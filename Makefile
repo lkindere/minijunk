@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/22 22:43:12 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/23 00:28:24 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,7 @@ fclean: clean
 re: fclean all
 
 debug: fclean
-	$(CC) $(CFLAGS) -g $(INCLUDES) $(INC_HEADER) $(BUILT) $(E_SRC) $(P_SRC) $(UTILS) -o debug
+	$(CC) $(CFLAGS) -g $(INC_HEADER) $(BUILT) $(E_SRC) $(P_SRC) $(UTILS) $(INCLUDES) -o debug
 	lldb debug
 
 .PHONY: all clean fclean re debug

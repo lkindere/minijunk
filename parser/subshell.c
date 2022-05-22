@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 22:00:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/23 00:04:10 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 01:06:22 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int clone_data(t_data *data, char *new_input, int and_or)
 
     i = -1;
     init_data(&data->next, data->envp, 0, NULL);
+    reset_data(data);
     // data->next = malloc(sizeof(t_data));
     // if (!data)
     //     return (1);
@@ -71,15 +72,17 @@ void    split_data(t_data *data, char *input)
 
     i = -1;
     split = 0;
-    while (data->input[++i] && !split)
+    while (data && data->input[++i] && !split)
     {
         split = is_split(data->input[i], data->input[i + 1]);
         if (split == -1)
             printf("Syntax error near unexpected token `&'\n");
         if (split > 0)
-        {
+        {   
+            printf("Data input: %s\n", data->input);
             if (clone_data(data, &data->input[i + 2], split) != 0)
                 return (1);
+                        printf("Data input: %s\n", data->input);
             data->input[i] = 0;
             data->input[i - 1] = 0;
             data = data->next;
@@ -90,23 +93,23 @@ void    split_data(t_data *data, char *input)
     }
 }
 
-// void    print_data(t_data *data)
-// {
-//     int i;
+void    print_data(t_data *data)
+{
+    int i;
 
-//     i = 0;
-//     while (data)
-//     {
-//         printf("Data: %p\n", data);
-//         i++;
-//         printf("Data %d: and_or: %d %s\n", i, data->and_or, data->input);
-//         data = data->next;
-//     }
-// }
+    i = 0;
+    while (data)
+    {
+        printf("Data: %p\n", data);
+        i++;
+        printf("Data %d: and_or: %d %s\n", i, data->and_or, data->input);
+        data = data->next;
+    }
+}
 
 void    subshells(t_data *data)
 {
     data->next = NULL;
     split_data(data, data->input); // split until || or &&
-    // print_data(data);
+    print_data(data);
 }

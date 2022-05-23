@@ -6,18 +6,19 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 15:31:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:31:29 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "parser.h"
 
 //Waits for cmd->pid and returns exit code
-int	get_exitstatus(t_cmd *cmd)
+int	get_exitstatus(int pid)
 {
 	int	exitstatus;
 
-	waitpid(cmd->pid, &exitstatus, 0);
+	waitpid(pid, &exitstatus, 0);
 	if (WIFEXITED(exitstatus))
 	{
 		exitstatus = WEXITSTATUS(exitstatus);
@@ -33,7 +34,7 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 	while (first_cmd)
 	{
 		if (first_cmd->pid > 0)
-			data->exit_code = get_exitstatus(first_cmd);
+			data->exit_code = get_exitstatus(first_cmd->pid);
 		first_cmd = first_cmd->pipe_next;
 	}
 }
@@ -54,7 +55,7 @@ void	executer_subfork(t_data *data, t_cmd *cmd)
 		internal_error_exit(ERROR_FORK);
 	if (cmd->pid == 0)
 		dup_and_exec(cmd, data->envp);
-	data->exit_code = get_exitstatus(cmd);
+	data->exit_code = get_exitstatus(cmd->pid);
 	exit (data->exit_code);
 }
 
@@ -83,18 +84,18 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 		exit(0);
 }
 
-void	print_command_data(t_cmd *cmd)
-{
-	int	i;
+// void	print_command_data(t_cmd *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	printf("Args: ");
-	while (cmd->cmd_arg && cmd->cmd_arg[i])
-		printf("%s, ", cmd->cmd_arg[i++]);
-	printf("\n");
-	printf("In: %d, out: %d\n", cmd->in, cmd->out);
-	printf("Pipe prev: %p, pipe next: %p\n", cmd->pipe_prev, cmd->pipe_next);
-}
+// 	i = 0;
+// 	printf("Args: ");
+// 	while (cmd->cmd_arg && cmd->cmd_arg[i])
+// 		printf("%s, ", cmd->cmd_arg[i++]);
+// 	printf("\n");
+// 	printf("In: %d, out: %d\n", cmd->in, cmd->out);
+// 	printf("Pipe prev: %p, pipe next: %p\n", cmd->pipe_prev, cmd->pipe_next);
+// }
 
 //Iterates through cmd if it's not built in, calls the startfork,
 //Once it reaches the final pipe calls finish to wait and get the exit codes
@@ -103,6 +104,11 @@ void	executer(t_data *data, t_cmd *cmd)
 	t_cmd	*first_cmd;
 
 	first_cmd = cmd;
+	// printf("Starting exit code: %d, and/or: %d\n", data->exit_code, data->and_or[0]);
+	if (data->and_or[0] == 1 && data->exit_code != 0)
+		return ;
+	if (data->and_or[0] == 2 && data->exit_code == 0)
+		return ;
 	while (cmd)
 	{
 		// print_command_data(cmd);
@@ -117,5 +123,5 @@ void	executer(t_data *data, t_cmd *cmd)
 		cmd = cmd->pipe_next;
 	}
 	executer_finish(data, first_cmd);
-	// printf("\nExit code: %d\n", data->exit_code);
+	// printf("\nQuitting exit code: %d\n", data->exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 06:01:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:39:21 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,19 @@ int	reset_data(t_data *data)
 	}
 	if (data->cmds)
 		free_cmds(&data->cmds);
+	data->cmds = ft_calloc(1, sizeof(t_cmd));
+	if (data->cmds == NULL)
+		return (ft_err(MALLOC_FAIL));
 	if (data->tokens)
 		free_tokens(&data->tokens);
+	data->flags.single_quote = 0;
+	data->flags.double_quote = 0;
+	data->cmd_count = 0;
+	data->dollar_count = 0;
+	if (data->expands)
+		free_2d_char(&data->expands);
+	if (add_char_ptr(&data->expands) != 0)
+		return (MALLOC_FAIL);
 	return (0);
 }
 
@@ -47,42 +58,87 @@ int	input_is_empty(char	*input)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_token *temp;
-	t_data	data;
-	t_data 	*dtemp;
+	char	*full_input;
+	char	*sub_input;
+	t_data	*data;
+	int		temp_pid = -1;
 
-	signal_handler(&data);
+	sub_input = NULL;
+	signal_handler(data);
+	if (init_data(&data, envp) != 0)
+		return (MALLOC_FAIL);
 	while (true)//can use continue keyword in here in case something fails. print error in the failing function and continue the loop with new input
 	{
-		if (init_data(&data, envp) != 0)
-			continue ;
-		data.input = readline("TheShell -> ");
-		if (!data.input)
+		full_input = readline("TheShell -> ");
+		if (!full_input)
 			builtin_exit(NULL, NULL);
-		if (data.input && data.input[0])
-			add_history(data.input);
-		// subshells(data);
-		if (input_is_empty(data.input))
+		if (full_input && full_input[0])
+			add_history(data->input);
+		if (input_is_empty(full_input))
 			continue ;
-		dtemp = &data;
-		while (dtemp)
+		while (full_input)
 		{
-			// data->input = expander(data->input, data);
-			if (lexer(dtemp) != 0)
+			while (!data->input && full_input && full_input[0])
+			{
+				if (subshells(&full_input, &sub_input))
+				{
+					temp_pid = fork();
+					if (temp_pid == 0)
+					{
+						free(full_input);
+						full_input = sub_input;
+						sub_input = NULL;
+					}
+				}
+				if (temp_pid > 0)
+				{
+					data->exit_code = get_exitstatus(temp_pid);
+				}
+				// printf("pid: %d, before split data input: %s, full input: %s, and_or: %d\n", temp_pid, data->input, full_input, data->and_or[0]);
+				split_input(&full_input, &data);
+				// printf("pid: %d, after split data input: %s, full input: %s\n, and_or: %d\n", temp_pid, data->input, full_input, data->and_or[0]);
+				// printf("pid: %d, Full input: %s\n", temp_pid, full_input);
+				// printf("pid: %d, Data input: %s\n", temp_pid, data->input);
+			}
+			if (!data->input || input_is_empty(data->input))
+			{
+				reset_data(data);
+				if (temp_pid == 0)
+					exit(data->exit_code);
+				break ;
+			}
+			// sleep(1);
+			// printf("Pid: %d, pre expander\n", temp_pid);
+			data->input = expander(data->input, data);
+			// printf("Pid: %d, pre lexer\n", temp_pid);
+			if (lexer(data) != 0)
 				continue ;
-			temp = dtemp->tokens;
-			if (parser(dtemp) != 0)
+			// printf("Past lexer\n");
+			// printf("Pid: %d, pre parser\n", temp_pid);
+			if (parser(data) != 0)
+			{
+				free(full_input);
+				full_input = NULL;
 				continue ;
+			}
+			// printf("Pid: %d, pre heredoc\n", temp_pid);
+			// printf("Past parser\n");
+			// if (do_heredoc(data) != 0)
+			// 	continue ;
 
-			if (do_heredoc(&data) != 0)
-				continue ;
-
-			in_out_std(dtemp);
-
-			executer(dtemp, dtemp->cmds);
-
-			dtemp = dtemp->next;
+			in_out_std(data);
+			// printf("Pid: %d, pre exec\n", temp_pid);
+			// printf("Pid: %d, executing: %s\n", temp_pid, data->input);
+			if (data->and_or[0] <= 0 || (data->and_or[0] == 1 && data->exit_code == 0) || (data->and_or[0] == 2 && data->exit_code != 0))
+				executer(data, data->cmds);
+			if (temp_pid == 0 && (!full_input || input_is_empty(full_input)))
+			{
+				printf("Sub process exitting with exit code: %d\n", data->exit_code);
+				exit(data->exit_code);
+			}
+			reset_data(data);
+			// printf("pid: %d, full input after reset: %s\n", temp_pid, full_input);
+			// printf("pid: %d post reset\n", temp_pid);
 		}
-		reset_data(&data);
 	}
 }

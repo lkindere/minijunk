@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:15:47 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 06:16:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 06:23:14 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ int	add_char_ptr(char ***arr)
 	char	**ret;
 	int	i;
 
-	printf("WAt\n");
 	if (*arr == NULL)//no expands array is there, which means we need to create the first string + NULL terminator
 	{
 		*arr = ft_calloc(2, sizeof(char *));
 		if (*arr == NULL)
 			return (ft_err(MALLOC_FAIL));
 	}
-	printf("WAt\n");
 	else
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 10:25:45 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 17:18:16 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:56:57 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-//Substring but appends c at the end
-char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*substr;
 	unsigned int	i;
@@ -38,14 +37,13 @@ char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c)
 		return (substr);
 	}
 	if (len < ft_strlen(&s[start]))
-		substr = malloc(len + 2);
+		substr = malloc(len + 1);
 	else
 		substr = malloc(ft_strlen(&s[start]) + 1);
 	if (!substr)
 		return (NULL);
 	while (i < len && s[start])
 		substr[i++] = s[start++];
-	substr[i++] = c;
-	substr[i] = 0;
+	substr[i] = '\0';
 	return (substr);
 }

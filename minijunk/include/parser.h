@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 05:37:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 06:11:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,20 @@ typedef struct s_data
 	int				exit_code;
 	int				std_in;
 	int				std_out;
-	int				and_or;
-	struct s_data	*next;
 }	t_data;
 
-int		lexer(t_data *data);
-int		parser(t_data *data);
-int		create_cmd_args(t_data *data);
+int	lexer(t_data *data);
+int	parser(t_data *data);
+int	create_cmd_args(t_data *data);
 void	save_redirs_in_cmds(t_data *data);
 int		do_heredoc(t_data *data);
 void	in_out_std(t_data *data);
 
-int		init_data(t_data *data, char **envp);
-int		add_char_ptr(char ***arr);
-int		add_char(char **str, char c);
-int		ft_add_str(char **str, char *add);
+int	init_data(t_data **data, char **envp);
+int	reset_data(t_data *data);
+int	add_char_ptr(char ***arr);
+int	add_char(char **str, char c);
+int	ft_add_str(char **str, char *add);
 
 /*	utils						*/
 
@@ -170,7 +169,5 @@ void    signal_handler(t_data *data);
 char	*expander(char *input, t_data *data);
 char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c);
 char	*ft_strionjoin(char *s1, char *s2, int n, int *index);
-
-void    subshells(t_data *data);
 
 #endif

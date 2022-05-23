@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 06:01:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 06:27:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,21 @@ int	reset_data(t_data *data)
 	}
 	if (data->cmds)
 		free_cmds(&data->cmds);
+	// data->cmds = ft_calloc(1, sizeof(t_cmd));
+	// if (data->cmds == NULL)
+	// 	return (ft_err(MALLOC_FAIL));
 	if (data->tokens)
 		free_tokens(&data->tokens);
+	data->flags.single_quote = 0;
+	data->flags.double_quote = 0;
+	data->cmd_count = 0;
+	data->dollar_count = 0;
+	if (data->expands)
+		free_2d_char(&data->expands);
+	// if (add_char_ptr(&data->expands) != 0)
+	// 	return (MALLOC_FAIL);
+	dup2(data->std_in, STDIN_FILENO);
+	dup2(data->std_out, STDOUT_FILENO);
 	return (0);
 }
 
@@ -47,42 +60,37 @@ int	input_is_empty(char	*input)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_token *temp;
-	t_data	data;
-	t_data 	*dtemp;
+	t_data	*data;
 
-	signal_handler(&data);
+	// signal_handler(data);
 	while (true)//can use continue keyword in here in case something fails. print error in the failing function and continue the loop with new input
 	{
 		if (init_data(&data, envp) != 0)
-			continue ;
-		data.input = readline("TheShell -> ");
-		if (!data.input)
+			return (MALLOC_FAIL);
+		data->input = readline("TheShell -> ");
+		if (!data->input)
 			builtin_exit(NULL, NULL);
-		if (data.input && data.input[0])
-			add_history(data.input);
-		// subshells(data);
-		if (input_is_empty(data.input))
+				printf("wat\n");
+		if (data->input && data->input[0])
+			add_history(data->input);
+		if (input_is_empty(data->input))
 			continue ;
-		dtemp = &data;
-		while (dtemp)
-		{
-			// data->input = expander(data->input, data);
-			if (lexer(dtemp) != 0)
-				continue ;
-			temp = dtemp->tokens;
-			if (parser(dtemp) != 0)
-				continue ;
+		printf("wat\n");
+		// data->input = expander(data->input, data);
+		if (lexer(data) != 0)
+			continue ;
 
-			if (do_heredoc(&data) != 0)
-				continue ;
+		if (parser(data) != 0)
+			continue ;
 
-			in_out_std(dtemp);
+		if (do_heredoc(data) != 0)
+			continue ;
 
-			executer(dtemp, dtemp->cmds);
+		in_out_std(data);
 
-			dtemp = dtemp->next;
-		}
-		reset_data(&data);
+		executer(data, data->cmds);
+		reset_data(data);
+		free(data);
+		// 	continue ;
 	}
 }

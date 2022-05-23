@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 22:00:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/23 01:06:22 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/23 05:45:53 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int clone_data(t_data *data, char *new_input, int and_or)
     int i;
 
     i = -1;
-    init_data(&data->next, data->envp, 0, NULL);
-    reset_data(data);
+    init_data(data->next, data->envp);
     // data->next = malloc(sizeof(t_data));
     // if (!data)
     //     return (1);

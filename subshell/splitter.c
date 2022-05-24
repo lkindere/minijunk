@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 19:28:44 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:11:23 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,9 @@ int splitter(char **input, char **segment)
 {
 	int end;
 
-
-	// printf("\nStart input  : %s\n", *input);
 	if (!(*input))
 		return (0);
+	// printf("\nSplit Start input: %s\n", *input);
 	// printf("Start input: %s\n", *input);
 	end = get_index(input);
 	// printf("End is: %d\n", end);
@@ -114,8 +113,8 @@ int splitter(char **input, char **segment)
 		(*segment) = (*input);
 		(*input) = NULL;
 	}
-	// printf("\nNew segment: %s\n", *segment);
-	// printf("\nNew input  : %s\n", *input);
-	sleep (5);
+	// printf("\nSplit New segment: %s\n", *segment);
+	// printf("\nSplit New input  : %s\n\n", *input);
+
 	return (0);
 }

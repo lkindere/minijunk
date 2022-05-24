@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 19:34:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:11:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 static int	is_separator(int c)
 {
 	if (c == '&' || c == '|' || c == '<' || c == '>')
+		return (1);
+	if (c == '(')
 		return (1);
 	return (0);
 }
@@ -27,6 +29,7 @@ static int	remove_separator(char **input, int i)
 		(*input)[i] = ' ';
 	if ((*input)[i + 1] == '|' || (*input)[i + 1] == '&')
 		(*input)[i + 1] = ' ';
+	// printf("\nSep New input  : %s\n", *input);
 	return (0);
 }
 
@@ -43,30 +46,17 @@ static int	handle_pipe(t_data *data, char **input, int i)
 	return (remove_separator(input, i));
 }
 
-//Returns first token encountered
-//Handles quotes
-//Checks for & | < ( )
-int	first_token(const char *input)
+//Returns first character encountered after spaces
+int	first_sep(const char *input)
 {
-	int		i;
-	t_flag	flag;
+	int	i;
 
-	i = -1;
-	init_flag(&flag);
-	while (input[++i])
-	{
-		set_flag(input[i], &flag);
-		if (!is_quoted(flag))
-		{
-			if (input[i] == '&' || input[i] == '|')
-				return (input[i]);
-			if (input[i] == '(' || input[i] == ')')
-				return (input[i]);
-			if (input[i] == '<' || input[i] == '>')
-				return (input[i]);
-		}
-	}
-	return (-1);
+	i = 0;
+	while (input[i] && input[i] == ' ')
+		i++;
+	if (!is_separator(input[i]))
+		return ('N');
+	return (input[i]);
 }
 
 //Checks the remainder of input for separators
@@ -79,16 +69,21 @@ int	handle_separators(t_data *data, char **input, int *and_or_next)
 	int	i;
 
 	i = 0;
+	// printf("\nSep input  : %s\n", *input);
 	if (!(*input))
 		return (0);
-	if (first_token(*input) == '(' || first_token(*input) == ')')
+	if (first_sep(*input) == '(' || first_sep(*input) == 'N')
 		return (0);
 	while ((*input)[i] && !is_separator((*input)[i]))
 		i++;
 	if (!(*input)[i])
 		return (0);
+	if ((*input)[i] == '|' && (*input)[i + 1] != '|')
+		return (handle_pipe(data, input, i));
+	if (first_sep(&((*input)[i + 2])) == '(')
+		return (0);
 	if ((*input)[i] == '&' && (*input)[i + 1] == '&')
-	{
+	{	
 		*and_or_next = 1;
 		return (remove_separator(input, i));
 	}
@@ -97,7 +92,5 @@ int	handle_separators(t_data *data, char **input, int *and_or_next)
 		*and_or_next = 2;
 		return (remove_separator(input, i));
 	}
-	if ((*input)[i] == '|' && (*input)[i + 1] != '|')
-		return (handle_pipe(data, input, i));
 	return (0);
 }

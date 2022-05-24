@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/24 17:46:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 20:45:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	reset_data(t_data *data)
 		free_2d_char(&data->expands);
 	if (add_char_ptr(&data->expands) != 0)
 		return (MALLOC_FAIL);
-	data->and_or = 0;
+	// data->and_or = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:56:14 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 19:09:19 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:11:08 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ int	is_subshell(char **segment)
 {
 	int	valid;
 
-	// printf("Input: %s\n", *segment);
-	// printf("Checking is_subshell\n");
+	// printf("Subshell Input: %s\n", *segment);
 	valid = is_valid(*segment);
 	if (valid == -1)
 	{
-		printf("Not a subshell\n");
+		// printf("Not a subshell\n");
 		return (0);
 	}
 	// if (valid == 0)
@@ -58,6 +57,7 @@ int	is_subshell(char **segment)
 	// 	(*segment) = NULL;
 	// 	return (-1);
 	// }
+	// printf("Is subshell\n");
 	// printf("Finding and replacing\n");
 	ft_find_replace(*segment, '(', ' ', 1);
 	ft_find_replace(*segment, ')', ' ', -1);

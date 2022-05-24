@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 13:45:59 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 09:56:42 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <stdint.h>
 
 # define BLUE "\033[38;5;36m"
 # define RED "\033[0;31m"
@@ -110,7 +111,8 @@ typedef struct s_data
 	int				exit_code;
 	int				std_in;
 	int				std_out;
-	int				and_or[2];
+	int				and_or;
+	int				pipe[2];
 	struct s_data*	next;
 }	t_data;
 
@@ -173,7 +175,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c);
 char	*ft_strionjoin(char *s1, char *s2, int n, int *index);
 
-void    split_input(char **full_input, t_data **data);
-int		subshells(char **full_input, char **sub_input);
+
+int 	splitter(char **input, char **segment);
+int		handle_separators(t_data *data, char **input);
+int		is_subshell(char **segment);
+void    ft_find_replace(char *str, int c, int r, int d);
 
 #endif

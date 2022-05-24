@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:07:27 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/23 18:18:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:21:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (s && s[i])
+	if (!s)
+		return (0);
+	while (s[i])
 		i++;
 	return (i);
 }
@@ -35,7 +37,10 @@ void    ft_find_replace(char *str, int c, int r, int d)
         while (--i >= 0)
         {
             if (str[i] == c)
-                str[i] = r;
+			{
+				str[i] = r;
+				return ;
+			}
         }
     }
     else if (d == 1)
@@ -43,7 +48,10 @@ void    ft_find_replace(char *str, int c, int r, int d)
         while (str[++i])
         {
             if (str[i] == c)
-                str[i] = r;
+			{
+				str[i] = r;
+				return ;
+			}
         }
     }
 }

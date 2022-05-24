@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:21:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 07:48:12 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:10:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int	init_data(t_data **data, char **envp)
 	if (add_char_ptr(&(*data)->expands) != 0)
 		return (MALLOC_FAIL);
 	(*data)->next = NULL;
+	(*data)->is_fork = 0;
 	return (0);
 }

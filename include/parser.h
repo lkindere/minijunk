@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/24 09:56:42 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:35:54 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_data
 	int				exit_code;
 	int				std_in;
 	int				std_out;
+	int				is_fork;
 	int				and_or;
 	int				pipe[2];
 	struct s_data*	next;
@@ -177,8 +178,12 @@ char	*ft_strionjoin(char *s1, char *s2, int n, int *index);
 
 
 int 	splitter(char **input, char **segment);
-int		handle_separators(t_data *data, char **input);
+int	handle_separators(t_data *data, char **input, int *and_or_next);
 int		is_subshell(char **segment);
 void    ft_find_replace(char *str, int c, int r, int d);
+
+int	the_loop(char **input, char **segment, t_data *data);
+int		ft_isalnum(int c);
+int	create_subshells(t_data *data, char **input, char **segment, int and_or);
 
 #endif

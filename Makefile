@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/24 09:56:10 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/24 15:50:03 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,13 @@ P_SRC := 	main.c 						\
 			signal.c 					\
 			expander.c 					\
 
-S_SRC :=	splitter.c 					\
+S_SRC :=	loop.c						\
+			fork.c 						\
+			splitter.c 					\
 			separators.c 				\
 			subshell.c					\
+			sub_utils.c 				\
+			sub_utils2.c 				\
 
 
 E_SRC :=	exec.c						\

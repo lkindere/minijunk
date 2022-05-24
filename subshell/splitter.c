@@ -6,69 +6,18 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 09:48:54 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:28:44 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
-#include "exec.h"
-
-typedef struct s_flag
-{
-	int p_open;
-	int p_close;
-	int s_quote;
-	int d_quote;
-} t_flag;
-
-//Inits flags to 0
-static void    init_flags(t_flag *flag)
-{
-	flag->p_open = 0;
-	flag->p_close = 0;
-	flag->s_quote = 0;
-	flag->d_quote = 0;
-}
-
-//Checks if quoted
-static int is_quoted(t_flag flag)
-{
-	if (flag.s_quote == 1)
-		return (1);
-	if (flag.d_quote == 1)
-		return (1);
-	return (0);
-	}
-
-//Increments parenthesis when encountered
-//If not quoted sets quote to 1
-//If quoted, resets quote to 0
-static void	set_flag(int c, t_flag *flag)
-{
-	if (c == '(')
-		flag->p_open++;
-	else if (c == ')')
-		flag->p_close++;
-    if (!is_quoted(*flag))
-    {
-		if (c == '\'')
-			flag->s_quote = 1;
-		else if (c == '"')
-			flag->d_quote = 1;
-		return ;
-    }
-	if (c == '\'')
-		flag->s_quote = 0;
-	else if (c == '"')
-		flag->d_quote = 0;
-}
+#include "subshell.h"
 
 //Checks if it's a separator
 static int	is_separator(int c, t_flag flag)
 {
 	if (is_quoted(flag))
 		return (0);
-	if (c == '&' || c == '|' || c == '<')
+	if (c == '&' || c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -79,21 +28,26 @@ static int	is_separator(int c, t_flag flag)
 //Returns 1 on | or < succeeded by opening parenthesis
 static int	should_split(char *input, t_flag flag, int i)
 {
-	if (index == 0)
+	if (i == 0)
 		return (0);
-	if (input[i] == '&' && input[i + 1] == '&')
-		return (1);
-	if (input[i] == '|' && input[i + 1] == '|')
-		return (1);
-	if (input[i] == '|' || input[i] == '<')
+	if (flag.p_open == flag.p_close)
 	{
-		printf("P open: %d, P close: %d\n", flag.p_open, flag.p_close);
-		if (flag.p_open > 0 && flag.p_close == flag.p_open)
+		if (input[i] == '&' && input[i + 1] == '&')
 			return (1);
-		while (input[i++] && !is_separator(input[i], flag))
+		if (input[i] == '|' && input[i + 1] == '|')
+			return (1);
+		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		{
+			if (flag.p_open > 0)
+				return (1);
+		}
+	}
+	if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+	{
+		while (input[i] && !is_separator(input[i], flag))
 		{
 			set_flag(input[i], &flag);
-			if (input[i] == '(' && !is_quoted(flag))
+			if (input[i++] == '(' && !is_quoted(flag))
 				return (1);
 		}
 	}
@@ -105,11 +59,11 @@ static int	should_split(char *input, t_flag flag, int i)
 //Returns -1 if no split is needed
 static int	get_index(char **input)
 {
-	int     i;
-	t_flag flag;
+	int		i;
+	t_flag	flag;
 
 	i = -1;
-	init_flags(&flag);
+	init_flag(&flag);
 	while ((*input)[++i])
 	{
 		set_flag((*input)[i], &flag);
@@ -134,8 +88,9 @@ static int	split_input(char **input, char **segment, int end)
 	free(old_input);
 	if (!(*input))
 		return (1);
-	printf("New segment: %s\n", *segment);
-	printf("New input  : %s\n", *input);
+	// printf("New segment: %s\n", *segment);
+	// printf("New input  : %s\n", *input);
+	return (0);
 }
 
 //Splits the input into segments
@@ -145,7 +100,11 @@ int splitter(char **input, char **segment)
 {
 	int end;
 
-	printf("Start input: %s\n", *input);
+
+	// printf("\nStart input  : %s\n", *input);
+	if (!(*input))
+		return (0);
+	// printf("Start input: %s\n", *input);
 	end = get_index(input);
 	// printf("End is: %d\n", end);
 	if (end != -1)
@@ -155,7 +114,8 @@ int splitter(char **input, char **segment)
 		(*segment) = (*input);
 		(*input) = NULL;
 	}
-	printf("New segment: %s\n", *segment);
-	printf("New input  : %s\n", *input);
+	// printf("\nNew segment: %s\n", *segment);
+	// printf("\nNew input  : %s\n", *input);
+	sleep (5);
 	return (0);
 }

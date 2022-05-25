@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/20 03:31:54 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:47:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	add_wildcards(char **wildcards, t_cmd *cmd, int *index)
 		(*index)++;
 		return (0);
 	}
-	new_arg = ft_straiofjoin(cmd->cmd_arg, wildcards, index);
+	new_arg = ft_straiojoin(cmd->cmd_arg, wildcards, index);
 	free(wildcards);
 	if (!new_arg)
 		return (-1);

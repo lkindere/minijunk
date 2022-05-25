@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   separators.c                                       :+:      :+:    :+:   */
+/*   and_or.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 11:50:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:06:15 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "subshell.h"
 
-//Checks if it's a separator
-static int	is_separator(int c)
-{
-	if (c == '&' || c == '|' || c == '<' || c == '>')
-		return (1);
-	if (c == '(')
-		return (1);
-	return (0);
-}
 
 //Returns first character encountered after spaces
-int	first_sep(const char *segment)
+static int	first_sep(const char *segment)
 {
 	int	i;
 
@@ -39,7 +30,7 @@ int	first_sep(const char *segment)
 //Removes || and && setting and_or next
 //Returns 0 on success
 //Returns 1 on error
-int	handle_separators(t_data *data, char **segment, int *and_or_next)
+int	handle_and_or(char **segment, int *and_or_next)
 {
 	int	i;
 

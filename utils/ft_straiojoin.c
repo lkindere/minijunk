@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 20:30:49 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 19:03:22 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:38:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static size_t	ft_stralen(char **s)
 //Joins a1 with a2 starting at a1[index] overwriting it, freeing a1[index]
 //a1 strings after [index] get moved to the end of a2
 //Changes index pointer to the first element after a2
-char	**ft_straiofjoin(char **a1, char **a2, int *index)
+char	**ft_straiojoin(char **a1, char **a2, int *index)
 {
 	char	**join;
 	int		i;

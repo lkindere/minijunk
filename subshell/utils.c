@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sub_utils.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:58:15 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 10:49:50 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:24:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	set_flag(int c, t_flag *flag)
 		flag->d_quote = 0;
 }
 
+//Checks and_or and exit code
 int	can_execute(int and_or, int exit_code)
 {
 	if (and_or == 0)

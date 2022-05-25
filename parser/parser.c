@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/23 13:47:41 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:14:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	copy_redir(t_token *token)
 	free(token->content);
 	token->content = ft_strdup(token->next->content);
 	if (token->content == NULL)
-		return (ft_err(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	// printf("TEST: content inside copy_dir: %s\n", token->content);
 	return (0);
 }

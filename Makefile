@@ -6,19 +6,21 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/25 11:51:13 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/25 19:27:02 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := ./minishell
 
 CC := gcc
-# CFLAGS ?= -Wall -Werror -Wextra
+CFLAGS ?= -Wall -Werror -Wextra
 
-P_SRC := 	main.c 						\
-			err.c 						\
-			inits.c 					\
-			lexer.c 					\
+M_SRC := 	main.c 						\
+			data.c 						\
+			input.c 					\
+			signal.c 					\
+
+P_SRC := 	lexer.c 					\
 			free.c 						\
 			expands_utils.c 			\
 			parser.c 					\
@@ -26,23 +28,26 @@ P_SRC := 	main.c 						\
 			save_redirs_in_cmds.c		\
 			heredoc.c					\
 			in_out_std.c				\
-			signal.c 					\
 			expander.c 					\
 
-S_SRC :=	loop.c						\
-			fork.c 						\
+S_SRC :=	fork.c 						\
 			splitter.c 					\
-			separators.c 				\
+			and_or.c 					\
+			pipe.c						\
+			pipe_checks.c				\
 			subshell.c					\
-			sub_utils.c 				\
-			sub_utils2.c 				\
+			utils.c						\
+			utils_sep.c 				\
 
 
-E_SRC :=	exec.c						\
+X_SRC :=	exec.c						\
 			forks.c 					\
 			path.c 						\
-			errors.c 					\
 			wildcards.c					\
+
+ERRORS :=	errors.c					\
+			err.c						\
+
 
 BUILT :=	builtins.c					\
 			cd.c 						\
@@ -77,17 +82,21 @@ UTILS :=	ft_calloc.c 				\
 			ft_substr_append.c 			\
 			ft_find_replace.c 			\
 
-OBJ_DIR := ./obj
+OBJ_DIR := ./_obj
 
+M_OBJ := $(addprefix $(OBJ_DIR)/, $(M_SRC:.c=.o))
 P_OBJ := $(addprefix $(OBJ_DIR)/, $(P_SRC:.c=.o))
 S_OBJ := $(addprefix $(OBJ_DIR)/, $(S_SRC:.c=.o))
-E_OBJ := $(addprefix $(OBJ_DIR)/, $(E_SRC:.c=.o))
+X_OBJ := $(addprefix $(OBJ_DIR)/, $(X_SRC:.c=.o))
+E_OBJ := $(addprefix $(OBJ_DIR)/, $(ERRORS:.c=.o))
 B_OBJ := $(addprefix $(OBJ_DIR)/, $(BUILT:.c=.o))
 U_OBJ := $(addprefix $(OBJ_DIR)/, $(UTILS:.c=.o))
 
+M_SRC := $(addprefix main/, $(M_SRC))
 P_SRC := $(addprefix parser/, $(P_SRC))
 S_SRC := $(addprefix subshell/, $(S_SRC))
-E_SRC := $(addprefix exec/, $(E_SRC))
+X_SRC := $(addprefix exec/, $(X_SRC))
+ERRORS := $(addprefix errors/, $(E_SRC))
 BUILT := $(addprefix builtins/, $(BUILT))
 UTILS := $(addprefix utils/, $(UTILS))
 
@@ -105,39 +114,51 @@ CUT := "\033[K"
 
 all: $(NAME)
 
-$(NAME): $(P_OBJ) $(E_OBJ) $(B_OBJ) $(U_OBJ) $(S_OBJ)
+$(NAME): $(M_OBJ) $(P_OBJ) $(S_OBJ) $(X_OBJ) $(E_OBJ) $(B_OBJ) $(U_OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	$(CC) $(CFLAGS) $(P_OBJ) $(E_OBJ) $(B_OBJ) $(U_OBJ) $(S_OBJ) $(INCLUDES) -o $(NAME)
+	$(CC) $(CFLAGS) $(M_OBJ) $(P_OBJ) $(S_OBJ) $(X_OBJ) $(E_OBJ) $(B_OBJ) $(U_OBJ) $(INCLUDES) -o $(NAME)
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished"  "[$(NAME)]...$(X)
 
+$(OBJ_DIR)/%.o: ./main/%.c $(HEADERFILES)
+	@echo $(Y)Compiling [$@]...$(X)
+	@mkdir -p _obj
+	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
+	@printf $(UP)$(CUT)
+
 $(OBJ_DIR)/%.o: ./parser/%.c $(HEADERFILES)
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p obj
+	@mkdir -p _obj
 	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
 	@printf $(UP)$(CUT)
 
 $(OBJ_DIR)/%.o: ./subshell/%.c $(HEADERFILES)
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p obj
+	@mkdir -p _obj
 	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
 	@printf $(UP)$(CUT)
 
 $(OBJ_DIR)/%.o: ./exec/%.c $(HEADERFILES)
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p obj
+	@mkdir -p _obj
+	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
+	@printf $(UP)$(CUT)
+
+$(OBJ_DIR)/%.o: ./errors/%.c $(HEADERFILES)
+	@echo $(Y)Compiling [$@]...$(X)
+	@mkdir -p _obj
 	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
 	@printf $(UP)$(CUT)
 
 $(OBJ_DIR)/%.o: ./builtins/%.c $(HEADERFILES)
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p obj
+	@mkdir -p _obj
 	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
 	@printf $(UP)$(CUT)
 
 $(OBJ_DIR)/%.o: ./utils/%.c $(HEADERFILES)
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p obj
+	@mkdir -p _obj
 	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
 	@printf $(UP)$(CUT)
 
@@ -158,7 +179,7 @@ fclean: clean
 re: fclean all
 
 debug: fclean
-	$(CC) $(CFLAGS) -g $(INC_HEADER) $(BUILT) $(E_SRC) $(P_SRC) $(S_SRC) $(UTILS) $(INCLUDES) -o debug
+	$(CC) $(CFLAGS) -g $(INC_HEADER) $(M_SRC) $(P_SRC) $(S_SRC) $(X_SRC) $(ERRORS) $(BUILT) $(UTILS) $(INCLUDES) -o debug
 	lldb debug
 
 .PHONY: all clean fclean re debug

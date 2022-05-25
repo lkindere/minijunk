@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   err.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:28:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/19 20:23:31 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:47:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	ft_err(t_error err)
-{
-	if (err == MALLOC_FAIL)
-		ft_putstr_fd("malloc failed\n", STDERR_FILENO);
-	else if (err == ERROR_PIPE)
-		ft_putstr_fd("pipe failed\n", STDERR_FILENO);
-	else if (err)
-		ft_putstr_fd("general error\n", STDERR_FILENO);
-	return (err);
-}
+// int	ft_err(t_error err)
+// {
+// 	if (err == MALLOC_FAIL)
+// 		ft_putstr_fd("malloc failed\n", STDERR_FILENO);
+// 	else if (err == ERROR_PIPE)
+// 		ft_putstr_fd("pipe failed\n", STDERR_FILENO);
+// 	else if (err)
+// 		ft_putstr_fd("general error\n", STDERR_FILENO);
+// 	return (err);
+// }
 
 /*
  *	Throws syntax error at token passed as input

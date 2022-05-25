@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:40:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 12:05:36 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:08:27 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	addto_env(char **cmd, char **envp)
 
 char	*dollar_trim(char *cmd)
 {
-	char	*trim;
-	int		i;
+	char			*trim;
+	unsigned int	i;
 
 	i = 0;
 	while (cmd[i] && cmd[i] != '$')

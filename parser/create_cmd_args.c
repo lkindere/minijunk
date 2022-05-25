@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/20 00:10:45 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:15:01 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_new_cmd(t_cmd **cmd)
 
 	new_cmd = ft_calloc(1, sizeof(t_cmd));
 	if (new_cmd == NULL)
-		return (ft_err(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	new_cmd->cmd_arg = NULL;
 	new_cmd->in = -2;
 	new_cmd->out = -2;
@@ -65,7 +65,7 @@ int	create_cmd_args(t_data *data)
 		if (temp->type == PIPE)
 		{
 			if (create_new_cmd(&cmd) != 0)
-				return (MALLOC_FAIL);
+				return (internal_error_return(ERROR_MALLOC));
 		}
 		else if (temp->type == WORD)
 		{

@@ -6,12 +6,11 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 15:39:07 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:07:57 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "parser.h"
 
 //Waits for cmd->pid and returns exit code
 int	get_exitstatus(int pid)
@@ -44,7 +43,7 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 //Forks again for execve, exits with exit code
 void	executer_subfork(t_data *data, t_cmd *cmd)
 {
-	cmd->paths = get_paths(data->envp, cmd->cmd_arg[0]);
+	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd))
 		cmd->cmd_path = cmd->cmd_arg[0];
 	if (!is_exec(cmd))

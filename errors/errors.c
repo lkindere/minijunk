@@ -6,11 +6,11 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:49:51 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 10:34:08 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:05:01 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "main.h"
 
 void	put_error(char *a, char *b, char *c, char *d)
 {

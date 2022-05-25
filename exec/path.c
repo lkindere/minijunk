@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 17:48:58 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:07:32 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*find_cmd(char *cmd, char **paths, char *pwd)
 }
 
 //Grabs path from environment and splits it into **char appending / to each path
-char	**get_paths(char **envp, char *cmd)
+char	**get_paths(char **envp)
 {
 	char	**paths;
 	int		i;

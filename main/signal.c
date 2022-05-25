@@ -5,20 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 08:16:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 08:54:13 by lkindere         ###   ########.fr       */
+/*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
+/*   Updated: 2022/05/25 19:05:43 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "main.h"
 
 void    handle_sigint(int sig)
 {
+	(void)sig;
     write(2, "\n", 1);
-    write(2, "TheShell -> ", 13);
+    write(2, "MiniJunk XD:", 13);
 }
 
-void    signal_handler(t_data *data)
+void    signal_handler(void)
 {
     struct sigaction sint;
     struct sigaction squit;

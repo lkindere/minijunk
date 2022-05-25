@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_out_std.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:45:31 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/19 22:47:17 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:42:16 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	in_out_std(t_data *data)
 		if (cmd->in == -2)
 			cmd->in = 0;
 		if (cmd->out == -2)
+			cmd->out = 1;
+		if (cmd->out == 0)
 			cmd->out = 1;
 		cmd = cmd->pipe_next;
 	}

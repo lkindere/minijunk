@@ -6,88 +6,97 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:05:09 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 22:16:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:30:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-# define BLUE "\033[38;5;36m"
-# define RED "\033[0;31m"
-# define YELLOW "\033[0;33m"
-# define PURPLE "\033[0;35m"
-# define GREEN "\033[0;32m"
-# define RESET "\033[0m"
 
 #include "parser.h"
 #include "exec.h"
 #include "subshell.h"
 
-int	the_loop(char **input, char **segment, t_data *data)
+int	do_stuff(t_data *data)
 {
-	// int	and_or_next;
-
-	// and_or_next = 0;
-	while (true)
-	{
-		if (splitter(input, segment) != 0)
-			;
-			//Error reset
-		// printf("\n\nAfter splitter:\n\n");
-		// printf("Segment: %s, data->is_fork: %d\n", *segment, data->is_fork);
-		// printf("Full input: %s, data->is_fork: %d\n\n", *input, data->is_fork);
-		
-		if (is_subshell(segment) == 1)
-			create_subshells(data, input, segment, data->and_or);
-
-		if (handle_separators(data, input, &data->and_or) != 0)
-			;
-			// Error reset
-	
-		// printf("After separator: data->and_or: %d and_or_next: %d\n\n", data->and_or, and_or_next);
-		// printf("Segment: %s, is_fork: %d\n", *segment, data->is_fork);
-		// printf("Full input: %s, is_fork: %d\n\n", *input, data->is_fork);
-		// printf("------------------------------------------------------\n");
-		if (!(*input) && !(*segment))
-		{
-			if (data->is_fork)
-				exit (data->exit_code);
-			reset_data(data);
-			return (0);
-		}
-		if (is_start(*segment))
-			break ;
-	}
-	// sleep(1);
-	// printf("\n");
-	// printf(RED"Data exit code: %d, and_or: %d, and_or_next: %d\n"RESET, data->exit_code, data->and_or, and_or_next);
-	// printf(RED"Data exit code: %d, and_or: %d\n"RESET, data->exit_code, data->and_or);
-	// printf("Data and or: %d, is_fork: %d\n", data->and_or, data->is_fork);
-	// printf("Data input: %s, is_fork: %d\n", data->input, data->is_fork);
-	data->input = (*segment);
-	(*segment) = NULL;
 	data->input = expander(data->input, data); //Maybe change to char ** and return error codes
 
 	lexer(data);
-
 	parser(data);
-
 	do_heredoc(data);
-
 	in_out_std(data);
-
+	if (data->pipe1[0] != -1)
+	{
+		data->cmds->in = data->pipe1[0];
+		data->pipe1[0] = -1;
+	}
+	if (data->pipe1[1] != -1)
+	{
+		data->cmds->out = data->pipe1[1];
+		data->pipe1[1] = -1;
+	}
+	if (data->pipe2[0] != -1)
+	{
+		data->cmds->in = data->pipe2[0];
+		data->pipe2[0] = -1;
+	}
+	if (data->pipe2[1] != -1)
+	{
+		data->cmds->out = data->pipe2[1];
+		data->pipe2[1] = -1;
+	}
 	// printf("\nData->and_or: %d with exit code: %d\n", data->and_or, data->exit_code);;
 	if (can_execute(data->and_or, data->exit_code))
 	{
-		// printf("Executing %s\n", data->input);
+		// printf("Executing cmd: %s in fd: %d, out fd: %d\n", data->cmds->cmd_arg[0], data->cmds->in, data->cmds->out);
+		// printf("\nvvv\n");
 		executer(data, data->cmds);
+		// printf("^^^\n");
 	}
-	// else
-	// 	printf("Not executing %s\n", data->input);
+	//Everytime reset data occurs should be cmd | (cmd) or (cmd) | cmd, meaning always singe pipe exec from main, maybe close pipes in data?
 	reset_data(data);
-	// data->and_or = and_or_next;
+	// printf("\n----------------------------------------------------------------\n");
+	return (0);
+}
+
+int	the_loop(char **input, char **segment, t_data *data)
+{
+	while (true)
+	{
+		if (handle_separators(data, segment, &data->and_or) != 0)
+			;
+		if (is_start(*segment))
+			break ;
+		if (splitter(data, input, segment) != 0)
+			;
+		// printf("Segment after splitter: %s\n", *segment);
+		// printf("Pipes after splitter:\n");
+		// printf("pipe1 in: %d, pipe1 out: %d\npipe2 in: %d, pipe2 out: %d\n\n", data->pipe1[0], data->pipe1[1], data->pipe2[0], data->pipe2[1]);
+		if (is_subshell(segment) == 1)
+		{
+			create_subshells(data, input, segment);
+			// printf("Subshell started with: %s\n", *input);
+			// printf("Pipes after subshell:\n");
+			// printf("pipe1 in: %d, pipe1 out: %d\npipe2 in: %d, pipe2 out: %d\n\n", data->pipe1[0], data->pipe1[1], data->pipe2[0], data->pipe2[1]);
+			continue ;
+		}
+		// printf("Post subshell segment: %s, is fork: %d\n\n", *segment, data->is_fork);
+
+		// printf("----------------------------------------------------\n");
+		// printf("Remaining input: %s\n", *input);
+		if ((!(*input) || input_is_empty(*input)) && !(*segment))
+		{
+			reset_data(data);
+			if (data->is_fork)
+				exit (data->exit_code);
+			return (0);
+		}
+	}
+	// printf("Returning from loop, pipe1 in: %d, pipe1 out: %d, pipe2 in: %d, pipe2 out: %d\n\n", data->pipe1[0], data->pipe1[1], data->pipe2[0], data->pipe2[1]);
+	data->input = (*segment);
+	(*segment) = NULL;
+	do_stuff(data);
+
 	if (data->is_fork && !(*input))
 	{
 		// printf("FORK EXITTED with exit code %d\n", data->exit_code);
 		exit (data->exit_code);
 	}
-	// printf("-------------------------------------------------------------------\n");
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/24 18:35:54 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:01:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ typedef struct s_data
 	int				std_out;
 	int				is_fork;
 	int				and_or;
-	int				pipe[2];
+	int				pipe1[2];
+	int				pipe2[2];
 	struct s_data*	next;
 }	t_data;
 
@@ -177,13 +178,14 @@ char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c);
 char	*ft_strionjoin(char *s1, char *s2, int n, int *index);
 
 
-int 	splitter(char **input, char **segment);
-int	handle_separators(t_data *data, char **input, int *and_or_next);
+int 	splitter(t_data *data, char **input, char **segment);
+int		handle_separators(t_data *data, char **input, int *and_or_next);
 int		is_subshell(char **segment);
 void    ft_find_replace(char *str, int c, int r, int d);
 
-int	the_loop(char **input, char **segment, t_data *data);
+int		the_loop(char **input, char **segment, t_data *data);
 int		ft_isalnum(int c);
-int	create_subshells(t_data *data, char **input, char **segment, int and_or);
+int		create_subshells(t_data *data, char **input, char **segment);
+int		input_is_empty(char	*input);
 
 #endif

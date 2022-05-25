@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:59:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 15:35:29 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:51:00 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ void	set_flag(int c, t_flag *flag);
 
 //Utils 2
 int		can_execute(int and_or, int exit_code);
+
+
+int		remove_separator(char **segment, int i);
 
 #endif

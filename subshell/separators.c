@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 22:11:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:50:09 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,75 +22,45 @@ static int	is_separator(int c)
 	return (0);
 }
 
-//Replaces && || | wih spaces
-static int	remove_separator(char **input, int i)
-{
-	if ((*input)[i] == '|' || (*input)[i] == '&')
-		(*input)[i] = ' ';
-	if ((*input)[i + 1] == '|' || (*input)[i + 1] == '&')
-		(*input)[i + 1] = ' ';
-	// printf("\nSep New input  : %s\n", *input);
-	return (0);
-}
-
-//Opens a pipe on data
-//Frees input and returns 1 on error
-static int	handle_pipe(t_data *data, char **input, int i)
-{
-	if (pipe(data->pipe) != 0)
-	{
-		free(*input);
-		(*input) = NULL;
-		return (1);
-	}
-	return (remove_separator(input, i));
-}
-
 //Returns first character encountered after spaces
-int	first_sep(const char *input)
+int	first_sep(const char *segment)
 {
 	int	i;
 
 	i = 0;
-	while (input[i] && input[i] == ' ')
+	while (segment[i] && segment[i] == ' ')
 		i++;
-	if (!is_separator(input[i]))
+	if (!is_separator(segment[i]))
 		return ('N');
-	return (input[i]);
+	return (segment[i]);
 }
 
-//Checks the remainder of input for separators
+//Checks the remainder of segment for separators
 //Removes || and && setting and_or next
-//Creates pipe if needed and removes |
 //Returns 0 on success
 //Returns 1 on error
-int	handle_separators(t_data *data, char **input, int *and_or_next)
+int	handle_separators(t_data *data, char **segment, int *and_or_next)
 {
 	int	i;
 
 	i = 0;
-	// printf("\nSep input  : %s\n", *input);
-	if (!(*input))
+	if (!(*segment))
 		return (0);
-	if (first_sep(*input) == '(' || first_sep(*input) == 'N')
-		return (0);
-	while ((*input)[i] && !is_separator((*input)[i]))
+	while ((*segment)[i] && !is_separator((*segment)[i]))
 		i++;
-	if (!(*input)[i])
+	if (!(*segment)[i])
 		return (0);
-	if ((*input)[i] == '|' && (*input)[i + 1] != '|')
-		return (handle_pipe(data, input, i));
-	if (first_sep(&((*input)[i + 2])) == '(')
+	if (first_sep(&((*segment)[i + 2])) == '(')
 		return (0);
-	if ((*input)[i] == '&' && (*input)[i + 1] == '&')
+	if ((*segment)[i] == '&' && (*segment)[i + 1] == '&')
 	{	
 		*and_or_next = 1;
-		return (remove_separator(input, i));
+		return (remove_separator(segment, i));
 	}
-	if ((*input)[i] == '|' && (*input)[i + 1] == '|')
+	if ((*segment)[i] == '|' && (*segment)[i + 1] == '|')
 	{
 		*and_or_next = 2;
-		return (remove_separator(input, i));
+		return (remove_separator(segment, i));
 	}
 	return (0);
 }

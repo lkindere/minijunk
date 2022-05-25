@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 15:12:46 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:34:03 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 //Check access rights, reroutes the in/out and executes command
 void	dup_and_exec(t_cmd *cmd, char **envp)
 {
+	printf("Before EXECVE: in: %d, out: %d\n", cmd->in, cmd->out);
 	if (access(cmd->cmd_path, X_OK) != 0)
 		error_exit(cmd->cmd_arg[0], NULL, 1, 126);
 	if (cmd->in < 0 || cmd->out < 0)

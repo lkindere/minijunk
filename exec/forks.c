@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 16:41:44 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:39:07 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,6 @@ void	executer(t_data *data, t_cmd *cmd)
 
 	first_cmd = cmd;
 	// printf("Starting exit code: %d, and/or: %d\n", data->exit_code, data->and_or[0]);
-	// if (data->and_or[0] == 1 && data->exit_code != 0)
-	// 	return ;
-	// if (data->and_or[0] == 2 && data->exit_code == 0)
-	// 	return ;
 	while (cmd)
 	{
 		// print_command_data(cmd);

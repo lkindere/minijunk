@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/24 15:34:12 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 15:35:15 by lkindere         ###   ########.fr       */
+/*   Created: 2022/05/25 11:50:31 by lkindere          #+#    #+#             */
+/*   Updated: 2022/05/25 11:51:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	can_execute(int and_or, int exit_code)
+//Replaces && || | wih spaces
+int	remove_separator(char **segment, int i)
 {
-	if (and_or == 0)
-		return (1);
-	if (and_or == 1 && exit_code == 0)
-		return (1);
-	if (and_or == 2 && exit_code != 0)
-		return (1);
+	if ((*segment)[i] == '|' || (*segment)[i] == '&')
+		(*segment)[i] = ' ';
+	if ((*segment)[i + 1] == '|' || (*segment)[i + 1] == '&')
+		(*segment)[i + 1] = ' ';
+	// printf("\nSep New segment  : %s\n", *segment);
 	return (0);
 }

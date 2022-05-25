@@ -6,11 +6,41 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 22:11:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:08:00 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "subshell.h"
+
+//Opens a pipe on data
+//Frees segment and returns 1 on error
+static int	handle_pipe(t_data *data, char **input, int i)
+{
+	if (data->pipe1[0] == -1 && data->pipe1[1] == -1)		//If pipe 1 is not in use pipe to pipe1
+	{
+		if (pipe(data->pipe1) != 0)
+		{
+			free(*input);
+			(*input) = NULL;
+			return (1);
+		}
+		remove_separator(input, i);
+		return (0);
+	}
+	if (data->pipe2[0] == -1 && data->pipe2[1] == -1)		//If pipe 2 is not in use pipe to pipe2
+	{
+		if (pipe(data->pipe2) != 0)
+		{
+			free(*input);
+			(*input) = NULL;
+			return (1);
+		}
+		remove_separator(input, i);
+		return (0);
+	}
+	printf("Creating pipes not working as expected\n");
+	return (0);
+}
 
 //Checks if it's a separator
 static int	is_separator(int c, t_flag flag)
@@ -57,7 +87,7 @@ static int	should_split(char *input, t_flag flag, int i)
 //Iterates through input and checks for flags or separator
 //Returns index if a split is needed
 //Returns -1 if no split is needed
-static int	get_index(char **input)
+static int	get_index(t_data *data, char **input)
 {
 	int		i;
 	t_flag	flag;
@@ -68,7 +98,12 @@ static int	get_index(char **input)
 	{
 		set_flag((*input)[i], &flag);
 		if (is_separator((*input)[i], flag) && should_split(*input, flag, i))
+		{
+			if ((*input)[i] == '|' && (*input)[i + 1] != '|')
+        		if (handle_pipe(data, input, i) == 1)
+					return (-1);
 			return (i);
+		}
 	}
 	return (-1);
 }
@@ -96,7 +131,7 @@ static int	split_input(char **input, char **segment, int end)
 //Splits the input into segments
 //Returns 1 on errors
 //Returns 0 on success
-int splitter(char **input, char **segment)
+int splitter(t_data *data, char **input, char **segment)
 {
 	int end;
 
@@ -104,7 +139,7 @@ int splitter(char **input, char **segment)
 		return (0);
 	// printf("\nSplit Start input: %s\n", *input);
 	// printf("Start input: %s\n", *input);
-	end = get_index(input);
+	end = get_index(data, input);
 	// printf("End is: %d\n", end);
 	if (end != -1)
 		return (split_input(input, segment, end));

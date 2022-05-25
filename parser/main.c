@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/24 20:45:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:31:00 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	reset_data(t_data *data)
 		free_2d_char(&data->expands);
 	if (add_char_ptr(&data->expands) != 0)
 		return (MALLOC_FAIL);
-	// data->and_or = 0;
+	data->and_or = 0;
 	return (0);
 }
 
@@ -72,14 +72,21 @@ int	main(int argc, char **argv, char **envp)
 		if (!data->is_fork)
 		{
 			if (!full_input)
-				full_input = readline("TheShell -> ");
+				full_input = readline("MiniJunk -> ");
 			if (!full_input)
 				builtin_exit(NULL, NULL);
 			if (full_input && full_input[0])
 				add_history(full_input);
 			if (input_is_empty(full_input))
+			{
+				free(full_input);
+				full_input = NULL;
+				reset_data(data);
 				continue ;
+			}
 		}
-		the_loop(&full_input, &segment, data);
+		while ((full_input && !input_is_empty(full_input)) || segment)
+			the_loop(&full_input, &segment, data);
+		// printf("Returning for input, pipe1 in: %d, pipe1 out: %d, pipe2 in: %d, pipe2 out: %d\n\n", data->pipe1[0], data->pipe1[1], data->pipe2[0], data->pipe2[1]);
 	}
 }

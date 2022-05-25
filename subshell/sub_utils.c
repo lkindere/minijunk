@@ -6,13 +6,13 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:58:15 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/24 19:34:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:49:50 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "subshell.h"
 
-//Checks if the input starts with alphanumeric characters
+//Checks if the input has a valid start
 int	is_start(const char *input)
 {
 	int	i;
@@ -22,9 +22,11 @@ int	is_start(const char *input)
 		return (0);
 	while (input[i] && input[i] == ' ')
 		i++;
-	if (ft_isalnum(input[i]))
-		return (1);
-	return (0);
+	if (input[i] == '(' || input[i] == ')'|| input[i] == '&')
+		return (0);
+	if (input[i] == '|' && input[i + 1] == '|')
+		return (0);
+	return (1);
 }
 
 //Inits flags to 0
@@ -67,4 +69,15 @@ void	set_flag(int c, t_flag *flag)
 		flag->s_quote = 0;
 	else if (c == '"')
 		flag->d_quote = 0;
+}
+
+int	can_execute(int and_or, int exit_code)
+{
+	if (and_or == 0)
+		return (1);
+	if (and_or == 1 && exit_code == 0)
+		return (1);
+	if (and_or == 2 && exit_code != 0)
+		return (1);
+	return (0);
 }

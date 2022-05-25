@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 19:05:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:52:46 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void    handle_sigint(int sig)
 {
+	write(-1, "    ", 5);
 	(void)sig;
     write(2, "\n", 1);
-    write(2, "MiniJunk XD:", 13);
+    write(2, "MiniJunk XD: ", 13);
 }
 
 void    signal_handler(void)

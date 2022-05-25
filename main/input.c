@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:43 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 19:22:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 22:09:22 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	input_is_empty(char	*input)
 	int	i;
 
 	i = 0;
+	if (!input)
+		return (1);
 	while (input[i] == ' ')
 		i++;
 	if (input[i] == '\0')

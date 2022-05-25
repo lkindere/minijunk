@@ -6,35 +6,23 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:49:51 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 18:05:01 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:04:26 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	put_error(char *a, char *b, char *c, char *d)
+int	ft_add_str(char **str, char *add);
+
+int	ft_syntax_err(char *token)
 {
-	if (a)
-	{
-		write(STDERR_FILENO, a, ft_strlen(a));
-		if (b || c || d)
-			write(STDERR_FILENO, ": ", 2);
-	}
-	if (b)
-	{
-		write(STDERR_FILENO, b, ft_strlen(b));
-		if (c || d)
-			write(STDERR_FILENO, ": ", 2);
-	}
-	if (c)
-	{
-		write(STDERR_FILENO, c, ft_strlen(c));
-		if (d)
-			write(STDERR_FILENO, ": ", 2);
-	}
-	if (d)
-		write(STDERR_FILENO, d, ft_strlen(d));
-	write (STDERR_FILENO, "\n", 1);
+	char	*str;
+
+	str = ft_strdup(PROMPT": syntax error near unexpected token `");
+	ft_add_str(&str, token);
+	ft_add_str(&str, "\'\n");
+	ft_putstr_fd(str, STDERR_FILENO);
+	return (1);
 }
 
 //Prints out error and exits

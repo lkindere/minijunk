@@ -6,19 +6,17 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 20:23:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 21:54:10 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "exec.h"
+#include "main.h"
 
 void	init_flags(t_flags *flags)
 {
 	flags->single_quote = 0;
 	flags->double_quote = 0;
 }
-
 
 //Retrieves variables from envp
 char	*retrieve_var(char **envp, int index)
@@ -33,10 +31,9 @@ char	*retrieve_var(char **envp, int index)
 		i++;
 	expanded_var = ft_strdup(&envp[index][i]);
 	if (!expanded_var)
-		printf("Malloc fail\n");
+		internal_error_return(ERROR_MALLOC);
 	return (expanded_var);
 }
-
 
 //Checks for variables
 char	*expand_var(char *input, t_data *data, int *dollar_len)
@@ -46,23 +43,23 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 	int		i;
 
 	i = 0;
-	// if (input[i] + 1 == '?' || input[i + 1] == DIGIT)
-	//Edge cases, in case of digit cuts off first digit, prints out the rest
-	while (input[i] && !is_meta(input[i]))
+	if (input[i] == '?')
+	{
+		*dollar_len = 2;
+		return (ft_itoa(data->exit_code));
+	}
+	while (input[i] && input[i] != '$' && !is_meta(input[i]))
 		i++;
 	if (i > 0)
 	{
 		*dollar_len = i + 1;
 		var = ft_substr_append(input, 0, i, '=');
 		if (!var)
-			return (NULL);
+			internal_error_return(ERROR_MALLOC);
 		index = is_set(var, data->envp);
 		free(var);
 		if (index >= 0)
-		{
-			var = retrieve_var(data->envp, index);
-			return (var);
-		}
+			return (retrieve_var(data->envp, index));
 	}
 	return (NULL);
 }
@@ -84,7 +81,8 @@ char	*alloc_meta(char *expansion)
 		i++;
 	}
 	alloc = malloc(i + (meta * 2) + 1);
-	// printf("Allocated for: %d\n", i + (meta * 2) + 1);
+	if (!alloc)
+		internal_error_return(ERROR_MALLOC);
 	return (alloc);
 }
 
@@ -111,7 +109,6 @@ char	*quote_meta(char *expansion)
 			quoted[j++] = expansion[i++];
 	}
 	quoted[j] = 0;
-	// printf("Quoted: %s\n", quoted);
 	return (quoted);
 }
 
@@ -137,21 +134,20 @@ char	*expander(char *input, t_data *data)
 	int		dollar_len;
 	int		i;
 
-	i = 0;
+	i = -1;
 	dollar_len = 0;
 	init_flags(&flags);
-	while (input && input[i])
+	while (input && input[++i])
 	{
 		if (input[i] == '\'' && !flags.double_quote)
 			flags.single_quote = ~flags.single_quote & 1;
 		if (input[i] == '"' && !flags.single_quote)
 			flags.double_quote = ~flags.double_quote & 1;
-		if (input[i] == '$' && input[i + 1] && !flags.double_quote)
+		while (input[i] == '$' && input[i + 1] && !flags.double_quote)
 		{
 			expansion = expand_var(&input[i + 1], data, &dollar_len);
 			input = rewrite_input(input, expansion, &i, &dollar_len);
 		}
-		i++;
 	}
 	if (flags.double_quote || flags.single_quote)
 		printf("Syntax error: unclosed quotes\n");

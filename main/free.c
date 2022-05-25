@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/19 03:15:07 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:40:30 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "main.h"
 
 /*
  *	'free()'s and sets to NULL all members of the 2D array and the array itself.

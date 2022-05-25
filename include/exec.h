@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:07:40 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:37:24 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	**clone_envp(char **envp);
 
 //Builtins
 int		is_valid(char *var);
-int		is_set(char *var, char **envp);
 int		check_builtin_exec(t_data *data, t_cmd *cmd);
 int		check_builtin(t_data *data, t_cmd *cmd);
 int		builtin_echo(char **cmd, int fd);

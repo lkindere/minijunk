@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 18:55:15 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 21:38:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,13 @@ int		parser(t_data *data);
 char	*expander(char *input, t_data *data);
 void	executer(t_data *data, t_cmd *cmd);
 
-
 //Data
 int		init_data(t_data **data, char **envp);
 int		reset_data(t_data *data);
+
+//Env
 char	**clone_envp(char **envp);
+int		is_set(char *var, char **envp);
 
 //Input
 void	get_input(char **full_input, t_data *data);
@@ -189,10 +191,15 @@ void	free_tokens(t_token **tokens);
 void	free_2d_char(char ***cmds);
 
 //Checks
+int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
 
 //Output
 void	ft_putstr_fd(char *str, int fd);
+char	*ft_itoa(int n);
+
+//Misc
+int		is_meta(char c);;
 
 #endif

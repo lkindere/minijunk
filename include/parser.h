@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 18:50:42 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:53:57 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int		ft_add_str(char **str, char *add);
 int		ft_err(t_error err);
 int		ft_syntax_err(char *token);
 int		ft_blank_err_near(char *blank, char *token);
-
-
-int		is_meta(char c);
 
 /*	token utils					*/
 

@@ -6,13 +6,13 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 13:20:27 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:43:14 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	check_invalid_words(t_data *data)
+int	check_invalid_words_amp(t_data *data)
 {
 	t_token	*temp;
 
@@ -44,11 +44,12 @@ int	check_content_between_par(t_data *data)
 		next = curr->next;
 		if ((curr->type == PAR_OPEN || curr->type == LOG_AND
 			|| curr->type == LOG_OR) && (next->type == LOG_AND
-			|| next->type == LOG_OR || next->type == PAR_CLOSE))
+			|| next->type == LOG_OR || next->type == PAR_CLOSE)
+			|| next->type == PIPE)
 			return (blank_err(data, "syntax", next->content));
 		if (curr->type == PAR_CLOSE && (next->type != PAR_CLOSE
 			&& next->type != LOG_AND && next->type != LOG_OR
-			&& next->type != END))
+			&& next->type != END && next->type != PIPE))
 			return (blank_err(data, "syntax", next->content));
 		curr = curr->next;
 	}
@@ -151,7 +152,9 @@ int	check_input_each_cmd(t_data *data)
 				return (blank_err(data, "syntax", temp->content));
 			has_input = 0;
 		}
-		else if (temp->type != PIPE)
+		else if (temp->type != PIPE && temp->type != LOG_AND
+				&& temp->type != LOG_OR && temp->type != PAR_OPEN
+				&& temp->type != PAR_CLOSE)
 			has_input = 1;
 		temp = temp->next;
 	}
@@ -160,7 +163,7 @@ int	check_input_each_cmd(t_data *data)
 
 int	parser(t_data *data)
 {
-	if (check_invalid_words(data) != 0)
+	if (check_invalid_words_amp(data) != 0)
 		return (1);
 	if (comb_redirs(data) != 0)
 		return (2);

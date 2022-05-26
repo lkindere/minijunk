@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 11:27:21 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:32:05 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_type	single_type(t_data *data, int *i)
 		return (PAR_OPEN);
 	else if (data->input[*i] == ')')
 		return (PAR_CLOSE);
+	else if (data->input[*i] == '&')
+		return (AMPERSAND);
 	else
 		return (WORD);
 }
@@ -115,6 +117,8 @@ void	get_content(t_data *data, t_token *token, int *i)
 		token->content = ft_strdup("&&");
 	else if (token->type == LOG_OR)
 		token->content = ft_strdup("||");
+	else if (token->type == AMPERSAND)
+		token->content = ft_strdup("&");
 	else
 		copy_word(data, token, i);
 }

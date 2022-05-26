@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 22:09:02 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 14:29:25 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ int	the_loop(char **input, char **segment, t_data *data)
 	return (0);
 }
 
+// int	syntax_check(t_data *data, char **full_input)
+// {
+// 	data->input = *full_input;
+
+// 	data->input = NULL;
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*full_input;
@@ -90,6 +97,8 @@ int	main(int argc, char **argv, char **envp)
 	while (argc || argv)
 	{
 		get_input(&full_input, data);
+		// if (syntax_check(data, &full_input) != 0)
+		// 	continue ;
 		while (is_input(full_input, segment))
 			the_loop(&full_input, &segment, data);
 	}

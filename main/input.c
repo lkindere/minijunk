@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:43 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 22:09:22 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:42:46 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	get_input(char **full_input, t_data *data)
 		return ;
 	if (!*full_input)
 		*full_input = readline("MiniJunk XD: ");
-	if (!*full_input)
-		builtin_exit(NULL, NULL);
+	// if (!*full_input)
+	// 	builtin_exit(NULL, NULL);
 	if (*full_input && (*full_input)[0])
 		add_history(*full_input);
 	if (input_is_empty(*full_input))

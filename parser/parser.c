@@ -3,14 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:14:37 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:15:56 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	check_invalid_words(t_data *data)
+{
+	t_token	*temp;
+
+	temp = data->tokens;
+	while (temp)
+	{
+		if (temp->type == AMPERSAND)
+			return (ft_blank_err_near(data, "Unhandled", "&"));
+		temp = temp->next;
+	}
+	return (0);
+}
+
+/*
+ *	Throws an error in case parentheses are used wrongly.
+ *	This includes not allowing "&&", "||" and ")" directly after 
+ *	"(", "&&" and "||".
+ *	Also, after ")", there must be either another ")", "&&", "||" or
+ *	end of input.
+ */
+int	check_content_between_par(t_data *data)
+{
+	t_token	*curr;
+	t_token	*next;
+
+	curr = data->tokens;
+	while (curr)
+	{
+		next = curr->next;
+		if ((curr->type == PAR_OPEN || curr->type == LOG_AND
+			|| curr->type == LOG_OR) && (next->type == LOG_AND
+			|| next->type == LOG_OR || next->type == PAR_CLOSE))
+			return (ft_blank_err_near(data, "syntax", next->content));
+		if (curr->type == PAR_CLOSE && (next->type != PAR_CLOSE
+			&& next->type != LOG_AND && next->type != LOG_OR
+			&& next->type != END))
+			return (ft_blank_err_near(data, "syntax", next->content));
+		curr = curr->next;
+	}
+	return (0);
+}
+
+int	check_even_par_count(t_data *data)
+{
+	int	par_count;
+	t_token	*temp;
+
+	par_count = 0;
+	temp = data->tokens;
+	while (temp)
+	{
+		if (par_count < 0)
+			return (ft_blank_err(data, "unopened parenthesis closed syntax"));
+		if (temp->type == PAR_OPEN)
+			par_count++;
+		else if (temp->type == PAR_CLOSE)
+			par_count--;
+		temp = temp->next;
+	}
+	if (par_count == 0)
+		return (0);
+	else
+		return (ft_blank_err(data, "unclosed parenthesis syntax"));
+}
 
 int	copy_redir(t_token *token)
 {
@@ -34,7 +100,7 @@ int	comb_redirs(t_data *data)
 	while (temp)
 	{
 		if (is_redir(temp->type) && temp->next && temp->next->type != WORD)
-			return (ft_syntax_err(temp->next->content));
+			return (ft_blank_err_near(data, "syntax", temp->next->content));
 		else if (is_redir(temp->type) && temp->next && temp->next->type == WORD)
 		{
 			if (copy_redir(temp) != 0)
@@ -82,7 +148,7 @@ int	check_input_each_cmd(t_data *data)
 		if (temp->type == PIPE || temp->type == END)
 		{
 			if (has_input == 0)
-				return (ft_syntax_err(temp->content));
+				return (ft_blank_err_near(data, "syntax", temp->content));
 			has_input = 0;
 		}
 		else if (temp->type != PIPE)
@@ -94,13 +160,19 @@ int	check_input_each_cmd(t_data *data)
 
 int	parser(t_data *data)
 {
-	if (comb_redirs(data) != 0)
+	if (check_invalid_words(data) != 0)
 		return (1);
+	if (comb_redirs(data) != 0)
+		return (2);
 	remove_double_end(data);
 	if (check_input_each_cmd(data) != 0)
-		return (2);
-	if (create_cmd_args(data) != 0)
 		return (3);
+	if (check_even_par_count(data) != 0)
+		return (4);
+	if (check_content_between_par(data) != 0)
+		return (5);
+	if (create_cmd_args(data) != 0)
+		return (6);
 	save_redirs_in_cmds(data);
 	return (0);
 }

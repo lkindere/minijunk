@@ -6,11 +6,29 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/19 22:31:51 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 11:27:21 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_type	single_type(t_data *data, int *i)
+{
+	if (data->input[*i] == '|')
+		return (PIPE);
+	else if (data->input[*i] == '<')
+		return (IN);
+	else if (data->input[*i] == '>')
+		return (OUT);
+	else if (data->input[*i] == '\0')
+		return (END);
+	else if (data->input[*i] == '(')
+		return (PAR_OPEN);
+	else if (data->input[*i] == ')')
+		return (PAR_CLOSE);
+	else
+		return (WORD);
+}
 
 /*
  *	Skips leading whitespaces and returns type of token.
@@ -21,26 +39,23 @@ t_type	get_type(t_data *data, int *i)
 {
 	while (data->input[*i] == ' ')
 		(*i)++;
-	if (data->input[*i] == '|')
-		return (PIPE);
-	else if (data->input[*i] == '<' && data->input[*i + 1] == '<')
+	if ((data->input[*i] == '<' && data->input[*i + 1] == '<')
+			|| (data->input[*i] == '>' && data->input[*i + 1] == '>')
+			|| (data->input[*i] == '&' && data->input[*i + 1] == '&')
+			|| (data->input[*i] == '|' && data->input[*i + 1] == '|'))
 	{
 		(*i)++;
-		return (HEREDOC);
+		if (data->input[*i - 1] == '<' && data->input[*i] == '<')
+			return (HEREDOC);
+		else if (data->input[*i - 1] == '>' && data->input[*i] == '>')
+			return (APPEND);
+		else if (data->input[*i - 1] == '&' && data->input[*i] == '&')
+			return (LOG_AND);
+		else
+			return (LOG_OR);
 	}
-	else if (data->input[*i] == '<')
-		return (IN);
-	else if (data->input[*i] == '>' && data->input[*i + 1] == '>')
-	{
-		(*i)++;
-		return (APPEND);
-	}
-	else if (data->input[*i] == '>')
-		return (OUT);
-	else if (data->input[*i] == '\0')
-		return (END);
 	else
-		return (WORD);
+		return (single_type(data, i));
 }
 
 /*
@@ -92,11 +107,16 @@ void	get_content(t_data *data, t_token *token, int *i)
 		token->content = ft_strdup(">>");
 	else if (token->type == END)
 		token->content = ft_strdup("newline");
+	else if (token->type == PAR_OPEN)
+		token->content = ft_strdup("(");
+	else if (token->type == PAR_CLOSE)
+		token->content = ft_strdup(")");
+	else if (token->type == LOG_AND)
+		token->content = ft_strdup("&&");
+	else if (token->type == LOG_OR)
+		token->content = ft_strdup("||");
 	else
-	{
 		copy_word(data, token, i);
-	}
-	// printf("token type is %i\n", token->type);
 }
 
 /*

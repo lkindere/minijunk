@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:53:57 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:09:13 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int		ft_add_str(char **str, char *add);
 
 /*	utils						*/
 int		ft_err(t_error err);
-int		ft_syntax_err(char *token);
-int		ft_blank_err_near(char *blank, char *token);
+int		ft_blank_err_near(t_data *data, char *blank, char *token);
 
 /*	token utils					*/
 

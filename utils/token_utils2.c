@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:12:00 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/20 03:34:36 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:17:09 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,11 @@ void	del_next_token(t_token *token)
 }
 
 /*
- *	Returns 1 if c equals ' ', '|', '<' or '>'
- *	(spacebar, pipe, less than, greater than).
+ *	Returns 1 if c equals ' ', '|', '<', '>', '(', ')'
+ *	(spacebar, pipe, less than, greater than, parenthesis open/close).
  */
 int	is_meta(char c)
 {
-	return (c == ' ' || c == '|' || c == '<' || c == '>');
+		return (c == ' ' || c == '|' || c == '<' || c == '>' || c == '('
+		|| c == ')' || c == '&');
 }

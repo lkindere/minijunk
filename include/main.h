@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:24:24 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:22:42 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef enum e_error
 }	t_error;
 
 //Main
+int		syntax_check(t_data *data, char **full_input);
 int		the_loop(char **input, char **segment, t_data *data);
 int		lexer(t_data *data);
 int		parser(t_data *data);

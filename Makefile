@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/26 19:15:31 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/26 21:34:03 by mmeising         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ MAIN_S := 	main.c 						\
 			free.c 						\
 			input.c 					\
 			signal.c 					\
+			syntax_check.c				\
 
 PARSE_S := 	lexer.c 					\
 			lexer_get_type.c			\

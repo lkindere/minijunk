@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 20:36:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:22:02 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,6 @@ int	the_loop(char **input, char **segment, t_data *data)
 	do_stuff(data);
 	if (data->is_fork && !(*input))
 		exit (data->exit_code);
-	return (0);
-}
-
-static int	syntax_check(t_data *data, char **full_input)
-{
-	data->input = *full_input;
-	if (lexer(data) != 0 || parser(data) != 0)
-	{
-		reset_data(data);
-		data->input = NULL;
-		*full_input = NULL;
-		return (1);
-	}
-	data->input = NULL;
-	reset_data(data);
 	return (0);
 }
 

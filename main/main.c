@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:17:25 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:36:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	pipe_fds(t_data *data)
 int	do_stuff(t_data *data)
 {
 	data->input = expander(data->input, data); //Maybe change to char ** and return error codes
+	if (input_is_empty(data->input))
+		return (reset_data(data));
 	lexer(data);
 	parser(data);
 	do_heredoc(data);
@@ -104,7 +106,8 @@ int	main(int argc, char **argv, char **envp)
 		internal_error_return(ERROR_MALLOC);
 	while (argc || argv)
 	{
-		get_input(&full_input, data);
+		while (!full_input)
+			get_input(&full_input, data);
 		if (syntax_check(data, &full_input) != 0)
 			continue ;
 		while (is_input(full_input, segment))

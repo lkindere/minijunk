@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:12:00 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 18:15:10 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:39:29 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	del_next_token(t_token *token)
  */
 int	is_meta(char c)
 {
+	if (c >= 9 && c <= 13)
+		return (1);
 	return (c == ' ' || c == '|' || c == '<' || c == '>' || c == '('
-		|| c == ')' || c == '&' || c == '\t');
+		|| c == ')' || c == '&');
 }

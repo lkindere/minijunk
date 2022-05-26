@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 13:43:14 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:44:33 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	check_content_between_par(t_data *data)
 		next = curr->next;
 		if ((curr->type == PAR_OPEN || curr->type == LOG_AND
 			|| curr->type == LOG_OR) && (next->type == LOG_AND
-			|| next->type == LOG_OR || next->type == PAR_CLOSE)
-			|| next->type == PIPE)
+			|| next->type == LOG_OR || next->type == PAR_CLOSE
+			|| next->type == PIPE))
 			return (blank_err(data, "syntax", next->content));
 		if (curr->type == PAR_CLOSE && (next->type != PAR_CLOSE
 			&& next->type != LOG_AND && next->type != LOG_OR

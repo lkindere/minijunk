@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 21:38:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:05:14 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef enum e_type
 	PAR_OPEN,
 	PAR_CLOSE,
 	LOG_AND,
-	LOG_OR
+	LOG_OR,
+	AMPERSAND
 }	t_type;
 
 typedef struct s_flags
@@ -158,6 +159,7 @@ int		error_exit(char *cmd, char *arg, int error, int exitcode);
 int		error_return(char *cmd, char *arg, int error, int exitcode);
 int		internal_error_return(t_error error);
 void	internal_error_exit(t_error error);
+int		blank_err(t_data *data, char *blank, char *token);
 
 /*----------UTILS----------*/
 //String compare

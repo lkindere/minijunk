@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 12:09:13 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:22:59 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int		add_char(char **str, char c);
 int		ft_add_str(char **str, char *add);
 
 /*	utils						*/
+
 int		ft_err(t_error err);
-int		ft_blank_err_near(t_data *data, char *blank, char *token);
 
 /*	token utils					*/
 

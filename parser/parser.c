@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 12:15:56 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:20:27 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_invalid_words(t_data *data)
 	while (temp)
 	{
 		if (temp->type == AMPERSAND)
-			return (ft_blank_err_near(data, "Unhandled", "&"));
+			return (blank_err(data, "Unhandled", "&"));
 		temp = temp->next;
 	}
 	return (0);
@@ -45,11 +45,11 @@ int	check_content_between_par(t_data *data)
 		if ((curr->type == PAR_OPEN || curr->type == LOG_AND
 			|| curr->type == LOG_OR) && (next->type == LOG_AND
 			|| next->type == LOG_OR || next->type == PAR_CLOSE))
-			return (ft_blank_err_near(data, "syntax", next->content));
+			return (blank_err(data, "syntax", next->content));
 		if (curr->type == PAR_CLOSE && (next->type != PAR_CLOSE
 			&& next->type != LOG_AND && next->type != LOG_OR
 			&& next->type != END))
-			return (ft_blank_err_near(data, "syntax", next->content));
+			return (blank_err(data, "syntax", next->content));
 		curr = curr->next;
 	}
 	return (0);
@@ -65,7 +65,7 @@ int	check_even_par_count(t_data *data)
 	while (temp)
 	{
 		if (par_count < 0)
-			return (ft_blank_err(data, "unopened parenthesis closed syntax"));
+			return (blank_err(data, "unopened parenthesis closed syntax", NULL));
 		if (temp->type == PAR_OPEN)
 			par_count++;
 		else if (temp->type == PAR_CLOSE)
@@ -75,7 +75,7 @@ int	check_even_par_count(t_data *data)
 	if (par_count == 0)
 		return (0);
 	else
-		return (ft_blank_err(data, "unclosed parenthesis syntax"));
+		return (blank_err(data, "unclosed parenthesis syntax", NULL));
 }
 
 int	copy_redir(t_token *token)
@@ -100,7 +100,7 @@ int	comb_redirs(t_data *data)
 	while (temp)
 	{
 		if (is_redir(temp->type) && temp->next && temp->next->type != WORD)
-			return (ft_blank_err_near(data, "syntax", temp->next->content));
+			return (blank_err(data, "syntax", temp->next->content));
 		else if (is_redir(temp->type) && temp->next && temp->next->type == WORD)
 		{
 			if (copy_redir(temp) != 0)
@@ -148,7 +148,7 @@ int	check_input_each_cmd(t_data *data)
 		if (temp->type == PIPE || temp->type == END)
 		{
 			if (has_input == 0)
-				return (ft_blank_err_near(data, "syntax", temp->content));
+				return (blank_err(data, "syntax", temp->content));
 			has_input = 0;
 		}
 		else if (temp->type != PIPE)

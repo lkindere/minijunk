@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:05:14 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:32:06 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,6 @@ typedef struct s_cmd
 
 typedef enum e_error
 {
-	ALL_FINE,
-	ERR_CATCHALL,
-	MALLOC_FAIL,
 	ERROR_NULL,
 	ERROR_WRITE,
 	ERROR_EXEC,

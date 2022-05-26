@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 18:49:40 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:15:16 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@ int	add_char_ptr(char ***arr)
 	char	**ret;
 	int	i;
 
-	if (*arr == NULL)//no expands array is there, which means we need to create the first string + NULL terminator
+	if (*arr == NULL)
 	{
 		*arr = ft_calloc(2, sizeof(char *));
 		if (*arr == NULL)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	}
 	else
 	{
 		i = 0;
 		while ((*arr)[i])
 			i++;
-		// printf("add_char_ptr's i + 2 is %i\n", i + 2);
-		ret = ft_calloc(i + 2, sizeof(char *));//+ 2 for terminating NULL and new string
+		ret = ft_calloc(i + 2, sizeof(char *));
 		if (ret == NULL)
-			return (internal_error_return(MALLOC_FAIL));
+			return (internal_error_return(ERROR_MALLOC));
 		i = -1;
 		while ((*arr)[++i])
 			ret[i] = (*arr)[i];
@@ -58,15 +57,15 @@ int	init_data(t_data **data, char **envp)
 	(*data) = ft_calloc(1, sizeof(t_data));
 	(*data)->cmds = ft_calloc(1, sizeof(t_cmd));
 	if ((*data)->cmds == NULL)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	if (*data == NULL)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	(*data)->envp = clone_envp(envp);
 	(*data)->pwd = getcwd((*data)->pwd, 0);
 	(*data)->std_in = dup(STDIN_FILENO);
 	(*data)->std_out = dup(STDOUT_FILENO);
 	if (add_char_ptr(&(*data)->expands) != 0)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	(*data)->pipe1[0] = -1;
 	(*data)->pipe1[1] = -1;
 	(*data)->pipe2[0] = -1;
@@ -91,7 +90,7 @@ int	reset_data(t_data *data)
 		free_cmds(&data->cmds);
 	data->cmds = ft_calloc(1, sizeof(t_cmd));
 	if (data->cmds == NULL)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	if (data->tokens)
 		free_tokens(&data->tokens);
 	data->flags.single_quote = 0;
@@ -101,7 +100,7 @@ int	reset_data(t_data *data)
 	if (data->expands)
 		free_2d_char(&data->expands);
 	if (add_char_ptr(&data->expands) != 0)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	data->and_or = 0;
 	return (0);
 }

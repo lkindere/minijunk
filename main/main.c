@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 14:29:25 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:32:33 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 	segment = NULL;
 	signal_handler();
 	if (init_data(&data, envp) != 0)
-		internal_error_return(MALLOC_FAIL);
+		internal_error_return(ERROR_MALLOC);
 	while (argc || argv)
 	{
 		get_input(&full_input, data);

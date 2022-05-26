@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 15:48:44 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:35:22 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	create_cmd_args(t_data *data)
 		}
 		temp = temp->next;
 	}
-	if (cmd->cmd_arg == NULL)//if there was no words (only heredoc in a cmd for example), save empty string
+	if (cmd->cmd_arg == NULL)
 	{
 		add_char_ptr(&cmd->cmd_arg);
 		ft_add_str(&cmd->cmd_arg[0], "\0");

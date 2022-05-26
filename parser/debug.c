@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:52:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 15:52:37 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:12:59 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	debug_print_cmds(t_data *data)
 void	debug_print_expands(t_data *data)
 {
 	char	**temp_exp;
-	int	i;
+	int		i;
 
 	i = 0;
 	temp_exp = data->expands;

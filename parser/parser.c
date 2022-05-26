@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 16:01:06 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:17:05 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	copy_redir(t_token *token)
 	token->content = ft_strdup(token->next->content);
 	if (token->content == NULL)
 		return (internal_error_return(ERROR_MALLOC));
-	// printf("TEST: content inside copy_dir: %s\n", token->content);
 	return (0);
 }
 

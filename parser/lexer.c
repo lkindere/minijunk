@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 15:59:06 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:16:41 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ static void	copy_word(t_data *data, t_token *token, int *i)
 	j = -1;
 	while (++j < token_len)
 	{
-		if (data->input[*i + j] == '\'' && !data->flags.double_quote)// if quote and that flag is on,
-			data->flags.single_quote = 1 - data->flags.single_quote;//just flip it and don't save the quote
+		if (data->input[*i + j] == '\'' && !data->flags.double_quote)
+			data->flags.single_quote = 1 - data->flags.single_quote;
 		else if (data->input[*i + j] == '\"' && !data->flags.single_quote)
 			data->flags.double_quote = 1 - data->flags.double_quote;
-		else if (data->input[*i + j] == '$')//encountered a $ sign:
+		else if (data->input[*i + j] == '$')
 		{
-			if (data->flags.single_quote)//inside single quote, so shouldn't be expanded
-				add_char(&data->expands[data->cmd_count], '0');//testing, set back to 1 and 0 later
+			if (data->flags.single_quote)
+				add_char(&data->expands[data->cmd_count], '0');
 			else//not in single quote, expand
-				add_char(&data->expands[data->cmd_count], '1');//testing, set back to 1 and 0 later
-			add_char(&(token->content), data->input[*i + j]);//add the $ to the content
+				add_char(&data->expands[data->cmd_count], '1');
+			add_char(&(token->content), data->input[*i + j]);
 		}
 		else
-			add_char(&(token->content), data->input[*i + j]);//any other char, just save to content
+			add_char(&(token->content), data->input[*i + j]);
 	}
-	add_char(&(token->content), '\0');//if input is empty like """", it at least creates an empty string.
+	add_char(&(token->content), '\0');
 	*i = *i + token_len - 1;//was it really just this - 1 that fixed it not finding new tokens that begin right after quote end?
 }
 
@@ -93,24 +93,23 @@ static int	new_token(t_data *data, int *i)
 
 	current = create_new_token();
 	if (current == NULL)
-		return (ft_err(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	current->type = get_type(data, i);
 	get_content(data, current, i);
 	if (current->content == NULL)
-		return (ft_err(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	token_add_back(&(data->tokens), current);
 	if (check_if_new_cmd(data))
 	{
 		if (data->expands[data->cmd_count] == NULL)
 			data->expands[data->cmd_count] = ft_strdup("");
 		if (data->expands[data->cmd_count] == NULL)
-			return (ft_err(MALLOC_FAIL));
+			return (internal_error_return(ERROR_MALLOC));
 		data->cmd_count++;
 		data->dollar_count = 0;
 		if (add_char_ptr(&data->expands) != 0)
-			return (MALLOC_FAIL);
+			return (internal_error_return(ERROR_MALLOC));
 	}
-	// printf("type %i\tcontent: %s\tcommand: %i\n", token_last(data->tokens)->type, token_last(data->tokens)->content, data->cmd_count);
 	return (0);
 }
 
@@ -122,9 +121,9 @@ int	lexer(t_data *data)
 	while (data->input[++i])
 	{
 		if (new_token(data, &i) != 0)
-			return (MALLOC_FAIL);
+			return (ERROR_MALLOC);
 	}
 	if (new_token(data, &i) != 0)
-		return (MALLOC_FAIL);
+		return (ERROR_MALLOC);
 	return (0);
 }

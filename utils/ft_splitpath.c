@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:03:47 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/04 20:26:29 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:47:35 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@ static int	word_count(const char *s, char c)
 	while (s[i])
 	{
 		while (s[i] == c && s[i])
-		{
 			i++;
-		}
 		if (s[i] != c && s[i])
 		{
 			count++;
 			while (s[i] != c && s[i])
-			{
 				i++;
-			}
 		}
 	}
 	return (count);
@@ -93,11 +89,9 @@ char	**ft_splitpath(char const *s, char c)
 	char	**splits;
 	int		wcount;
 	int		first;
-	int		i;
 
 	if (!s)
 		return (NULL);
-	i = 0;
 	first = 0;
 	wcount = word_count(s, c);
 	splits = splitter(s, c, &first, &wcount);

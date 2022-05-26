@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:00:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:33:26 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:47:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int	check_invalid_words_amp(t_data *data)
  */
 int	check_input_each_cmd(t_data *data)
 {
-	int		cmds;
 	int		has_input;
 	t_token	*temp;
 
-	cmds = 0;
 	has_input = 0;
 	temp = data->tokens;
 	while (temp)

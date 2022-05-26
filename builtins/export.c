@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:40:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 21:28:06 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:45:09 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 static int	replace_env(char *export, char **envp, int index)
 {
-	int	i;
 	int	equals_index;
 
-	i = 0;
 	equals_index = 0;
 	while (export[equals_index] && export[equals_index] != '=')
 		equals_index++;

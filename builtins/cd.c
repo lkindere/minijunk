@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:12:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 20:51:11 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:44:00 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int	cd_home(char **cmd, t_data *data)
 //cd's into first arg of cd, if no arg cd's to home dir
 int	builtin_cd(char **cmd, t_data *data)
 {
-	int	i;
-
-	i = 0;
 	if (!cmd[1])
 	{
 		if (!data->envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 21:45:37 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:42:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	the_loop(char **input, char **segment, t_data *data)
 	while (true)
 	{
 		if (handle_and_or(segment, &data->and_or) != 0)
-			;
+			{;}
 		if (is_start(*segment))
 			break ;
 		if (splitter(data, input, segment) != 0)
-			;
+			{;}
 		if (is_subshell(segment) == 1)
 		{
 			create_subshells(data, input, segment);

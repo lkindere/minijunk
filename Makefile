@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
+#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/26 15:52:04 by mmeising         ###   ########.fr        #
+#    Updated: 2022/05/26 19:15:31 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ PARSE_S := 	lexer.c 					\
 
 EXPAN_S	:=	expander.c					\
 			wildcards.c					\
-			sort_wildcards.c 			\
+			meta.c 						\
+			e_utils.c 					\
 
 SUB_S :=	fork.c 						\
 			splitter.c 					\

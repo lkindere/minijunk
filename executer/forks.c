@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 15:20:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:28:20 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,6 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 		exit(0);
 }
 
-// void	print_command_data(t_cmd *cmd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	printf("Args: ");
-// 	while (cmd->cmd_arg && cmd->cmd_arg[i])
-// 		printf("%s, ", cmd->cmd_arg[i++]);
-// 	printf("\n");
-// 	printf("In: %d, out: %d\n", cmd->in, cmd->out);
-// 	printf("Pipe prev: %p, pipe next: %p\n", cmd->pipe_prev, cmd->pipe_next);
-// }
-
 //Iterates through cmd if it's not built in, calls the startfork,
 //Once it reaches the final pipe calls finish to wait and get the exit codes
 void	executer(t_data *data, t_cmd *cmd)
@@ -103,10 +90,8 @@ void	executer(t_data *data, t_cmd *cmd)
 	t_cmd	*first_cmd;
 
 	first_cmd = cmd;
-	// printf("Starting exit code: %d, and/or: %d\n", data->exit_code, data->and_or[0]);
 	while (cmd)
 	{
-		// print_command_data(cmd);
 		if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
 		{
 			if (cmd->in == 0 && cmd->out == 0)
@@ -118,5 +103,4 @@ void	executer(t_data *data, t_cmd *cmd)
 		cmd = cmd->pipe_next;
 	}
 	executer_finish(data, first_cmd);
-	// printf("\nQuitting exit code: %d\n", data->exit_code);
 }

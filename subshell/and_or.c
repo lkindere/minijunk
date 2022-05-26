@@ -6,12 +6,11 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:18:16 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:29:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "subshell.h"
-
 
 //Returns first character encountered after spaces
 static int	first_sep(const char *segment)

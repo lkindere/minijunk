@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 10:25:45 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:24:40 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:03:35 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static size_t	ft_strlen(const char *s)
 }
 
 //Substring but appends c at the end
-char	*ft_substr_append(char *s, unsigned int start, size_t len, char c)
+char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c)
 {
 	char			*substr;
 	unsigned int	i;

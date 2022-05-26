@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 21:22:42 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:44:30 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		builtin_exit(t_cmd *cmd, t_data *data);
 
 /*----------ERRORS----------*/
 //Exec
-void	put_error(char *a, char *b, char *c, char *d);
+int		put_error(char *a, char *b, char *c, char *d);
 int		error_exit(char *cmd, char *arg, int error, int exitcode);
 int		error_return(char *cmd, char *arg, int error, int exitcode);
 int		internal_error_return(t_error error);

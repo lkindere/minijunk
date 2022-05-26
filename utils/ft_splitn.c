@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:03:47 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/09 14:06:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:19:25 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,24 +111,3 @@ char	**ft_splitn(char const *s, char c, int n)
 	splits = splitter(&split, &first, &wcount);
 	return (splits);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	char	str[] = "  Potatoes tomatoes abcd  ";
-// 	char	c = ' ';
-// 	int		i;
-
-// 	i = 0;
-// 	printf("%c\n", str[21]);
-// 	char	**split = ft_splitn(str, c, 21);
-// 	if (!split)
-// 	{
-// 		printf("NULL\n");
-// 		return (0);
-// 	}
-// 	while (split[i] != NULL)
-// 		printf("%s\n", split[i++]);
-// 	return (0);
-// }

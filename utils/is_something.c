@@ -6,9 +6,18 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:23:48 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 21:37:46 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:15:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+int	ft_isspace(int c)
+{
+	if (c == ' ')
+		return (1);
+	if (c >= 9 && c <= 13)
+		return (1);
+	return (0);
+}
 
 int	ft_isdigit(int c)
 {

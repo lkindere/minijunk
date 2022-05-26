@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 17:21:10 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:35:16 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void    handle_sigint(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
-	write(2, "MiniJunk XD: ", 13);
+    write(1, "\n", 1);
+    write(1, "MiniJunk XD: ", 13);
 }
 
 void    signal_handler(void)

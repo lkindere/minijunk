@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 19:06:15 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:18:16 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	first_sep(const char *segment)
 	int	i;
 
 	i = 0;
-	while (segment[i] && segment[i] == ' ')
+	while (segment[i] && ft_isspace(segment[i]))
 		i++;
 	if (!is_separator(segment[i]))
 		return ('N');

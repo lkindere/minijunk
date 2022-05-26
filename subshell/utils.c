@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:58:15 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 17:24:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:19:17 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_start(const char *input)
 	i = 0;
 	if (!input)
 		return (0);
-	while (input[i] && input[i] == ' ')
+	while (input[i] && ft_isspace(input[i]))
 		i++;
 	if (input[i] == '(' || input[i] == ')'|| input[i] == '&')
 		return (0);

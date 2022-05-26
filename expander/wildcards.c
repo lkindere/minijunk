@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 10:46:11 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:16:35 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,11 @@ int	check_wildcards(t_data *data, t_cmd *cmd)
 			wildcards = sort_wildcards(wildcards);
 			if (!wildcards)
 				error_return("Wildcards", NULL, 1, 0);
-			printf("Wildcards: %s\n", wildcards[0]);
 			if (add_wildcards(wildcards, cmd, &i) != 0)
 				error_return("Wildcards", NULL, 1, 0);
 		}
 		else
 			i++;
 	}
-	printf("\n\n");
 	return (0);
 }

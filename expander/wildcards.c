@@ -6,13 +6,14 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 19:53:19 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 10:46:11 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "expander.h"
 
 //Frees the input in check_match
+//Returns 1
 int	free_input(char **input)
 {
 	int	i;
@@ -27,20 +28,25 @@ int	free_input(char **input)
 }
 
 //Fix ./*	not returning anything
+//Returns -1 on errors
+//Returns 0 on no match
+//Returns 1 on match
 int	check_match(char *name, char *cmd)
 {
 	int		i;
 	int		last_index;
 	char	**input;
 
-	i = 0;
+	i = -1;
 	last_index = 0;
 	input = ft_split(cmd, '*');
 	if (!input)
 		return (-1);
-	if ((!ft_strcmp(name, ".") || !ft_strcmp(name, "..")) && free_input(input))
+	if ((!ft_strncmp(name, ".", 1)) && free_input(input))
 		return (0);
-	while (input[i])
+	if (!ft_strcmp(cmd, "./*"))
+		return (1);
+	while (input[++i])
 	{
 		if (cmd[0] != '*' && cmd[0] != name[0] && free_input(input))
 			return (0);
@@ -49,7 +55,6 @@ int	check_match(char *name, char *cmd)
 		if (ft_stristr(name, input[i]) < last_index && free_input(input))
 			return (0);
 		last_index = ft_stristr(name, input[i]);
-		i++;
 	}
 	free_input(input);
 	return (1);
@@ -122,13 +127,16 @@ int	check_wildcards(t_data *data, t_cmd *cmd)
 		if (ft_strchr(cmd->cmd_arg[i], '*'))
 		{
 			wildcards = get_wildcards(data, cmd->cmd_arg[i]);
+			wildcards = sort_wildcards(wildcards);
 			if (!wildcards)
 				error_return("Wildcards", NULL, 1, 0);
+			printf("Wildcards: %s\n", wildcards[0]);
 			if (add_wildcards(wildcards, cmd, &i) != 0)
 				error_return("Wildcards", NULL, 1, 0);
 		}
 		else
 			i++;
 	}
+	printf("\n\n");
 	return (0);
 }

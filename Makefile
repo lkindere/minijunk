@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/25 21:19:17 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/26 10:39:04 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ PARSE_S := 	lexer.c 					\
 
 EXPAN_S	:=	expander.c					\
 			wildcards.c					\
+			sort_wildcards.c 			\
 
 SUB_S :=	fork.c 						\
 			splitter.c 					\

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 21:32:47 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:30:42 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 	}
 	if (cmd->pid != 0)
 	{	
-		if (cmd->pipe_prev && close(cmd->in) == -1)
+		if (cmd->pipe_prev && cmd->in != 0 && close(cmd->in) == -1)
 			internal_error_exit(ERROR_CLOSE);
-		if (cmd->pipe_next && close(cmd->out) == -1)
+		if (cmd->pipe_next && cmd->out != 1 && close(cmd->out) == -1)
 			internal_error_exit(ERROR_CLOSE);
 	}
 	if (cmd->pid == 0)
@@ -94,8 +94,6 @@ void	executer(t_data *data, t_cmd *cmd)
 	{
 		if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
 		{
-			if (cmd->in == 0 && cmd->out == 0)
-				cmd->out = 1;
 			check_wildcards(data, cmd);
 			if (check_builtin(data, cmd) == -1)
 				executer_startfork(data, cmd);

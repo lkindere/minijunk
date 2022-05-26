@@ -1,4 +1,3 @@
-/bin/echo $test
 export test=42 | echo 99
 /bin/echo $test
 

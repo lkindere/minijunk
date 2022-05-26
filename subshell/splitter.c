@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 17:18:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:34:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	should_split(char *input, t_flag flag, int i)
 	}
 	if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 	{
-		while (input[i] && !splitter_separator(input[i], flag))
+		while (input[i] && !split_separator(input[i], flag))
 		{
 			set_flag(input[i], &flag);
 			if (input[i++] == '(' && !is_quoted(flag))
@@ -88,10 +88,10 @@ static int	get_index(t_data *data, char **input)
 	while ((*input)[++i])
 	{
 		set_flag((*input)[i], &flag);
-		if (splitter_separator((*input)[i], flag) && should_split(*input, flag, i))
+		if (split_separator((*input)[i], flag) && should_split(*input, flag, i))
 		{
 			if ((*input)[i] == '|' && (*input)[i + 1] != '|')
-        		if (handle_pipe(data, input, i) == 1)
+				if (handle_pipe(data, input, i) == 1)
 					return (-1);
 			return (i);
 		}
@@ -120,9 +120,9 @@ static int	split_input(char **input, char **segment, int end)
 //Splits the input into segments
 //Returns 1 on errors
 //Returns 0 on success
-int splitter(t_data *data, char **input, char **segment)
+int	splitter(t_data *data, char **input, char **segment)
 {
-	int end;
+	int	end;
 
 	if (!(*input))
 		return (0);

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 17:54:58 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:24:24 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //Will contain universal includes/defines
 //And utils that are usable in all parts of the code
 
-#ifndef MAIN_HPP
-# define MAIN_HPP
+#ifndef MAIN_H
+# define MAIN_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -63,7 +63,7 @@ typedef enum e_type
 
 typedef struct s_flags
 {
-	int single_quote;
+	int	single_quote;
 	int	double_quote;
 }	t_flags;
 
@@ -84,7 +84,7 @@ typedef struct s_data
 	t_flags			flags;
 	int				cmd_count;
 	int				dollar_count;
-	char			**expands;//expands[cmd][dollar] == 1 if that dollar expands, 0 if not
+	char			**expands;
 	int				exit_code;
 	int				std_in;
 	int				std_out;
@@ -92,7 +92,7 @@ typedef struct s_data
 	int				and_or;
 	int				pipe1[2];
 	int				pipe2[2];
-	struct s_data*	next;
+	struct s_data	*next;
 }	t_data;
 
 typedef struct s_cmd
@@ -105,7 +105,7 @@ typedef struct s_cmd
 	int				pid;
 	struct s_cmd	*pipe_prev;
 	struct s_cmd	*pipe_next;
-}	t_cmd; 
+}	t_cmd;
 
 typedef enum e_error
 {
@@ -143,11 +143,11 @@ int		input_is_empty(char	*input);
 int		is_input(char *full_input, char *segment);
 
 //Signal
-void    signal_handler(void);
+void	signal_handler(void);
 
 //Exit
 int		get_exitstatus(int pid);
-int     builtin_exit(t_cmd *cmd, t_data *data);
+int		builtin_exit(t_cmd *cmd, t_data *data);
 
 /*----------ERRORS----------*/
 //Exec
@@ -174,8 +174,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char	*ft_strionjoin(char *s1, char *s2, int n, int *index);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_substr_append(char const *s, unsigned int start, size_t len, char c);
-void    ft_find_replace(char *str, int c, int r, int d);
+char	*ft_substr_append(char *s, unsigned int start, size_t len, char c);
+void	ft_find_replace(char *str, int c, int r, int d);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 //Array
@@ -200,6 +200,6 @@ void	ft_putstr_fd(char *str, int fd);
 char	*ft_itoa(int n);
 
 //Misc
-int		is_meta(char c);;
+int		is_meta(char c);
 
 #endif

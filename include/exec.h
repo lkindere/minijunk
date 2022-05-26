@@ -6,14 +6,14 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:37:24 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:21:08 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-#include "main.h"
+# include "main.h"
 
 //Exec
 void	dup_and_exec(t_cmd *cmd, char **envp);

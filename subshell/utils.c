@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:58:15 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:19:17 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:30:58 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 int	is_start(const char *input)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!input)
 		return (0);
 	while (input[i] && ft_isspace(input[i]))
 		i++;
-	if (input[i] == '(' || input[i] == ')'|| input[i] == '&')
+	if (input[i] == '(' || input[i] == ')' || input[i] == '&')
 		return (0);
 	if (input[i] == '|' && input[i + 1] == '|')
 		return (0);
@@ -30,7 +30,7 @@ int	is_start(const char *input)
 }
 
 //Inits flags to 0
-void    init_flag(t_flag *flag)
+void	init_flag(t_flag *flag)
 {
 	flag->p_open = 0;
 	flag->p_close = 0;
@@ -39,22 +39,22 @@ void    init_flag(t_flag *flag)
 }
 
 //Checks if quoted
-int is_quoted(t_flag flag)
+int	is_quoted(t_flag flag)
 {
 	if (flag.s_quote == 1)
 		return (1);
 	if (flag.d_quote == 1)
 		return (1);
 	return (0);
-	}
+}
 
 //Increments parenthesis when encountered
 //If not quoted sets quote to 1
 //If quoted, resets quote to 0
 void	set_flag(int c, t_flag *flag)
 {
-    if (!is_quoted(*flag))
-    {
+	if (!is_quoted(*flag))
+	{
 		if (c == '(')
 			flag->p_open++;
 		else if (c == ')')
@@ -64,7 +64,7 @@ void	set_flag(int c, t_flag *flag)
 		else if (c == '"')
 			flag->d_quote = 1;
 		return ;
-    }
+	}
 	if (c == '\'')
 		flag->s_quote = 0;
 	else if (c == '"')

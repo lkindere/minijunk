@@ -6,14 +6,14 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:35:30 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:59:33 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "main.h"
+# include "main.h"
 
 int		create_cmd_args(t_data *data);
 void	save_redirs_in_cmds(t_data *data);
@@ -29,18 +29,12 @@ int		ft_add_str(char **str, char *add);
 t_type	get_type(t_data *data, int *i);
 
 /*	parser						*/
-
-int	check_invalid_words_amp(t_data *data);
-int	check_content_between_par(t_data *data);
-int	check_even_par_count(t_data *data);
-int	check_input_each_cmd(t_data *data);
-
-/*	utils						*/
-
-int		ft_err(t_error err);
+int		check_invalid_words_amp(t_data *data);
+int		check_content_between_par(t_data *data);
+int		check_even_par_count(t_data *data);
+int		check_input_each_cmd(t_data *data);
 
 /*	token utils					*/
-
 int		is_end_of_token(t_data *data, char c);
 t_token	*create_new_token(void);
 t_token	*token_last(t_token *token);

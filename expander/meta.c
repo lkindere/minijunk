@@ -6,12 +6,13 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:21:06 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:17:59 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:08:46 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
+//Allocates extra for every quote of meta characters
 static char	*alloc_meta(char *expansion)
 {
 	char	*alloc;
@@ -34,6 +35,7 @@ static char	*alloc_meta(char *expansion)
 	return (alloc);
 }
 
+//Quotes every meta character with single quotes and returns the string
 char	*quote_meta(char *expansion)
 {
 	char	*quoted;
@@ -53,10 +55,9 @@ char	*quote_meta(char *expansion)
 			quoted[j++] = expansion[i++];
 			quoted[j++] = '\'';
 		}
-		else 
+		else
 			quoted[j++] = expansion[i++];
 	}
 	quoted[j] = 0;
 	return (quoted);
 }
-

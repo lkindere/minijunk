@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/26 10:39:04 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/26 15:52:04 by mmeising         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,15 @@ MAIN_S := 	main.c 						\
 			signal.c 					\
 
 PARSE_S := 	lexer.c 					\
+			lexer_get_type.c			\
 			parser.c 					\
+			parser_checks.c				\
 			heredoc.c					\
 			in_out_std.c				\
 			expands_utils.c 			\
 			create_cmd_args.c 			\
 			save_redirs_in_cmds.c		\
+			debug.c						\
 
 EXPAN_S	:=	expander.c					\
 			wildcards.c					\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:54:56 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:16:35 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:14:48 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	found_heredoc(t_cmd *cmd, t_token *token)
 		return (internal_error_return(ERROR_CLOSE));
 	if (pipe(fd) != 0)
 		return (internal_error_return(ERROR_PIPE));
-	while (ft_strcmp_x(input, token->content, ft_strlen(token->content)) != 0)//compares input with EOF from heredoc.
+	while (ft_strcmp_x(input, token->content, ft_strlen(token->content)) != 0)
 	{
 		input = readline("> ");
 		if (!input)
@@ -34,7 +34,7 @@ int	found_heredoc(t_cmd *cmd, t_token *token)
 		if (ft_add_str(&str, "\n") != 0)
 			return (internal_error_return(ERROR_MALLOC));
 	}
-	write(fd[1], str, ft_strlen(str) - ft_strlen(token->content) - 1);//-1 for the last "\n" after the EOF.
+	write(fd[1], str, ft_strlen(str) - ft_strlen(token->content) - 1);
 	if (close(fd[1]) != 0)
 		return (internal_error_return(ERROR_CLOSE));
 	cmd->in = fd[0];

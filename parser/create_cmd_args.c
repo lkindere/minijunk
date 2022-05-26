@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:15:01 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:35:22 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  *	ft_strdup.
  *	in and out fds are set to -1 to show they are not yet set.
  */
-int	create_new_cmd(t_cmd **cmd)
+static int	create_new_cmd(t_cmd **cmd)
 {
 	t_cmd	*new_cmd;
 
@@ -74,7 +74,7 @@ int	create_cmd_args(t_data *data)
 		}
 		temp = temp->next;
 	}
-	if (cmd->cmd_arg == NULL)//if there was no words (only heredoc in a cmd for example), save empty string
+	if (cmd->cmd_arg == NULL)
 	{
 		add_char_ptr(&cmd->cmd_arg);
 		ft_add_str(&cmd->cmd_arg[0], "\0");

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:12:00 by mmeising          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/05/26 17:42:16 by mmeising         ###   ########.fr       */
+=======
 /*   Updated: 2022/05/26 13:20:10 by lkindere         ###   ########.fr       */
+>>>>>>> b6d4d548aecc0c9a038ff2209cfe83e0e8e25fbe
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +89,11 @@ void	del_next_token(t_token *token)
 }
 
 /*
- *	Returns 1 if c equals ' ', '|', '<' or '>'
- *	(spacebar, pipe, less than, greater than).
+ *	Returns 1 if c equals ' ', '|', '<', '>', '(', ')'
+ *	(spacebar, pipe, less than, greater than, parenthesis open/close).
  */
 int	is_meta(char c)
 {
-	if (ft_isspace(c))
-		return (1);
-	return (c == '|' || c == '<' || c == '>');
+	return (c == ' ' || c == '|' || c == '<' || c == '>' || c == '('
+		|| c == ')' || c == '&' || (c >= 9 && c <= 13));
 }

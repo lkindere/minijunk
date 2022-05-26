@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 17:28:06 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:02:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@ int	add_char_ptr(char ***arr)
 	char	**ret;
 	int	i;
 
-	if (*arr == NULL)//no expands array is there, which means we need to create the first string + NULL terminator
+	if (*arr == NULL)
 	{
 		*arr = ft_calloc(2, sizeof(char *));
 		if (*arr == NULL)
-		return (internal_error_return(MALLOC_FAIL));
+		return (internal_error_return(ERROR_MALLOC));
 	}
 	else
 	{
 		i = 0;
 		while ((*arr)[i])
 			i++;
-		// printf("add_char_ptr's i + 2 is %i\n", i + 2);
-		ret = ft_calloc(i + 2, sizeof(char *));//+ 2 for terminating NULL and new string
+		ret = ft_calloc(i + 2, sizeof(char *));
 		if (ret == NULL)
-			return (internal_error_return(MALLOC_FAIL));
+			return (internal_error_return(ERROR_MALLOC));
 		i = -1;
 		while ((*arr)[++i])
 			ret[i] = (*arr)[i];
@@ -121,6 +120,7 @@ int	reset_data(t_data *data)
 	data->flags.double_quote = 0;
 	data->cmd_count = 0;
 	data->dollar_count = 0;
-	data->and_or = 0;
-	return (0);
-}
+	if (data->expands)
+		free_2d_char(&data->expands);
+	if (add_char_ptr(&data->expands) != 0)
+		return (internal_error_return(ERROR_MALLOC));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:14:37 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:17:05 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	copy_redir(t_token *token)
 	token->content = ft_strdup(token->next->content);
 	if (token->content == NULL)
 		return (internal_error_return(ERROR_MALLOC));
-	// printf("TEST: content inside copy_dir: %s\n", token->content);
 	return (0);
 }
 
@@ -26,7 +25,7 @@ int	copy_redir(t_token *token)
  *	Groups any redirection type tokens with the next WORD token into one.
  *	If there is no WORD after a redirection type token, throws an error.
  */
-int	comb_redirs(t_data *data)
+static int	comb_redirs(t_data *data)
 {
 	t_token	*temp;
 
@@ -34,7 +33,7 @@ int	comb_redirs(t_data *data)
 	while (temp)
 	{
 		if (is_redir(temp->type) && temp->next && temp->next->type != WORD)
-			return (ft_syntax_err(temp->next->content));
+			return (blank_err(data, "syntax", temp->next->content));
 		else if (is_redir(temp->type) && temp->next && temp->next->type == WORD)
 		{
 			if (copy_redir(temp) != 0)
@@ -50,7 +49,7 @@ int	comb_redirs(t_data *data)
  *	If there are two END tokens (happens when there are spaces at end of input),
  *	removes the second one.
  */
-void	remove_double_end(t_data *data)
+static void	remove_double_end(t_data *data)
 {
 	t_token	*temp;
 
@@ -63,44 +62,21 @@ void	remove_double_end(t_data *data)
 	}
 }
 
-/*
- *	Checks the token list to see if every command has at least one token before
- *	next command starts or input ends.
- *	If not, throws an error and returns with != 0.
- */
-int	check_input_each_cmd(t_data *data)
-{
-	int	cmds;
-	int	has_input;
-	t_token	*temp;
-
-	cmds = 0;
-	has_input = 0;
-	temp = data->tokens;
-	while (temp)
-	{
-		if (temp->type == PIPE || temp->type == END)
-		{
-			if (has_input == 0)
-				return (ft_syntax_err(temp->content));
-			has_input = 0;
-		}
-		else if (temp->type != PIPE)
-			has_input = 1;
-		temp = temp->next;
-	}
-	return (0);
-}
-
 int	parser(t_data *data)
 {
-	if (comb_redirs(data) != 0)
+	if (check_invalid_words_amp(data) != 0)
 		return (1);
+	if (comb_redirs(data) != 0)
+		return (2);
 	remove_double_end(data);
 	if (check_input_each_cmd(data) != 0)
-		return (2);
-	if (create_cmd_args(data) != 0)
 		return (3);
+	if (check_even_par_count(data) != 0)
+		return (4);
+	if (check_content_between_par(data) != 0)
+		return (5);
+	if (create_cmd_args(data) != 0)
+		return (6);
 	save_redirs_in_cmds(data);
 	return (0);
 }

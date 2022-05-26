@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:53:57 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:26:10 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,20 @@ int		add_char_ptr(char ***arr);
 int		add_char(char **str, char c);
 int		ft_add_str(char **str, char *add);
 
+/*	lexer						*/
+
+t_type	get_type(t_data *data, int *i);
+
+/*	parser						*/
+
+int	check_invalid_words_amp(t_data *data);
+int	check_content_between_par(t_data *data);
+int	check_even_par_count(t_data *data);
+int	check_input_each_cmd(t_data *data);
+
 /*	utils						*/
+
 int		ft_err(t_error err);
-int		ft_syntax_err(char *token);
-int		ft_blank_err_near(char *blank, char *token);
 
 /*	token utils					*/
 

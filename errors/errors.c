@@ -3,25 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:49:51 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 20:04:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:20:25 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	ft_add_str(char **str, char *add);
-
-int	ft_syntax_err(char *token)
+/*
+ *	Prints error message to STDERR.
+ *	If token is set, prints:
+ *	<prompt>: <blank> error near unexpected token `<token'
+ *	If token is NULL, prints:
+ *	<prompt>: <blank> error
+ */
+int	blank_err(t_data *data, char *blank, char *token)
 {
-	char	*str;
-
-	str = ft_strdup(PROMPT": syntax error near unexpected token `");
-	ft_add_str(&str, token);
-	ft_add_str(&str, "\'\n");
-	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(PROMPT": ", STDERR_FILENO);
+	ft_putstr_fd(blank, STDERR_FILENO);
+	if (token)
+	{
+		ft_putstr_fd(" error near unexpected token `", STDERR_FILENO);
+		ft_putstr_fd(token, STDERR_FILENO);
+	}
+	else
+	{
+		ft_putstr_fd(" error", STDERR_FILENO);
+	}
+	ft_putstr_fd("\'\n", STDERR_FILENO);
+	data->exit_code = 258;
 	return (1);
 }
 

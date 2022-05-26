@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:59:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:26:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:33:56 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		can_execute(int and_or, int exit_code);
 
 //Utils sep
 int		is_separator(int c);
-int		splitter_separator(int c, t_flag flag);
+int		split_separator(int c, t_flag flag);
 int		remove_separator(char **segment, int i);
 int		input_is_empty(char	*input);
 

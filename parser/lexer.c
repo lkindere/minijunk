@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/19 22:31:51 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:18:46 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  */
 t_type	get_type(t_data *data, int *i)
 {
-	while (data->input[*i] == ' ')
+	while (ft_isspace(data->input[*i]))
 		(*i)++;
 	if (data->input[*i] == '|')
 		return (PIPE);

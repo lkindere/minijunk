@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 21:54:10 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:17:14 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*quote_meta(char *expansion)
 		return (NULL);
 	while (expansion && expansion[i])
 	{
-		if (is_meta(expansion[i]) && expansion[i] != ' ')
+		if (is_meta(expansion[i]) && !ft_isspace(expansion[i]))
 		{
 			quoted[j++] = '\'';
 			quoted[j++] = expansion[i++];

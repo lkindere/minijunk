@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:12:00 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/20 03:34:36 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:20:10 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ void	del_next_token(t_token *token)
  */
 int	is_meta(char c)
 {
-	return (c == ' ' || c == '|' || c == '<' || c == '>');
+	if (ft_isspace(c))
+		return (1);
+	return (c == '|' || c == '<' || c == '>');
 }

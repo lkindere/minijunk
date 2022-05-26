@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:31:28 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:34:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	should_split(char *input, t_flag flag, int i)
 	}
 	if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 	{
-		while (input[i] && !splitter_separator(input[i], flag))
+		while (input[i] && !split_separator(input[i], flag))
 		{
 			set_flag(input[i], &flag);
 			if (input[i++] == '(' && !is_quoted(flag))

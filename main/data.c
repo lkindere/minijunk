@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 15:03:40 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:28:06 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,25 @@ int	add_char_ptr(char ***arr)
 	return (0);
 }
 
+//Allocates memory for init data
+//Exits on error
+int	alloc_data(t_data **data, char **envp)
+{
+	(*data) = ft_calloc(1, sizeof(t_data));
+	if (!(*data))
+		internal_error_exit(MALLOC_FAIL);
+	(*data)->cmds = ft_calloc(1, sizeof(t_cmd));
+	if ((*data)->cmds == NULL)
+		internal_error_exit(MALLOC_FAIL);
+	if (add_char_ptr(&(*data)->expands) != 0)
+		internal_error_exit(MALLOC_FAIL);
+	(*data)->pwd = getcwd((*data)->pwd, 0);
+	if (!(*data)->pwd)
+		internal_error_exit(MALLOC_FAIL);
+	(*data)->envp = clone_envp(envp);
+	return (0);
+}
+
 /*
  *	Initializes data.
  *	Calloc's data struct, saves envp inside.
@@ -55,18 +74,11 @@ int	add_char_ptr(char ***arr)
  */
 int	init_data(t_data **data, char **envp)
 {
-	(*data) = ft_calloc(1, sizeof(t_data));
-	(*data)->cmds = ft_calloc(1, sizeof(t_cmd));
-	if ((*data)->cmds == NULL)
-		return (internal_error_return(MALLOC_FAIL));
-	if (*data == NULL)
-		return (internal_error_return(MALLOC_FAIL));
-	(*data)->envp = clone_envp(envp);
-	(*data)->pwd = getcwd((*data)->pwd, 0);
+	alloc_data(data, envp);
 	(*data)->std_in = dup(STDIN_FILENO);
 	(*data)->std_out = dup(STDOUT_FILENO);
-	if (add_char_ptr(&(*data)->expands) != 0)
-		return (internal_error_return(MALLOC_FAIL));
+	(*data)->cmds->in = -2;
+	(*data)->cmds->out = -2;
 	(*data)->pipe1[0] = -1;
 	(*data)->pipe1[1] = -1;
 	(*data)->pipe2[0] = -1;
@@ -76,11 +88,7 @@ int	init_data(t_data **data, char **envp)
 }
 
 
-/*
- *	Resets the data that needs to be cleaned for every time we get new input.
- *	Includes resetting stdin and stdout from the backup saved in data.
- */
-int	reset_data(t_data *data)
+void	reset_mem(t_data *data)
 {
 	if (data->input)
 	{
@@ -89,19 +97,30 @@ int	reset_data(t_data *data)
 	}
 	if (data->cmds)
 		free_cmds(&data->cmds);
-	data->cmds = ft_calloc(1, sizeof(t_cmd));
-	if (data->cmds == NULL)
-		return (internal_error_return(MALLOC_FAIL));
 	if (data->tokens)
 		free_tokens(&data->tokens);
+	if (data->expands)
+		free_2d_char(&data->expands);
+	data->cmds = ft_calloc(1, sizeof(t_cmd));
+	if (data->cmds == NULL)
+		internal_error_exit(MALLOC_FAIL);
+	if (add_char_ptr(&data->expands) != 0)
+		internal_error_exit(MALLOC_FAIL);
+}
+
+/*
+ *	Resets the data that needs to be cleaned for every time we get new input.
+ *	Includes resetting stdin and stdout from the backup saved in data.
+ */
+int	reset_data(t_data *data)
+{
+	reset_mem(data);
+	data->cmds->in = -2;
+	data->cmds->out = -2;
 	data->flags.single_quote = 0;
 	data->flags.double_quote = 0;
 	data->cmd_count = 0;
 	data->dollar_count = 0;
-	if (data->expands)
-		free_2d_char(&data->expands);
-	if (add_char_ptr(&data->expands) != 0)
-		return (internal_error_return(MALLOC_FAIL));
 	data->and_or = 0;
 	return (0);
 }

@@ -6,16 +6,28 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:17:14 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:58:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	init_flags(t_flags *flags)
+typedef	struct s_expander
 {
-	flags->single_quote = 0;
-	flags->double_quote = 0;
+	int		i;
+	int		dollar_len;
+	int		single_quote;
+	int		double_quote;
+	char	*expansion;
+} t_expander;
+
+void	init_expander(t_expander *xp)
+{
+	xp->i = -1;
+	xp->dollar_len = 0;
+	xp->single_quote = 0;
+	xp->double_quote = 0;
+	xp->expansion = NULL;
 }
 
 //Retrieves variables from envp
@@ -112,44 +124,41 @@ char	*quote_meta(char *expansion)
 	return (quoted);
 }
 
-char	*rewrite_input(char *input, char *expansion, int *i, int *dollar_len)
+char	*rewrite_input(char *input, t_expander *xp)
 {
 	char	*old_input;
 
 	old_input = input;
-	expansion = quote_meta(expansion);
-	input = ft_strionjoin(input, expansion, *dollar_len, i);
-	free(expansion);
+	xp->expansion = quote_meta(xp->expansion);
+	input = ft_strionjoin(input, xp->expansion, xp->dollar_len, &xp->i);
+	free(xp->expansion);
 	free(old_input);
-	expansion = NULL;
-	*dollar_len = 0;
+	xp->expansion = NULL;
+	xp->dollar_len = 0;
 	return (input);
 }
 
 //Iterates through the input checking for quotes and dollar signs
 char	*expander(char *input, t_data *data)
 {
-	t_flags	flags;
-	char	*expansion;
-	int		dollar_len;
-	int		i;
-
-	i = -1;
-	dollar_len = 0;
-	init_flags(&flags);
-	while (input && input[++i])
+	t_expander	xp;
+	
+	printf("Input: %s\n", input);
+	init_expander(&xp);
+	while (input && input[++xp.i])
 	{
-		if (input[i] == '\'' && !flags.double_quote)
-			flags.single_quote = ~flags.single_quote & 1;
-		if (input[i] == '"' && !flags.single_quote)
-			flags.double_quote = ~flags.double_quote & 1;
-		while (input[i] == '$' && input[i + 1] && !flags.double_quote)
+		if (input[xp.i] == '\'' && !xp.double_quote)
+			xp.single_quote = ~xp.single_quote & 1;
+		if (input[xp.i] == '"' && !xp.single_quote)
+			xp.double_quote = ~xp.double_quote & 1;
+		while (input[xp.i] == '$' && input[xp.i + 1] && !xp.single_quote)
 		{
-			expansion = expand_var(&input[i + 1], data, &dollar_len);
-			input = rewrite_input(input, expansion, &i, &dollar_len);
+			printf("Expanding\n");
+			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
+			printf("Expansion: %s\n", xp.expansion);
+			input = rewrite_input(input, &xp);
 		}
 	}
-	if (flags.double_quote || flags.single_quote)
-		printf("Syntax error: unclosed quotes\n");
+	printf("Expander: %s\n", input);
 	return (input);
 }

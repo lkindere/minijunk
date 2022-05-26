@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 17:55:44 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:55:36 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static void	copy_word(t_data *data, t_token *token, int *i)
 			data->flags.single_quote = 1 - data->flags.single_quote;
 		else if (data->input[*i + j] == '\"' && !data->flags.single_quote)
 			data->flags.double_quote = 1 - data->flags.double_quote;
-		else if (data->input[*i + j] == '$')
+		else if (data->input[*i + j] == '*')
 		{
-			if (data->flags.single_quote)
+			if (data->flags.single_quote || data->flags.double_quote)
 				add_char(&data->expands[data->cmd_count], '0');
-			else//not in single quote, expand
+			else//not in quotes, expand
 				add_char(&data->expands[data->cmd_count], '1');
 			add_char(&(token->content), data->input[*i + j]);
 		}

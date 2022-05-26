@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:53:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 15:55:49 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:56:44 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_type	single_type(t_data *data, int *i)
  */
 t_type	get_type(t_data *data, int *i)
 {
-	while (data->input[*i] == ' ')
+	while (ft_isspace(data->input[*i]))
 		(*i)++;
 	if ((data->input[*i] == '<' && data->input[*i + 1] == '<')
 			|| (data->input[*i] == '>' && data->input[*i + 1] == '>')

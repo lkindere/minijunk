@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 17:17:05 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:58:15 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,23 @@ int	parser(t_data *data)
 {
 	if (check_invalid_words_amp(data) != 0)
 		return (1);
+	// printf("survived check_invalid_words_amp\n");
 	if (comb_redirs(data) != 0)
 		return (2);
+	// printf("survived comb_redirs\n");
 	remove_double_end(data);
-	if (check_input_each_cmd(data) != 0)
-		return (3);
-	if (check_even_par_count(data) != 0)
-		return (4);
 	if (check_content_between_par(data) != 0)
+		return (3);
+	// printf("survived content_between_par\n");
+	if (check_input_each_cmd(data) != 0)
+		return (4);
+	// printf("survived input_each_cmd\n");
+	if (check_even_par_count(data) != 0)
 		return (5);
+	// printf("survived even_par_count\n");
 	if (create_cmd_args(data) != 0)
 		return (6);
+	// printf("survived create_cmd_args\n");
 	save_redirs_in_cmds(data);
 	return (0);
 }

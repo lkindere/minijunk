@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 17:55:59 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:17:25 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,20 @@ int	the_loop(char **input, char **segment, t_data *data)
 	return (0);
 }
 
-// int	syntax_check(t_data *data, char **full_input)
-// {
-// 	data->input = *full_input;
-
-// 	data->input = NULL;
-// }
+static int	syntax_check(t_data *data, char **full_input)
+{
+	data->input = *full_input;
+	if (lexer(data) != 0 || parser(data) != 0)
+	{
+		reset_data(data);
+		data->input = NULL;
+		*full_input = NULL;
+		return (1);
+	}
+	data->input = NULL;
+	reset_data(data);
+	return (0);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -97,8 +105,8 @@ int	main(int argc, char **argv, char **envp)
 	while (argc || argv)
 	{
 		get_input(&full_input, data);
-		// if (syntax_check(data, &full_input) != 0)
-		// 	continue ;
+		if (syntax_check(data, &full_input) != 0)
+			continue ;
 		while (is_input(full_input, segment))
 			the_loop(&full_input, &segment, data);
 	}

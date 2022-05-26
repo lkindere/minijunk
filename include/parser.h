@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 16:26:10 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:35:30 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,11 @@ int		ft_tokenlen(t_data *data, int *i);
 void	del_token(t_token **token);
 int		is_redir(t_type type);
 void	del_next_token(t_token *token);
+
+/*	debug						*/
+
+void	debug_print_expands(t_data *data);
+void	debug_print_tokens(t_data *data);
+void	debug_print_cmds(t_data *data);
 
 #endif

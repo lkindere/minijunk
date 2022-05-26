@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 20:36:52 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:19:51 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 		*dollar_len = 2;
 		return (ft_itoa(data->exit_code));
 	}
-	while (input[i] && (input[i] != '$'
-			&& input[i] != '"' && !is_meta(input[i])))
+	//Alnum or underscore
+	while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))
 		i++;
 	if (i > 0)
 	{

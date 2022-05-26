@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:28:20 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:32:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	executer(t_data *data, t_cmd *cmd)
 		cmd = cmd->pipe_next;
 	}
 	executer_finish(data, first_cmd);
+	// printf("Exexc -> exit_code: %d\n", data->exit_code);
 }

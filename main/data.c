@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 18:02:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:07:57 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int	alloc_data(t_data **data, char **envp)
 {
 	(*data) = ft_calloc(1, sizeof(t_data));
 	if (!(*data))
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 	(*data)->cmds = ft_calloc(1, sizeof(t_cmd));
 	if ((*data)->cmds == NULL)
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 	if (add_char_ptr(&(*data)->expands) != 0)
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 	(*data)->pwd = getcwd((*data)->pwd, 0);
 	if (!(*data)->pwd)
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 	(*data)->envp = clone_envp(envp);
 	return (0);
 }
@@ -102,9 +102,9 @@ void	reset_mem(t_data *data)
 		free_2d_char(&data->expands);
 	data->cmds = ft_calloc(1, sizeof(t_cmd));
 	if (data->cmds == NULL)
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 	if (add_char_ptr(&data->expands) != 0)
-		internal_error_exit(MALLOC_FAIL);
+		internal_error_exit(ERROR_MALLOC);
 }
 
 /*
@@ -124,3 +124,5 @@ int	reset_data(t_data *data)
 		free_2d_char(&data->expands);
 	if (add_char_ptr(&data->expands) != 0)
 		return (internal_error_return(ERROR_MALLOC));
+	return (0);
+}

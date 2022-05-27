@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:31:39 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:44:32 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 //Forks again for execve, exits with exit code
 int	executer_subfork(t_data *data, t_cmd *cmd)
 {
-	printf("Checking path\n");
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(data, cmd) != 0)
 		return (data->exit_code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 22:01:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:11:43 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ int	alloc_data(t_data **data, char **envp)
 
 /*
  *	Initializes data.
- *	Calloc's data struct, saves envp inside.
- *	Saves a NULL-pointer for data->cmds[0] for easier realloc later.
- *
- *	argc and argv added to silence warning of not using argc/argv in main.
  */
 int	init_data(t_data **data, char **envp)
 {
@@ -86,7 +82,9 @@ int	init_data(t_data **data, char **envp)
 	return (0);
 }
 
-
+/*
+ *	Resets all members of the data struct not reused for the next input.
+ */
 void	reset_mem(t_data *data)
 {
 	if (data->input)

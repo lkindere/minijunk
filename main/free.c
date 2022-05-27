@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 12:29:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:12:36 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int	free_2d_char(char ***cmds)
  */
 void	free_cmds(t_cmd **cmds)
 {
-	t_cmd	**temp;
+	t_cmd	**temp_start;
+	t_cmd	*temp;
 
-	temp = cmds;
+	temp_start = cmds;
 	while (*cmds)
 	{
 		if ((*cmds)->cmd_arg)
@@ -48,11 +49,12 @@ void	free_cmds(t_cmd **cmds)
 		if ((*cmds)->paths)
 			free_2d_char(&(*cmds)->paths);
 		(*cmds)->pipe_prev = NULL;
+		temp = *cmds;
 		free((*cmds));
-		(*cmds) = (*cmds)->pipe_next;
+		(*cmds) = temp->pipe_next;
 	}
-	free(*temp);
-	*temp = NULL;
+	free(*temp_start);
+	*temp_start = NULL;
 }
 
 /*

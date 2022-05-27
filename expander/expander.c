@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 14:53:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:11:56 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ char	*expander(char *input, t_data *data)
 			xp.single_quote = ~xp.single_quote & 1;
 		if (input[xp.i] == '"' && !xp.single_quote)
 			xp.double_quote = ~xp.double_quote & 1;
-		while (input[xp.i] == '$' && input[xp.i + 1] && !xp.single_quote)
+		while (input[xp.i] == '$' && !xp.single_quote
+			&& (ft_isalnum(input[xp.i + 1]) || input[xp.i + 1] == '_'))
 		{
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
 			input = rewrite_input(input, &xp);

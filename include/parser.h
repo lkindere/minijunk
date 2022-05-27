@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:59:33 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:43:51 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		ft_add_str(char **str, char *add);
 t_type	get_type(t_data *data, int *i);
 
 /*	parser						*/
+int		checker(t_data *data);
 int		check_invalid_words_amp(t_data *data);
 int		check_content_between_par(t_data *data);
 int		check_even_par_count(t_data *data);
@@ -45,6 +46,9 @@ int		ft_tokenlen(t_data *data, int *i);
 void	del_token(t_token **token);
 int		is_redir(t_type type);
 void	del_next_token(t_token *token);
+
+int		comb_redirs(t_data *data);
+void	remove_double_end(t_data *data);
 
 /*	debug						*/
 

@@ -6,11 +6,18 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:29:10 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:36:29 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+static int	is_exp(int single_quote, char c)
+{
+	if (single_quote)
+		return (0);
+	return (ft_isalnum(c) || c == '_' || c == '?');
+}
 
 //Checks for variables
 char	*expand_var(char *input, t_data *data, int *dollar_len)
@@ -25,7 +32,7 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 		*dollar_len = 2;
 		return (ft_itoa(data->exit_code));
 	}
-	while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))
+	while (input[i] && is_exp(0, input[i]))
 		i++;
 	if (i > 0)
 	{
@@ -67,8 +74,7 @@ char	*expander(char *input, t_data *data)
 			xp.single_quote = ~xp.single_quote & 1;
 		if (input[xp.i] == '"' && !xp.single_quote)
 			xp.double_quote = ~xp.double_quote & 1;
-		while (input[xp.i] == '$' && !xp.single_quote
-			&& (ft_isalnum(input[xp.i + 1]) || input[xp.i + 1] == '_' || input[xp.i + 1] == '?'))
+		while (input[xp.i] == '$' && is_exp(xp.single_quote, input[xp.i]))
 		{
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
 			input = rewrite_input(input, &xp);

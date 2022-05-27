@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 15:28:16 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:32:42 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	save_redirs_in_cmds(t_data *data)
 				|| (temp->type == OUT && type_out(temp, cmd) != 0)
 				|| (temp->type == APPEND && type_append(temp, cmd) != 0))
 		{//one of the redirections failed
+			data->exit_code = 1;
 			while (temp && temp->type != PIPE && temp->type != END)
 				temp = temp->next;
 		}

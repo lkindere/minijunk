@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:40:14 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:28:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ static int	is_exp(int single_quote, char c)
 {
 	if (single_quote)
 		return (0);
-	return (ft_isalnum(c) || c == '_' || c == '?');
+	if (ft_isalnum(c) || c == '_' || c == '_' || c == '?')
+		return (1);
+	if (c == '"' || c == '\'')
+		return (2);
+	return (0);
 }
 
 //Checks for variables
@@ -32,19 +36,16 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 		*dollar_len = 2;
 		return (ft_itoa(data->exit_code));
 	}
-	while (input[i] && is_exp(0, input[i]))
+	while (input[i] && is_exp(0, input[i]) == 1)
 		i++;
-	if (i > 0)
-	{
-		*dollar_len = i + 1;
-		var = ft_substr_append(input, 0, i, '=');
-		if (!var)
-			internal_error_return(ERROR_MALLOC);
-		index = is_set(var, data->envp);
-		free(var);
-		if (index >= 0)
-			return (retrieve_var(data->envp, index));
-	}
+	*dollar_len = i + 1;
+	var = ft_substr_append(input, 0, i, '=');
+	if (!var)
+		internal_error_return(ERROR_MALLOC);
+	index = is_set(var, data->envp);
+	free(var);
+	if (index >= 0)
+		return (retrieve_var(data->envp, index));
 	return (NULL);
 }
 
@@ -52,9 +53,19 @@ char	*rewrite_input(char *input, t_expander *xp)
 {
 	char	*old_input;
 
+	// printf("Index: %d, index char: %c\n", xp->i, input[xp->i]);
+	// printf("Dollar len: %d\n", xp->dollar_len);
+	// printf("Double quote: %d\n", xp->double_quote);
+	if (!xp->expansion && xp->double_quote)
+	{
+		xp->i+= 2;
+		return (input);
+	}
 	old_input = input;
 	xp->expansion = quote_meta(xp->expansion);
 	input = ft_strionjoin(input, xp->expansion, xp->dollar_len, &xp->i);
+	if (!xp->expansion)
+		xp->i--;
 	free(xp->expansion);
 	free(old_input);
 	xp->expansion = NULL;

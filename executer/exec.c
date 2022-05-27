@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 17:51:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:17:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 int	is_exception(char *input)
 {
+	int	i;
+
+	i = 0;
 	if (input_is_empty(input)
 		&& put_error(SHELLNAME, input, "command not found", NULL))
 		return (1);
 	if (input[0] == '.' && input_is_empty(&input[1])
+		&& put_error(SHELLNAME, input, "command not found", NULL))
+		return (1);
+	while (input[i] && input[i] != '/')
+		i++;
+	if (input[i] == '/' && !input[i + 1] && access(input, F_OK) == 0
 		&& put_error(SHELLNAME, input, "command not found", NULL))
 		return (1);
 	return (0);
@@ -41,7 +49,7 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 int	executer_subfork(t_data *data, t_cmd *cmd)
 {
 	if (is_exception(cmd->cmd_arg[0]))
-		return (127);
+		return (126);
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(data, cmd) != 0)
 		return (data->exit_code);

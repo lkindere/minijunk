@@ -6,11 +6,38 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:12:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 23:44:00 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:45:35 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+// static int	change_pwd(char **cmd, t_data *data)
+// {
+// 	char	**temp;
+// 	int		i;
+
+// 	i = is_set("PWD=", data->envp);
+// 	if (i >= 0)
+// 	{
+// 		if (replace_env(data->pwd, data->envp, i) != 0)
+// 			return (error_return(cmd[0], NULL, 1, 0));
+// 		return (0);
+// 	}
+// 	if (realloc_env(data, 1) != 0)
+// 		return (error_return(cmd[0], NULL, 1, 0));
+// 	temp = ft_calloc(sizeof(char *), 2);
+// 	if (!temp)
+// 		return (error_return(cmd[0], NULL, 1, 0));
+// 	temp[0] = ft_strjoin("PWD=", data->pwd);
+// 	if (!temp[0])
+// 		return (error_return(cmd[0], NULL, 1, 0));
+// 	if (addto_env(temp, data->envp) != 0)
+// 		return (error_return(cmd[0], NULL, 1, 0));
+// 	free(temp[0]);
+// 	free(temp);
+// 	return (0);
+// }
 
 int	cd_home(char **cmd, t_data *data)
 {
@@ -23,6 +50,7 @@ int	cd_home(char **cmd, t_data *data)
 		return (error_return(cmd[0], "HOME not set", 0, 0));
 	if (chdir(&data->envp[i][5]) == -1)
 		return (error_return(cmd[0], NULL, 1, 0));
+	return (change_pwd(cmd, data));
 	return (0);
 }
 
@@ -45,5 +73,5 @@ int	builtin_cd(char **cmd, t_data *data)
 		if (!data->pwd)
 			return (error_return(cmd[0], NULL, 1, 0));
 	}
-	return (0);
+	return (change_pwd(cmd, data));
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:37:53 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:26:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:27:57 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	is_valid(char *var)
 
 //Checks if the env variable is valid and is already set
 //if set returns index of it
+//Returns -1 if not found
 int	is_set(char *var, char **envp)
 {
 	int	i;

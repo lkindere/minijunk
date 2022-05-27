@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 15:09:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:40:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int		builtin_cd(char **cmd, t_data *data);
 int		builtin_env(char **cmd, int fd);
 int		builtin_export(char **cmd, t_data *data);
 int		builtin_unset(char **cmd, t_data *data);
+
+
+//Env
+int		replace_env(char *export, char **envp, int index);
+int		realloc_env(t_data *data, int new_exports);
+int		addto_env(char **cmd, char **envp);
 
 //Bonus
 int		check_wildcards(t_data *data, t_cmd *cmd);

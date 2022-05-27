@@ -6,13 +6,13 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:40:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 23:45:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:40:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static int	replace_env(char *export, char **envp, int index)
+int	replace_env(char *export, char **envp, int index)
 {
 	int	equals_index;
 

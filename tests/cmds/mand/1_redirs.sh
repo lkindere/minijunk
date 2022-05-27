@@ -1,15 +1,3 @@
-### PERMISSION DENIED ###
-touch tmp_redir_out_file1
-chmod -r tmp_redir_out_file1
-/bin/echo 1 > tmp_redir_out tmp_redir_out_file1
-
-/bin/grep 1 < inputfile
-
-/bin/grep 1 < NO_SUCH_FILE
-
-/bin/grep 1 < inputfile < inputfile
-
-/bin/grep 1 < NO_SUCH_FILE < inputfile
 
 > tmp_std_outfile && echo 1
 

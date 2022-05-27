@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:44:32 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 16:32:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	executer(t_data *data, t_cmd *cmd)
 	first_cmd = cmd;
 	if (!cmd->pipe_next)
 	{
-		if (cmd->in != -1 && cmd->out != -1)
+		if (cmd->in != -1 && cmd->out != -1 
+			&& cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
 			executer_main(data, cmd);
 		return ;
 	}

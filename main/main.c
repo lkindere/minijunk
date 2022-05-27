@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 23:42:19 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 16:31:02 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,26 @@ void	pipe_fds(t_data *data)
 	data->pipe2[1] = -1;
 }
 
+void	print_command_data(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	printf("Args: ");
+	while (cmd->cmd_arg && cmd->cmd_arg[i])
+		printf("%s, ", cmd->cmd_arg[i++]);
+	printf("\n");
+	printf("In: %d, out: %d\n", cmd->in, cmd->out);
+	printf("Pipe prev: %p, pipe next: %p\n", cmd->pipe_prev, cmd->pipe_next);
+}
+
 //Returns the entire chain of commands for current segment
 int	do_stuff(t_data *data)
 {
 	data->input = expander(data->input, data); //Maybe change to char ** and return error codes
 	if (input_is_empty(data->input))
 		return (reset_data(data));
+	printf("Data input: %s\n", data->input);
 	lexer(data);
 	parser(data);
 	do_heredoc(data);

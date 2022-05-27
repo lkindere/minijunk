@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:16:16 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:58:50 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	add_char_ptr(char ***arr)
 	{
 		*arr = ft_calloc(2, sizeof(char *));
 		if (*arr == NULL)
-		return (internal_error_return(ERROR_MALLOC));
+			return (internal_error_return(ERROR_MALLOC));
 	}
 	else
 	{
@@ -97,7 +97,10 @@ void	reset_mem(t_data *data)
 	if (data->tokens)
 		free_tokens(&data->tokens);
 	if (data->expands)
-		free_2d_char(&data->expands);
+	{
+		free(data->expands);
+		data->expands = NULL;
+	}
 	data->cmds = ft_calloc(1, sizeof(t_cmd));
 	if (data->cmds == NULL)
 		internal_error_exit(ERROR_MALLOC);

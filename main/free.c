@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 16:10:46 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:49:59 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	free_cmds(t_cmd **cmds)
 		if ((*cmds)->paths)
 			free_2d_char(&(*cmds)->paths);
 		(*cmds)->pipe_prev = NULL;
+		free((*cmds)->exp);
 		temp = *cmds;
 		free((*cmds));
 		(*cmds) = temp->pipe_next;

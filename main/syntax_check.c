@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 21:21:48 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 14:44:17 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:15:08 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	raw_check(t_data *data)
 
 int	checker(t_data *data)
 {
+	remove_double_end(data);
 	if (check_invalid_words_amp(data) != 0)
 		return (1);
 	if (comb_redirs(data) != 0)
@@ -47,7 +48,6 @@ int	checker(t_data *data)
 		return (4);
 	if (check_even_par_count(data) != 0)
 		return (5);
-	remove_double_end(data);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 16:35:22 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:47:45 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,21 @@ int	ft_last_ptr(char **ptr_arr)
 	return (i);
 }
 
+static int	count_cmds(t_data *data)
+{
+	t_cmd	*temp;
+	int		i;
+
+	temp = data->cmds;
+	i = 0;
+	while (temp)
+	{
+		temp = temp->pipe_next;
+		i++;
+	}
+	return (i);
+}
+
 /*
  *	Goes through all tokens, creates the cmd linked lists for every command.
  */
@@ -64,6 +79,7 @@ int	create_cmd_args(t_data *data)
 	{
 		if (temp->type == PIPE)
 		{
+			cmd->exp = data->expands[count_cmds(data) - 1];
 			if (create_new_cmd(&cmd) != 0)
 				return (internal_error_return(ERROR_MALLOC));
 		}

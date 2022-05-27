@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:55:36 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:38:59 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,12 @@ static int	new_token(t_data *data, int *i)
 	if (current->content == NULL)
 		return (internal_error_return(ERROR_MALLOC));
 	token_add_back(&(data->tokens), current);
+	if (data->expands[data->cmd_count] == NULL)
+		data->expands[data->cmd_count] = ft_strdup("");
+	if (data->expands[data->cmd_count] == NULL)
+		return (internal_error_return(ERROR_MALLOC));
 	if (check_if_new_cmd(data))
 	{
-		if (data->expands[data->cmd_count] == NULL)
-			data->expands[data->cmd_count] = ft_strdup("");
-		if (data->expands[data->cmd_count] == NULL)
-			return (internal_error_return(ERROR_MALLOC));
 		data->cmd_count++;
 		data->dollar_count = 0;
 		if (add_char_ptr(&data->expands) != 0)

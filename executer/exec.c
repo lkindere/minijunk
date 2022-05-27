@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:36 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:31:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 //Forks again for execve, exits with exit code
 int	executer_subfork(t_data *data, t_cmd *cmd)
 {
+	printf("Checking path\n");
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(data, cmd) != 0)
 		return (data->exit_code);
@@ -92,15 +93,22 @@ void	executer(t_data *data, t_cmd *cmd)
 	t_cmd	*first_cmd;
 
 	first_cmd = cmd;
-	if (!cmd->pipe_next && executer_main(data, cmd))
+	if (!cmd->pipe_next)
+	{
+		if (cmd->in != -1 && cmd->out != -1)
+			executer_main(data, cmd);
 		return ;
+	}
 	while (cmd)
 	{
-		if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
+		if (cmd->in != -1 || cmd->out != -1)
 		{
-			if (cmd->pipe_next)
-				create_pipes(cmd);
-			executer_startfork(data, cmd);
+			if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
+			{
+				if (cmd->pipe_next)
+					create_pipes(cmd);
+				executer_startfork(data, cmd);
+			}
 		}
 		cmd = cmd->pipe_next;
 	}

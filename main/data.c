@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 22:01:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:29:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	init_data(t_data **data, char **envp)
 	(*data)->is_fork = 0;
 	return (0);
 }
-
 
 void	reset_mem(t_data *data)
 {

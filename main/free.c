@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:40:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:29:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*
  *	'free()'s and sets to NULL all members of the 2D array and the array itself.
  */
-void	free_2d_char(char ***cmds)
+//Returns 1
+int	free_2d_char(char ***cmds)
 {
 	int	i;
 
@@ -28,6 +29,7 @@ void	free_2d_char(char ***cmds)
 	}
 	free(*cmds);
 	*cmds = NULL;
+	return (1);
 }
 
 /*
@@ -45,8 +47,6 @@ void	free_cmds(t_cmd **cmds)
 			free_2d_char(&(*cmds)->cmd_arg);
 		if ((*cmds)->paths)
 			free_2d_char(&(*cmds)->paths);
-		if ((*cmds)->cmd_path)
-			free((*cmds)->cmd_path);
 		(*cmds)->pipe_prev = NULL;
 		free((*cmds));
 		(*cmds) = (*cmds)->pipe_next;

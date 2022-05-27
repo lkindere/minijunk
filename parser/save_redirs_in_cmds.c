@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_redirs_in_cmds.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 18:33:13 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:16:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ static int	type_in(t_token *temp, t_cmd *cmd)
 	if (cmd->in != -2)
 		close(cmd->in);
 	cmd->in = open(temp->content, O_RDONLY, 0644);
-	printf("cmd fd: %d\n", cmd->in);
 	if (cmd->in == -1)
 	{
-		printf("error is here\n");
 		perror(temp->content);
 		return (1);
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
+#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/26 21:46:00 by mmeising         ###   ########.fr        #
+#    Updated: 2022/05/27 11:28:58 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SUB_S :=	fork.c 						\
 
 
 EXEC_S :=	exec.c						\
-			forks.c 					\
+			dup.c 						\
 			path.c 						\
 
 ERROR :=	errors.c					\

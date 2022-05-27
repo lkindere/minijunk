@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:12:14 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/19 23:17:07 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:32:03 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int	builtin_pwd(char *pwd, int fd)
 	int		i;
 
 	i = 0;
-	pwd = getcwd(pwd, PATH_MAX);
-	if (!pwd)
-		return (error_return("pwd", NULL, 1, 0));
 	while (pwd[i])
 	{
 		if (write(fd, &pwd[i++], 1) == -1)

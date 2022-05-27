@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_redirs_in_cmds.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/27 13:16:49 by lkindere         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/27 14:39:11 by mmeising         ###   ########.fr       */
->>>>>>> 71fbed373c453e0eaa3fedf296e363187ba545a7
+/*   Updated: 2022/05/27 15:28:16 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

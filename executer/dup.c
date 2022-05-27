@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 18:06:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:58:43 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ int	create_pipes(t_cmd *cmd)
 
 	if (pipe(pfd) == -1)
 		internal_error_exit(ERROR_PIPE);
-	cmd->out = pfd[1];
-	cmd->pipe_next->in = pfd[0];
+	if (cmd->out == STDOUT_FILENO)
+		cmd->out = pfd[1];
+	else
+		close (pfd[1]);
+	if (cmd->pipe_next->in == STDIN_FILENO)
+		cmd->pipe_next->in = pfd[0];
+	else
+		close (pfd[0]);
 	return (1);
 }
 

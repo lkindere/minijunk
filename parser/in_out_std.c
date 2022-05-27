@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:45:31 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 15:06:24 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:53:27 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	in_out_std(t_data *data)
 		if (cmd->in == -2)
 			cmd->in = 0;
 		if (cmd->out == -2)
-			cmd->out = 1;
-		if (cmd->out == 0)
 			cmd->out = 1;
 		cmd = cmd->pipe_next;
 	}

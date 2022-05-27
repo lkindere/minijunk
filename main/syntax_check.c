@@ -6,11 +6,11 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 21:21:48 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 21:36:13 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:44:17 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "parser.h"
 
 int	raw_check(t_data *data)
 {
@@ -35,6 +35,22 @@ int	raw_check(t_data *data)
 	return (0);
 }
 
+int	checker(t_data *data)
+{
+	if (check_invalid_words_amp(data) != 0)
+		return (1);
+	if (comb_redirs(data) != 0)
+		return (2);
+	if (check_content_between_par(data) != 0)
+		return (3);
+	if (check_input_each_cmd(data) != 0)
+		return (4);
+	if (check_even_par_count(data) != 0)
+		return (5);
+	remove_double_end(data);
+	return (0);
+}
+
 int	syntax_check(t_data *data, char **full_input)
 {
 	data->input = *full_input;
@@ -45,7 +61,7 @@ int	syntax_check(t_data *data, char **full_input)
 		*full_input = NULL;
 		return (1);
 	}
-	if (lexer(data) != 0 || parser(data) != 0)
+	if (lexer(data) != 0 || checker(data) != 0)
 	{
 		reset_data(data);
 		data->input = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/25 19:40:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:11:23 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ void	free_2d_char(char ***cmds)
  */
 void	free_cmds(t_cmd **cmds)
 {
-	t_cmd	**temp;
+	t_cmd	**temp_start;
+	t_cmd	*temp;
 
-	temp = cmds;
+	temp_start = cmds;
 	while (*cmds)
 	{
 		if ((*cmds)->cmd_arg)
@@ -48,11 +49,12 @@ void	free_cmds(t_cmd **cmds)
 		if ((*cmds)->cmd_path)
 			free((*cmds)->cmd_path);
 		(*cmds)->pipe_prev = NULL;
+		temp = *cmds;
 		free((*cmds));
-		(*cmds) = (*cmds)->pipe_next;
+		(*cmds) = temp->pipe_next;
 	}
-	free(*temp);
-	*temp = NULL;
+	free(*temp_start);
+	*temp_start = NULL;
 }
 
 /*

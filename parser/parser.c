@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:58:15 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:43:53 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	copy_redir(t_token *token)
  *	Groups any redirection type tokens with the next WORD token into one.
  *	If there is no WORD after a redirection type token, throws an error.
  */
-static int	comb_redirs(t_data *data)
+int	comb_redirs(t_data *data)
 {
 	t_token	*temp;
 
@@ -49,7 +49,7 @@ static int	comb_redirs(t_data *data)
  *	If there are two END tokens (happens when there are spaces at end of input),
  *	removes the second one.
  */
-static void	remove_double_end(t_data *data)
+void	remove_double_end(t_data *data)
 {
 	t_token	*temp;
 
@@ -64,25 +64,13 @@ static void	remove_double_end(t_data *data)
 
 int	parser(t_data *data)
 {
-	if (check_invalid_words_amp(data) != 0)
+	if (checker(data) != 0)
 		return (1);
-	// printf("survived check_invalid_words_amp\n");
-	if (comb_redirs(data) != 0)
-		return (2);
-	// printf("survived comb_redirs\n");
-	remove_double_end(data);
-	if (check_content_between_par(data) != 0)
-		return (3);
-	// printf("survived content_between_par\n");
-	if (check_input_each_cmd(data) != 0)
-		return (4);
-	// printf("survived input_each_cmd\n");
-	if (check_even_par_count(data) != 0)
-		return (5);
 	// printf("survived even_par_count\n");
 	if (create_cmd_args(data) != 0)
 		return (6);
 	// printf("survived create_cmd_args\n");
 	save_redirs_in_cmds(data);
+	remove_double_end(data);
 	return (0);
 }

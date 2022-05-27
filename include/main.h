@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:12:19 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:25:49 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_cmd
 	int				in;
 	int				out;
 	int				pid;
+	char			*exp;
 	struct s_cmd	*pipe_prev;
 	struct s_cmd	*pipe_next;
 }	t_cmd;
@@ -133,6 +134,10 @@ void	executer(t_data *data, t_cmd *cmd);
 //Data
 int		init_data(t_data **data, char **envp);
 int		reset_data(t_data *data);
+
+int		add_char_ptr(char ***arr);
+int		add_char(char **str, char c);
+int		ft_add_str(char **str, char *add);
 
 //Env
 char	**clone_envp(char **envp);

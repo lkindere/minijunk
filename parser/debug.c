@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:52:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 16:18:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:00:46 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	debug_print_cmds(t_data *data)
 	i = -1;
 	while (temp)
 	{
-		while (temp->cmd_arg[++i])
+		while (temp->cmd_arg && temp->cmd_arg[++i])
 			printf("string %i: %s\n", i, temp->cmd_arg[i]);
-		printf("string %i: %s\n", i, temp->cmd_arg[i]);
+		// printf("string %i: %s\n", i, temp->cmd_arg[i]);
 		printf("in: %i out: %i\n", temp->in, temp->out);
 		temp = temp->pipe_next;
 	}

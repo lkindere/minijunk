@@ -1,16 +1,4 @@
 
-> tmp_std_outfile && echo 1
-
-rm -f tmp_std_outfile
-
->tmp_std_outfile && ls | grep tmp_std_outfile
-
-rm -f tmp_std_outfile
-
-"" >tmp_std_outfile && ls | grep tmp_std_outfile
-
-rm -f tmp_std_outfile
-
 /bin/echo 1 >/dev/null | /usr/bin/grep 1
 
 /bin/echo 1 >/dev/null | /bin/echo 2
@@ -80,3 +68,5 @@ $USER
 $NOVAR
 $HOME
 lim
+
+echo wat

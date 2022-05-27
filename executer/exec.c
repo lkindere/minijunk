@@ -6,11 +6,22 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 16:32:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:51:43 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	is_exception(char *input)
+{
+	if (input_is_empty(input)
+		&& put_error(SHELLNAME, input, "command not found", NULL))
+		return (1);
+	if (input[0] == '.' && input_is_empty(&input[1])
+		&& put_error(SHELLNAME, input, "command not found", NULL))
+		return (1);
+	return (0);
+}
 
 //Waits for all the commands executed in current run
 //Frees cmds, gets exit codes
@@ -29,6 +40,8 @@ static void	executer_finish(t_data *data, t_cmd *first_cmd)
 //Forks again for execve, exits with exit code
 int	executer_subfork(t_data *data, t_cmd *cmd)
 {
+	if (is_exception(cmd->cmd_arg[0]))
+		return (127);
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(data, cmd) != 0)
 		return (data->exit_code);
@@ -94,8 +107,7 @@ void	executer(t_data *data, t_cmd *cmd)
 	first_cmd = cmd;
 	if (!cmd->pipe_next)
 	{
-		if (cmd->in != -1 && cmd->out != -1 
-			&& cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
+		if (cmd->in != -1 && cmd->out != -1 && cmd->cmd_arg)
 			executer_main(data, cmd);
 		return ;
 	}
@@ -103,7 +115,7 @@ void	executer(t_data *data, t_cmd *cmd)
 	{
 		if (cmd->in != -1 || cmd->out != -1)
 		{
-			if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
+			if (cmd->cmd_arg)
 			{
 				if (cmd->pipe_next)
 					create_pipes(cmd);

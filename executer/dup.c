@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 15:09:34 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:56:17 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,17 @@ int	get_exitstatus(int pid)
 //Checks for correct exit code if executable fails
 int	exec_access(t_data *data, t_cmd *cmd)
 {
+	printf("Access: %d\n", access(cmd->cmd_arg[0], W_OK));
+	printf("%s\n", strerror(errno));
 	if (access(cmd->cmd_arg[0], F_OK != 0))
 	{
 		if (errno == 20)
 		{
 			data->exit_code = 126;
-			return (126);
+			return (error_return(cmd->cmd_arg[0], NULL, 1, 126));
 		}
 		data->exit_code = 127;
-			return (127);
+			return (error_return(cmd->cmd_arg[0], NULL, 1, 127));
 	}
 	return (0);
 }

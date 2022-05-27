@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 14:42:52 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:12:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ char	**ft_straiojoin(char **a1, char **a2, int *index);
 void	*ft_calloc(size_t count, size_t size);
 void	free_cmds(t_cmd **cmds);
 void	free_tokens(t_token **tokens);
-void	free_2d_char(char ***cmds);
+int		free_2d_char(char ***cmds);
 
 //Checks
 int		ft_isspace(int c);

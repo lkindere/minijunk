@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 13:05:48 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 10:36:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:57:44 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	builtin_unset(char **cmd, t_data *data)
 		if (index >= 0 && unset_env(data, index) != 0)
 			return (error_return("unset", NULL, 1, 0));
 		if (index == -2)
+		{
 			put_error(SHELLNAME, cmd[0], cmd[i], "not a valid identifier");
+			data->exit_code = 1;
+		}
 		i++;
 	}
-	return (0);
+	return (data->exit_code);
 }

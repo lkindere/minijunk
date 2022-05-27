@@ -6,26 +6,12 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 12:16:35 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:11:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-//Frees the input in check_match
-//Returns 1
-int	free_input(char **input)
-{
-	int	i;
-
-	i = 0;
-	if (!input)
-		return (1);
-	while (input[i])
-		free(input[i++]);
-	free(input);
-	return (1);
-}
 
 //Fix ./*	not returning anything
 //Returns -1 on errors
@@ -42,22 +28,21 @@ int	check_match(char *name, char *cmd)
 	input = ft_split(cmd, '*');
 	if (!input)
 		return (-1);
-	if ((!ft_strncmp(name, ".", 1)) && free_input(input))
+	if ((!ft_strncmp(name, ".", 1)) && free_2d_char(&input))
 		return (0);
 	if (!ft_strcmp(cmd, "./*"))
 		return (1);
 	while (input[++i])
 	{
-		if (cmd[0] != '*' && cmd[0] != name[0] && free_input(input))
+		if (cmd[0] != '*' && cmd[0] != name[0] && free_2d_char(&input))
 			return (0);
-		if (ft_stristr(name, input[i]) == -1 && free_input(input))
+		if (ft_stristr(name, input[i]) == -1 && free_2d_char(&input))
 			return (0);
-		if (ft_stristr(name, input[i]) < last_index && free_input(input))
+		if (ft_stristr(name, input[i]) < last_index && free_2d_char(&input))
 			return (0);
 		last_index = ft_stristr(name, input[i]);
 	}
-	free_input(input);
-	return (1);
+	return (free_2d_char(&input));
 }
 
 //Wildcards will only work below 500 files per dir

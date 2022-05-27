@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:21:08 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:09:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 //Exec
 void	dup_and_exec(t_cmd *cmd, char **envp);
 int		is_exec(t_cmd *cmd);
-void	create_pipes(t_cmd *cmd);
+int		create_pipes(t_cmd *cmd);
+int		exec_access(t_data *data, t_cmd *cmd);
 
 //Path
 char	**get_paths(char **envp);
 void	free_paths(char ***paths);
-char	*find_cmd(char *cmd, char **paths, char *pwd);
+char	*find_cmd(t_data *data, char *cmd, char **paths);
 char	**clone_envp(char **envp);
 
 //Builtins
@@ -40,7 +41,5 @@ int		builtin_unset(char **cmd, t_data *data);
 //Bonus
 int		check_wildcards(t_data *data, t_cmd *cmd);
 
-//Fake commands
-void	fake_commands(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 19:07:32 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:48:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 //Command not found should return 127 exit code
 //Checks if command exists in paths
-char	*find_cmd(char *cmd, char **paths, char *pwd)
+char	*find_cmd(t_data *data, char *cmd, char **paths)
 {
 	char	*full_path;
 	int		i;
 
 	i = 0;
+	if (!paths || !paths[i])
+	{
+		full_path = ft_strjoin3(data->pwd, "/", cmd);
+		if (!full_path)
+			internal_error_exit(ERROR_MALLOC);
+		if (access(full_path, F_OK) == 0)
+			return (full_path);
+	}
 	while (paths && paths[i])
 	{
 		full_path = ft_strjoin(paths[i++], cmd);
@@ -27,18 +35,10 @@ char	*find_cmd(char *cmd, char **paths, char *pwd)
 			internal_error_exit(ERROR_MALLOC);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
-		free(full_path);
 	}
-	if (!paths || !paths[i])
-	{
-		full_path = ft_strjoin3(pwd, "/", cmd);
-		if (!full_path)
-			internal_error_exit(ERROR_MALLOC);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(full_path);
-		error_exit(cmd, "command not found", 0, 127);
-	}
+	free(full_path);
+	data->exit_code = 127;
+	put_error(SHELLNAME, cmd, "command not found", NULL);
 	return (NULL);
 }
 
@@ -85,7 +85,7 @@ char	**clone_envp(char **envp)
 
 	i = 0;
 	if (!envp)
-		internal_error_exit(ERROR_NULL);
+		return (NULL);
 	while (envp[i])
 		i++;
 	envp_clone = malloc(sizeof(char *) * (i + 1));

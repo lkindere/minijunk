@@ -6,65 +6,103 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 22:33:52 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:08:36 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-//Check access rights, reroutes the in/out and executes command
-void	dup_and_exec(t_cmd *cmd, char **envp)
+//Waits for all the commands executed in current run
+//Frees cmds, gets exit codes
+static void	executer_finish(t_data *data, t_cmd *first_cmd)
 {
-	if (access(cmd->cmd_path, X_OK) != 0)
-		error_exit(cmd->cmd_arg[0], NULL, 1, 126);
-	if (cmd->in < 0 || cmd->out < 0)
-		exit(1);
-	if (cmd->in != STDIN_FILENO)
+	while (first_cmd)
 	{
-		if (dup2(cmd->in, STDIN_FILENO) == -1)
-			internal_error_exit(ERROR_DUP);
-		if (close(cmd->in) == -1)
-			internal_error_exit(ERROR_CLOSE);
+		if (first_cmd->pid > 0)
+			data->exit_code = get_exitstatus(first_cmd->pid);
+		first_cmd = first_cmd->pipe_next;
 	}
-	if (cmd->out != STDOUT_FILENO)
-	{
-		if (dup2(cmd->out, STDOUT_FILENO) == -1)
-			internal_error_exit(ERROR_DUP);
-		if (close(cmd->out) == -1)
-			internal_error_exit(ERROR_CLOSE);
-	}
-	execve(cmd->cmd_path, cmd->cmd_arg, envp);
-	error_exit(cmd->cmd_arg[0], NULL, 1, 0);
 }
 
-//Creates the pipes
-void	create_pipes(t_cmd *cmd)
+//Is a fork, exits in case of error
+//Gets the paths, finds commands
+//Forks again for execve, exits with exit code
+int	executer_subfork(t_data *data, t_cmd *cmd)
 {
-	int	pfd[2];
-
-	if (pipe(pfd) == -1)
-		internal_error_exit(ERROR_PIPE);
-	cmd->out = pfd[1];
-	cmd->pipe_next->in = pfd[0];
+	cmd->paths = get_paths(data->envp);
+	if (is_exec(cmd) && exec_access(data, cmd) != 0)
+		return (data->exit_code);
+	if (!is_exec(cmd))
+		cmd->cmd_path = find_cmd(data, cmd->cmd_arg[0], cmd->paths);
+	if (!cmd->cmd_path)
+		return (data->exit_code);
+	cmd->pid = fork();
+	if (cmd->pid == -1)
+		internal_error_exit(ERROR_FORK);
+	if (cmd->pid == 0)
+		dup_and_exec(cmd, data->envp);
+	if (cmd->cmd_path != cmd->cmd_arg[0])
+		free(cmd->cmd_path);
+	cmd->cmd_path = NULL;
+	return (get_exitstatus(cmd->pid));
 }
 
-//Checks whether cmd is exec or command if exec doesn't exist error exits
-int	is_exec(t_cmd *cmd)
+//Creates pipes if needed
+//Forks for subfork
+static void	executer_startfork(t_data *data, t_cmd *cmd)
 {
-	int	is_exec;
-	int	i;
-
-	is_exec = 0;
-	i = 0;
-	while (cmd->cmd_arg[0][i])
+	cmd->pid = fork();
+	if (cmd->pid == -1)
+		internal_error_exit(ERROR_FORK);
+	if (cmd->pid == 0)
 	{
-		if (cmd->cmd_arg[0][i] == '/' && cmd->cmd_arg[0][i + 1])
-			is_exec = 1;
-		i++;
+		check_wildcards(data, cmd);
+		if (check_builtin(data, cmd) != -1)
+			exit(data->exit_code);
+		if (check_builtin_exec(data, cmd) != -1)
+			exit(data->exit_code);
+		data->exit_code = executer_subfork(data, cmd);
+		exit(data->exit_code);
 	}
-	if (i > 0 && cmd->cmd_arg[0][i - 1] == '/')
-		is_exec = 1;
-	if (is_exec && access(cmd->cmd_arg[0], F_OK) != 0)
-		error_exit(cmd->cmd_arg[0], NULL, 1, 126);
-	return (0 + is_exec);
+	if (cmd->pid != 0)
+	{	
+		if (cmd->pipe_prev && cmd->in != 0 && close(cmd->in) == -1)
+			internal_error_exit(ERROR_CLOSE);
+		if (cmd->pipe_next && cmd->out != 1 && close(cmd->out) == -1)
+			internal_error_exit(ERROR_CLOSE);
+	}
+}
+
+//Returns 1
+int	executer_main(t_data *data, t_cmd *cmd)
+{
+	check_wildcards(data, cmd);
+	if (check_builtin(data, cmd) != -1)
+		return (1);
+	if (check_builtin_exec(data, cmd) != -1)
+		return (1);
+	data->exit_code = executer_subfork(data, cmd);
+	return (1);
+}
+
+//Iterates through cmd if it's not built in, calls the startfork,
+//Once it reaches the final pipe calls finish to wait and get the exit codes
+void	executer(t_data *data, t_cmd *cmd)
+{
+	t_cmd	*first_cmd;
+
+	first_cmd = cmd;
+	if (!cmd->pipe_next && executer_main(data, cmd))
+		return ;
+	while (cmd)
+	{
+		if (cmd->cmd_arg && !input_is_empty(cmd->cmd_arg[0]))
+		{
+			if (cmd->pipe_next)
+				create_pipes(cmd);
+			executer_startfork(data, cmd);
+		}
+		cmd = cmd->pipe_next;
+	}
+	executer_finish(data, first_cmd);
 }

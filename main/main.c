@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/28 13:19:34 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:32:22 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	pipe_fds(t_data *data)
 //Returns the entire chain of commands for current segment
 int	do_stuff(t_data *data)
 {
-	data->input = expander(data->input, data); //Maybe change to char ** and return error codes
+	data->input = expander(data->input, data, 0); //Maybe change to char ** and return error codes
 	lexer(data);
 	parser(data);
 	if (!input_is_empty(data->input))

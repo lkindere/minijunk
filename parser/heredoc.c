@@ -3,37 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:54:56 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 17:14:48 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:30:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	found_heredoc(t_cmd *cmd, t_token *token)
+//Reads to str passed by ref
+//Expands it
+//Returns 1 on error
+//Returns 0 on success
+int	read_heredoc(t_data *data, t_token *token, char **str)
 {
 	char	*input;
+
+	input = NULL;
+	while (ft_strcmp_x(input, token->content, ft_strlen(token->content)) != 0)
+	{
+		input = readline("XD: ");
+		if (!input || !input[0])
+			return (0);
+		if (ft_add_str(str, input) != 0 || ft_add_str(str, "\n") != 0)
+			return (1);
+	}
+	*str = expander(*str, data, 1);
+	return (0);
+}
+
+int	found_heredoc(t_data *data, t_cmd *cmd, t_token *token)
+{
 	char	*str;
 	int		fd[2];
 
-	input = NULL;
 	str = NULL;
 	if (cmd->in >= 0 && close(cmd->in) != 0)
 		return (internal_error_return(ERROR_CLOSE));
 	if (pipe(fd) != 0)
 		return (internal_error_return(ERROR_PIPE));
-	while (ft_strcmp_x(input, token->content, ft_strlen(token->content)) != 0)
-	{
-		input = readline("> ");
-		if (!input)
-			return (0);
-		if (ft_add_str(&str, input) != 0)
-			return (internal_error_return(ERROR_MALLOC));
-		if (ft_add_str(&str, "\n") != 0)
-			return (internal_error_return(ERROR_MALLOC));
-	}
+	if (read_heredoc(data, token, &str) != 0)
+		return (internal_error_return(ERROR_MALLOC));
+	if (!str)
+		return (0);
 	write(fd[1], str, ft_strlen(str) - ft_strlen(token->content) - 1);
 	if (close(fd[1]) != 0)
 		return (internal_error_return(ERROR_CLOSE));
@@ -54,7 +67,7 @@ int	do_heredoc(t_data *data)
 			cmd = cmd->pipe_next;
 		else if (token->type == HEREDOC)
 		{
-			if (found_heredoc(cmd, token) != 0)
+			if (found_heredoc(data, cmd, token) != 0)
 				return (1);
 		}
 		token = token->next;

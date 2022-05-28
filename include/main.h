@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/28 11:37:50 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:30:12 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int		syntax_check(t_data *data, char **full_input);
 int		the_loop(char **input, char **segment, t_data *data);
 int		lexer(t_data *data);
 int		parser(t_data *data);
-char	*expander(char *input, t_data *data);
+char	*expander(char *input, t_data *data, int heredoc);
 void	executer(t_data *data, t_cmd *cmd);
 
 //Data
@@ -173,7 +173,6 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strschr(const char *s, int c);
 int		ft_strwstr(const char *haystack, const char *needle, int w);
-
 //String manipulation
 char	*ft_strdup(const char *s1);
 char	*ft_strndup(char *ptr, int len);
@@ -184,28 +183,23 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr_append(char *s, unsigned int start, size_t len, char c);
 void	ft_find_replace(char *str, int c, int r, int d);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-
 //Array
 char	**ft_split(char const *s, char c);
 char	**ft_splitpath(char const *s, char c);
 char	**ft_straiojoin(char **a1, char **a2, int *index);
-
 //Memory
 void	*ft_calloc(size_t count, size_t size);
 void	free_cmds(t_cmd **cmds);
 void	free_tokens(t_token **tokens);
 int		free_2d_char(char ***cmds);
-
 //Checks
 int		ft_isspace(int c);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
-
 //Output
 void	ft_putstr_fd(char *str, int fd);
 char	*ft_itoa(int n);
-
 //Misc
 int		is_meta(char c);
 

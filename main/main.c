@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 17:15:00 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 13:19:10 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	signal_handler();
 	if (init_data(&data, envp) != 0)
 		internal_error_return(ERROR_MALLOC);
+		printf("%s\n", ttyname(1));
 	while (argc || argv)
 	{
 		while (!full_input)

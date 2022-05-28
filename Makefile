@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/28 12:03:33 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/28 13:12:53 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAIN_S := 	main.c 						\
 			free.c 						\
 			input.c 					\
 			signal.c 					\
-			syntax_check.c				\
+			syntax.c					\
 
 PARSE_S := 	lexer.c 					\
 			lexer_get_type.c			\
@@ -29,8 +29,8 @@ PARSE_S := 	lexer.c 					\
 			heredoc.c					\
 			in_out_std.c				\
 			expands_utils.c 			\
-			create_cmd_args.c 			\
-			save_redirs_in_cmds.c		\
+			cmd_args.c 					\
+			redirs.c					\
 			debug.c						\
 
 EXPAN_S	:=	expander.c					\

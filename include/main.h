@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 19:25:49 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:37:50 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_strcmp_x(const char *s1, const char *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strchr(const char *s, int c);
-int		ft_stristr(const char *haystack, const char *needle);
+char	*ft_strschr(const char *s, int c);
+int		ft_strwstr(const char *haystack, const char *needle, int w);
 
 //String manipulation
 char	*ft_strdup(const char *s1);

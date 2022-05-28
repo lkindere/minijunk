@@ -6,12 +6,11 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 12:11:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 12:00:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
 
 //Fix ./*	not returning anything
 //Returns -1 on errors
@@ -25,22 +24,22 @@ int	check_match(char *name, char *cmd)
 
 	i = -1;
 	last_index = 0;
-	input = ft_split(cmd, '*');
+	if (cmd[0] == '.' && cmd[1] == '/')
+		i += 2;
+	input = ft_split(cmd, (char)-1);
 	if (!input)
 		return (-1);
 	if ((!ft_strncmp(name, ".", 1)) && free_2d_char(&input))
 		return (0);
-	if (!ft_strcmp(cmd, "./*"))
-		return (1);
 	while (input[++i])
 	{
-		if (cmd[0] != '*' && cmd[0] != name[0] && free_2d_char(&input))
+		if (cmd[0] != (char)-1 && cmd[0] != name[0] && free_2d_char(&input))
 			return (0);
-		if (ft_stristr(name, input[i]) == -1 && free_2d_char(&input))
+		if (ft_strwstr(name, input[i], (char)-1) == -1 && free_2d_char(&input))
 			return (0);
-		if (ft_stristr(name, input[i]) < last_index && free_2d_char(&input))
+		if (ft_strwstr(name, input[i], (char)-1) < last_index && free_2d_char(&input))
 			return (0);
-		last_index = ft_stristr(name, input[i]);
+		last_index = ft_strwstr(name, input[i], (char)-1);
 	}
 	return (free_2d_char(&input));
 }
@@ -107,9 +106,12 @@ int	check_wildcards(t_data *data, t_cmd *cmd)
 	int		i;
 
 	i = 0;
+	if (!cmd->exp)
+		return (0);
+	hide_wildcards(cmd);
 	while (cmd->cmd_arg[i])
 	{
-		if (ft_strchr(cmd->cmd_arg[i], '*'))
+		if (ft_strschr(cmd->cmd_arg[i], (char)-1))
 		{
 			wildcards = get_wildcards(data, cmd->cmd_arg[i]);
 			wildcards = sort_wildcards(wildcards);
@@ -121,5 +123,6 @@ int	check_wildcards(t_data *data, t_cmd *cmd)
 		else
 			i++;
 	}
+	unhide_wildcards(cmd);
 	return (0);
 }

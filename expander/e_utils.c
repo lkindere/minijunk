@@ -1,37 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   e_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:00:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:09:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 12:03:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-char	**sort_wildcards(char **wildcards)
+//Allocates extra for every quote of meta characters
+static char	*alloc_meta(char *expansion)
 {
+	char	*alloc;
 	int		i;
-	char	*temp;
+	int		meta;
 
 	i = 0;
-	if (!wildcards)
+	meta = 0;
+	if (!expansion || !expansion[i])
 		return (NULL);
-	while (wildcards[i] && wildcards[i + 1])
+	while (expansion && expansion[i])
 	{
-		if (ft_strcmp(wildcards[i], wildcards[i + 1]) > 0)
-		{	
-			temp = wildcards[i];
-			wildcards[i] = wildcards[i + 1];
-			wildcards[i + 1] = temp;
-			i = -1;
-		}
+		if (is_meta(expansion[i]))
+			meta++;
 		i++;
 	}
-	return (wildcards);
+	alloc = malloc(i + (meta * 2) + 1);
+	if (!alloc)
+		internal_error_return(ERROR_MALLOC);
+	return (alloc);
+}
+
+//Quotes every meta character with single quotes and returns the string
+char	*quote_meta(char *expansion)
+{
+	char	*quoted;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	quoted = alloc_meta(expansion);
+	if (!quoted)
+		return (NULL);
+	while (expansion && expansion[i])
+	{
+		if (is_meta(expansion[i]) && !ft_isspace(expansion[i]))
+		{
+			quoted[j++] = '\'';
+			quoted[j++] = expansion[i++];
+			quoted[j++] = '\'';
+		}
+		else
+			quoted[j++] = expansion[i++];
+	}
+	quoted[j] = 0;
+	return (quoted);
 }
 
 //Retrieves variables from envp

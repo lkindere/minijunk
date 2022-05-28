@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/27 11:28:58 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/28 12:03:33 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PARSE_S := 	lexer.c 					\
 
 EXPAN_S	:=	expander.c					\
 			wildcards.c					\
-			meta.c 						\
+			wild_flags.c 				\
 			e_utils.c 					\
 
 SUB_S :=	fork.c 						\
@@ -75,7 +75,7 @@ UTILS :=	ft_calloc.c 				\
 			ft_strcmp.c 				\
 			ft_strncmp.c 				\
 			ft_strchr.c 				\
-			ft_stristr.c 				\
+			ft_strwstr.c 				\
 			ft_straiojoin.c 			\
 			ft_strionjoin.c 			\
 			ft_strndup.c 				\

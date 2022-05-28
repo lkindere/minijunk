@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 19:28:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:31:33 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ static int	is_exp(int single_quote, char c)
 {
 	if (single_quote)
 		return (0);
-	if (ft_isalnum(c) || c == '_' || c == '_' || c == '?')
+	if (ft_isalnum(c) || c == '_' || c == '_')
 		return (1);
 	if (c == '"' || c == '\'')
 		return (2);
+	if (c == '?')
+		return (3);
 	return (0);
 }
 
@@ -74,17 +76,20 @@ char	*rewrite_input(char *input, t_expander *xp)
 }
 
 //Iterates through the input checking for quotes and dollar signs
-char	*expander(char *input, t_data *data)
+char	*expander(char *input, t_data *data, int heredoc)
 {
 	t_expander	xp;
 
 	init_expander(&xp);
 	while (input && input[++xp.i])
 	{
-		if (input[xp.i] == '\'' && !xp.double_quote)
-			xp.single_quote = ~xp.single_quote & 1;
-		if (input[xp.i] == '"' && !xp.single_quote)
-			xp.double_quote = ~xp.double_quote & 1;
+		if (!heredoc)
+		{
+			if (input[xp.i] == '\'' && !xp.double_quote)
+				xp.single_quote = ~xp.single_quote & 1;
+			if (input[xp.i] == '"' && !xp.single_quote)
+				xp.double_quote = ~xp.double_quote & 1;
+		}
 		while (input[xp.i] == '$' && is_exp(xp.single_quote, input[xp.i + 1]))
 		{
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);

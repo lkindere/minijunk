@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 20:47:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 01:36:56 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->pipe2[0] = -1;
 	(*data)->pipe2[1] = -1;
 	(*data)->is_fork = 0;
+	(*data)->and_or = 0;
 	return (0);
 }
 
@@ -121,6 +122,7 @@ int	reset_data(t_data *data)
 	data->flags.double_quote = 0;
 	data->cmd_count = 0;
 	data->dollar_count = 0;
+	data->and_or = 0;
 	if (data->expands)
 		free_2d_char(&data->expands);
 	if (add_char_ptr(&data->expands) != 0)

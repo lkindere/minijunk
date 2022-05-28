@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/28 16:44:45 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 01:40:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*expander(char *input, t_data *data, int heredoc)
 	t_expander	xp;
 
 	if (heredoc == 2)
-		return (inpu);
+		return (input);
 	init_expander(&xp);
 	while (input && input[++xp.i])
 	{

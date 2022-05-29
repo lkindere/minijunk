@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 01:36:56 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:49:40 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	alloc_data(t_data **data, char **envp)
 int	init_data(t_data **data, char **envp)
 {
 	alloc_data(data, envp);
-	(*data)->std_in = dup(STDIN_FILENO);
-	(*data)->std_out = dup(STDOUT_FILENO);
+	// (*data)->std_in = dup(STDIN_FILENO);
+	// (*data)->std_out = dup(STDOUT_FILENO);
 	(*data)->cmds->in = -2;
 	(*data)->cmds->out = -2;
 	(*data)->pipe1[0] = -1;
@@ -98,15 +98,7 @@ void	reset_mem(t_data *data)
 	if (data->tokens)
 		free_tokens(&data->tokens);
 	if (data->expands)
-	{
-		free(data->expands);
-		data->expands = NULL;
-	}
-	data->cmds = ft_calloc(1, sizeof(t_cmd));
-	if (data->cmds == NULL)
-		internal_error_exit(ERROR_MALLOC);
-	if (add_char_ptr(&data->expands) != 0)
-		internal_error_exit(ERROR_MALLOC);
+		free_2d_char(&data->expands);
 }
 
 /*
@@ -116,15 +108,16 @@ void	reset_mem(t_data *data)
 int	reset_data(t_data *data)
 {
 	reset_mem(data);
-	data->cmds->in = -2;
-	data->cmds->out = -2;
 	data->flags.single_quote = 0;
 	data->flags.double_quote = 0;
 	data->cmd_count = 0;
 	data->dollar_count = 0;
 	data->and_or = 0;
-	if (data->expands)
-		free_2d_char(&data->expands);
+	data->cmds = ft_calloc(1, sizeof(t_cmd));
+	if (data->cmds == NULL)
+		internal_error_exit(ERROR_MALLOC);
+	data->cmds->in = -2;
+	data->cmds->out = -2;
 	if (add_char_ptr(&data->expands) != 0)
 		return (internal_error_return(ERROR_MALLOC));
 	return (0);

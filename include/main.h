@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/28 16:30:12 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:44:25 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ typedef struct s_data
 	int				dollar_count;
 	char			**expands;
 	int				exit_code;
-	int				std_in;
-	int				std_out;
+	// int				std_in;
+	// int				std_out;
 	int				is_fork;
 	int				and_or;
 	int				pipe1[2];
@@ -134,6 +134,7 @@ void	executer(t_data *data, t_cmd *cmd);
 //Data
 int		init_data(t_data **data, char **envp);
 int		reset_data(t_data *data);
+void		reset_mem(t_data *data);
 
 int		add_char_ptr(char ***arr);
 int		add_char(char **str, char c);

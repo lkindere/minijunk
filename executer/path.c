@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 17:08:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:58:21 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*find_cmd(t_data *data, char *cmd, char **paths)
 			internal_error_exit(ERROR_MALLOC);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
+		free(full_path);
 	}
 	while (paths && paths[i])
 	{
@@ -35,8 +36,9 @@ char	*find_cmd(t_data *data, char *cmd, char **paths)
 			internal_error_exit(ERROR_MALLOC);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
+		free(full_path);
 	}
-	free(full_path);
+	full_path = NULL;
 	data->exit_code = 127;
 	put_error(SHELLNAME, cmd, "command not found", NULL);
 	return (NULL);

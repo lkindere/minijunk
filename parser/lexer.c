@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 19:38:59 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:36:58 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,6 @@ static int	new_token(t_data *data, int *i)
 	if (current->content == NULL)
 		return (internal_error_return(ERROR_MALLOC));
 	token_add_back(&(data->tokens), current);
-	if (data->expands[data->cmd_count] == NULL)
-		data->expands[data->cmd_count] = ft_strdup("");
-	if (data->expands[data->cmd_count] == NULL)
-		return (internal_error_return(ERROR_MALLOC));
 	if (check_if_new_cmd(data))
 	{
 		data->cmd_count++;
@@ -115,13 +111,15 @@ static int	new_token(t_data *data, int *i)
 
 int	lexer(t_data *data)
 {
-	int		i;
+	int	i;
 
-	i = -1;
-	while (data->input[++i])
+	i = 0;
+	while (data->input[i])
 	{
 		if (new_token(data, &i) != 0)
 			return (ERROR_MALLOC);
+		if (data->input[i])
+			i++;
 	}
 	if (new_token(data, &i) != 0)
 		return (ERROR_MALLOC);

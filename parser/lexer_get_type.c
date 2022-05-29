@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_get_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:53:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 19:56:44 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:38:23 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ t_type	get_type(t_data *data, int *i)
 		else
 			return (LOG_OR);
 	}
-	else
-		return (single_type(data, i));
+	return (single_type(data, i));
 }

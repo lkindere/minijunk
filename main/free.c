@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 03:27:02 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 14:24:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,15 @@ void	free_tokens(t_token **tokens)
 
 	while (*tokens)
 	{
-		temp = (*tokens)->next;
 		if ((*tokens)->content)
 		{
 			free((*tokens)->content);
 			(*tokens)->content = NULL;
 		}
-		free(*tokens);
-		*tokens = temp;
+		temp = (*tokens);
+		*tokens = (*tokens)->next;
+		free(temp);
 	}
+	(*tokens) = NULL;
 }
 

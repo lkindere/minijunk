@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 02:34:20 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:56:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void    handle_sigint(int sig)
 void    signal_handler(void)
 {
 	struct termios		term;
-	struct sigaction	sint;
-	struct sigaction	squit;
+	struct sigaction	sint = {0};
+	struct sigaction	squit = {0};
 
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;

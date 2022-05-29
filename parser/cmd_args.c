@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_cmd_args.c                                  :+:      :+:    :+:   */
+/*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 19:47:45 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:39:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	create_cmd_args(t_data *data)
 		if (temp->type == PIPE)
 		{
 			cmd->exp = data->expands[count_cmds(data) - 1];
+			data->expands[count_cmds(data) - 1] = NULL;
 			if (create_new_cmd(&cmd) != 0)
 				return (internal_error_return(ERROR_MALLOC));
 		}

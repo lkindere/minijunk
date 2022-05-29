@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 18:17:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:49:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	executer_subfork(t_data *data, t_cmd *cmd)
 //Forks for subfork
 static void	executer_startfork(t_data *data, t_cmd *cmd)
 {
+	int	exit_code;
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		internal_error_exit(ERROR_FORK);
@@ -82,8 +83,10 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 			exit(data->exit_code);
 		if (check_builtin_exec(data, cmd) != -1)
 			exit(data->exit_code);
-		data->exit_code = executer_subfork(data, cmd);
-		exit(data->exit_code);
+		exit_code = executer_subfork(data, cmd);
+		// reset_mem(data);
+		// free(data);
+		exit(exit_code);
 	}
 	if (cmd->pid != 0)
 	{	

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/28 16:32:22 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:40:23 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	pipe_fds(t_data *data)
 //Returns the entire chain of commands for current segment
 int	do_stuff(t_data *data)
 {
+	// printf("data input: %s\n", data->input);
+	// sleep(1);
 	data->input = expander(data->input, data, 0); //Maybe change to char ** and return error codes
 	lexer(data);
 	parser(data);
@@ -86,6 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*segment;
 	t_data	*data;
 
+	full_input = NULL;
 	segment = NULL;
 	signal_handler();
 	if (init_data(&data, envp) != 0)

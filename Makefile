@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/28 13:12:53 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/29 23:17:38 by mmeising         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+VPATH = builtins errors executer expander main parser subshell utils
 
 NAME := ./minishell
 
@@ -92,26 +94,11 @@ UTILS :=	ft_calloc.c 				\
 
 OBJ_DIR := ./_obj
 
-MAIN_O := $(addprefix $(OBJ_DIR)/, $(MAIN_S:.c=.o))
-PARSE_O := $(addprefix $(OBJ_DIR)/, $(PARSE_S:.c=.o))
-EXPAN_O := $(addprefix $(OBJ_DIR)/, $(EXPAN_S:.c=.o))
-SUB_O := $(addprefix $(OBJ_DIR)/, $(SUB_S:.c=.o))
-EXEC_O := $(addprefix $(OBJ_DIR)/, $(EXEC_S:.c=.o))
-ERROR_O := $(addprefix $(OBJ_DIR)/, $(ERROR:.c=.o))
-BUILT_O := $(addprefix $(OBJ_DIR)/, $(BUILT:.c=.o))
-UTILS_O := $(addprefix $(OBJ_DIR)/, $(UTILS:.c=.o))
+SRC := $(MAIN_S) $(PARSE_S) $(EXPAN_S) $(SUB_S) $(EXEC_S) $(ERROR) $(BUILT) $(UTILS)
+OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-MAIN_S := $(addprefix main/, $(MAIN_S))
-PARSE_S := $(addprefix parser/, $(PARSE_S))
-EXPAN_S := $(addprefix expander/, $(EXPAN_S))
-SUB_S := $(addprefix subshell/, $(SUB_S))
-EXEC_S := $(addprefix executer/, $(EXEC_S))
-ERROR := $(addprefix errors/, $(ERROR))
-BUILT := $(addprefix builtins/, $(BUILT))
-UTILS := $(addprefix utils/, $(UTILS))
-
-INC_HEADER := -I ./include
-INCLUDES := -lreadline
+LIB := -lreadline -L/Users/mmeising/.brew/opt/readline/lib
+INC := -I ./include
 
 # Colorcodes
 Y := "\033[33m"
@@ -124,58 +111,18 @@ CUT := "\033[K"
 
 all: $(NAME)
 
-$(NAME): $(MAIN_O) $(PARSE_O) $(EXPAN_O) $(SUB_O) $(EXEC_O) $(ERROR_O) $(BUILT_O) $(UTILS_O)
+# only need to link the readline libraries for the executable with $(LIB)
+$(NAME): $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	$(CC) $(CFLAGS) $(MAIN_O) $(PARSE_O) $(EXPAN_O) $(SUB_O) $(EXEC_O) $(ERROR_O) $(BUILT_O) $(UTILS_O) $(INCLUDES) -o $(NAME)
+	$(CC) $(CFLAGS) $^ $(LIB) -o $(NAME)
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished"  "[$(NAME)]...$(X)
 
-$(OBJ_DIR)/%.o: ./main/%.c $(HEADERFILES)
+# only need the header files for the object file compilation
+$(OBJ_DIR)/%.o: %.c
 	@echo $(Y)Compiling [$@]...$(X)
 	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./parser/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./expander/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./subshell/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./executer/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./errors/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./builtins/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
-	@printf $(UP)$(CUT)
-
-$(OBJ_DIR)/%.o: ./utils/%.c $(HEADERFILES)
-	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p _obj
-	@$(CC) $(CFLAGS) $(INC_HEADER) -c $< -o $@
+	@$(CC) $(CFLAGS) -MMD -MP -c $< $(INC) -o $@
 	@printf $(UP)$(CUT)
 
 clean:
@@ -195,7 +142,9 @@ fclean: clean
 re: fclean all
 
 debug: fclean
-	$(CC) $(CFLAGS) -g $(INC_HEADER) $(MAIN_S) $(PARSE_S) $(EXPAN_S) $(SUB_S) $(EXEC_S) $(ERROR) $(BUILT) $(UTILS) $(INCLUDES) -o debug
+	$(CC) $(CFLAGS) -g $(INC) $(SRC) $(INC) -o debug
 	lldb debug
 
 .PHONY: all clean fclean re debug
+
+-include $(OBJ:.o=.d)

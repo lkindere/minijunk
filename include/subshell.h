@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:59:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:33:56 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:08:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SUBSHELL_H
 
 # include "main.h"
-# include "parser.h"
 
 typedef struct s_flag
 {

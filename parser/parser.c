@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 21:06:16 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:16:39 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,11 @@ void	remove_double_end(t_data *data)
 
 int	parser(t_data *data)
 {
-	// if (checker(data) != 0)
-	// 	return (1);
 	if (comb_redirs(data) != 0)
-		return (2);
-	// printf("survived even_par_count\n");
+		return (1);
 	if (create_cmd_args(data) != 0)
-		return (6);
-	// printf("survived create_cmd_args\n");
+		return (2);
 	save_redirs_in_cmds(data);
 	remove_double_end(data);
-	// debug_print_cmds(data);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:52:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 11:16:07 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:11:05 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	debug_print_cmds(t_data *data)
 	{
 		while (temp->cmd_arg && temp->cmd_arg[++i])
 			printf("string %i: %s\n", i, temp->cmd_arg[i]);
-		// printf("string %i: %s\n", i, temp->cmd_arg[i]);
 		printf("in: %i out: %i\n", temp->in, temp->out);
 		temp = temp->pipe_next;
 	}
@@ -61,7 +60,6 @@ void	debug_print_expands(t_data *data)
 	while (temp_exp[i])
 	{
 		printf("Expand index p: %p\n", temp_exp[i]);
-		// printf("expands: index: %i:\t%s\n", i, temp_exp[i]);
 		i++;
 	}
 	printf("Expands i: %d\n", i);

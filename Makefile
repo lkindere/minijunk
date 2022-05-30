@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
+#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/29 23:17:38 by mmeising         ###   ########.fr        #
+#    Updated: 2022/05/30 11:21:17 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ VPATH = builtins errors executer expander main parser subshell utils
 NAME := ./minishell
 
 CC := gcc
-CFLAGS ?= -Wall -Werror -Wextra
+# CFLAGS ?= -Wall -Werror -Wextra
 
 MAIN_S := 	main.c 						\
 			data.c 						\
@@ -97,7 +97,7 @@ OBJ_DIR := ./_obj
 SRC := $(MAIN_S) $(PARSE_S) $(EXPAN_S) $(SUB_S) $(EXEC_S) $(ERROR) $(BUILT) $(UTILS)
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-LIB := -lreadline -L/Users/mmeising/.brew/opt/readline/lib
+LIB := -lreadline -L/Users/lkindere/.brew/opt/readline/lib
 INC := -I ./include
 
 # Colorcodes

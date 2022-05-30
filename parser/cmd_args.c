@@ -6,11 +6,24 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 17:39:39 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:38:53 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+/*
+ *	returns index of first NULL pointer in char **ptr_arr
+ */
+int	ft_last_ptr(char **ptr_arr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr_arr[i])
+		i++;
+	return (i);
+}
 
 /*
  *	Creates a new cmd struct, links it to the end of the cmds linked list and
@@ -28,6 +41,7 @@ static int	create_new_cmd(t_cmd **cmd)
 	if (new_cmd == NULL)
 		return (internal_error_return(ERROR_MALLOC));
 	new_cmd->cmd_arg = NULL;
+	new_cmd->exp = NULL;
 	new_cmd->in = -2;
 	new_cmd->out = -2;
 	(*cmd)->pipe_next = new_cmd;
@@ -38,51 +52,30 @@ static int	create_new_cmd(t_cmd **cmd)
 }
 
 /*
- *	returns index of first NULL pointer in char **ptr_arr
- */
-int	ft_last_ptr(char **ptr_arr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr_arr[i])
-		i++;
-	return (i);
-}
-
-static int	count_cmds(t_data *data)
-{
-	t_cmd	*temp;
-	int		i;
-
-	temp = data->cmds;
-	i = 0;
-	while (temp)
-	{
-		temp = temp->pipe_next;
-		i++;
-	}
-	return (i);
-}
-
-/*
  *	Goes through all tokens, creates the cmd linked lists for every command.
  */
 int	create_cmd_args(t_data *data)
 {
+	int		x;
 	t_token	*temp;
 	t_cmd	*cmd;
 
+	x = 0;
 	temp = data->tokens;
 	cmd = data->cmds;
+	cmd->exp = data->expands[x];
+	data->expands[x++] = NULL;
 	while (temp && temp->type != END)
 	{
 		if (temp->type == PIPE)
 		{
-			cmd->exp = data->expands[count_cmds(data) - 1];
-			data->expands[count_cmds(data) - 1] = NULL;
 			if (create_new_cmd(&cmd) != 0)
 				return (internal_error_return(ERROR_MALLOC));
+			if (data->expands[x])
+			{
+				cmd->exp = data->expands[x];
+				data->expands[x++] = NULL;
+			}
 		}
 		else if (temp->type == WORD)
 		{

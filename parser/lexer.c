@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 17:36:58 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:39:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ static int	new_token(t_data *data, int *i)
 	token_add_back(&(data->tokens), current);
 	if (check_if_new_cmd(data))
 	{
+		if (add_char(&(data->expands[data->cmd_count]), '\0') != 0)
+			return (internal_error_return(ERROR_MALLOC));
 		data->cmd_count++;
 		data->dollar_count = 0;
 		if (add_char_ptr(&data->expands) != 0)

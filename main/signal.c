@@ -6,11 +6,13 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 02:56:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:35:33 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+
 
 void    handle_sigint(int sig)
 {

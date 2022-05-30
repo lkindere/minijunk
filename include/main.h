@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 08:02:37 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:35:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
@@ -203,5 +204,7 @@ void	ft_putstr_fd(char *str, int fd);
 char	*ft_itoa(int n);
 //Misc
 int		is_meta(char c);
+
+void   rl_replace_line (const char *text, int clear_undo);
 
 #endif

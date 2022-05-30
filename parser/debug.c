@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:52:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 17:00:46 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:16:07 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	debug_print_expands(t_data *data)
 	temp_exp = data->expands;
 	while (temp_exp[i])
 	{
-		printf("expands: index: %i:\t%s\n", i, temp_exp[i]);
+		printf("Expand index p: %p\n", temp_exp[i]);
+		// printf("expands: index: %i:\t%s\n", i, temp_exp[i]);
 		i++;
 	}
+	printf("Expands i: %d\n", i);
 }

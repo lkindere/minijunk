@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 14:24:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 09:44:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	free_cmds(t_cmd **cmds)
 		if ((cmd)->paths)
 			free_2d_char(&cmd->paths);
 		if (cmd->exp)
+		{
 			free(cmd->exp);
+			cmd->exp = NULL;
+		}
 		temp = cmd;
 		cmd = cmd->pipe_next;
 		free(temp);

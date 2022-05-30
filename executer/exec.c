@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 20:57:20 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:12:26 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	executer_subfork(t_data *data, t_cmd *cmd)
 {
 	if (is_exception(cmd->cmd_arg[0]))
-		fork_exit(&data, cmd, 126);
+		fork_exit(&data, cmd, exit_code(-1));
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(cmd) != 0)
 		fork_exit(&data, cmd, -1);
@@ -74,10 +74,7 @@ static void	executer_main(t_data *data, t_cmd *cmd)
 	if (check_builtin(data, cmd))
 		return ;
 	if (is_exception(cmd->cmd_arg[0]))
-	{
-		exit_code(126);
 		return ;
-	}
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(cmd) != 0)
 		return ;

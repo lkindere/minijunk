@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:49:01 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:04:24 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	handle_sigint(int sig)
 {
 	if (sig)
 		exit_code(1);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	// write(1, "\n", 1);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
 }
 
 int	signal_default(void)

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:23:45 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:06:00 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:14:15 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,24 @@ int	is_exception(char *input)
 	i = 0;
 	if (input_is_empty(input)
 		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
+		{
+			exit_code(127);
+			return (1);
+		}
 	if (input[0] == '.' && input_is_empty(&input[1])
 		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
+		{
+			exit_code(127);
+			return (1);
+		}
 	while (input[i] && input[i] != '/')
 		i++;
 	if (input[i] == '/' && !input[i + 1] && access(input, F_OK) == 0
 		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
+		{
+			exit_code(126);
+			return (1);
+		}
 	return (0);
 }
 

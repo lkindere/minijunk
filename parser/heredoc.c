@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:54:56 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/28 16:30:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:06:59 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	read_heredoc(t_data *data, t_token *token, char **str)
 		if (ft_add_str(str, input) != 0 || ft_add_str(str, "\n") != 0)
 			return (1);
 	}
-	*str = expander(*str, data, 1);
+	*str = expander(*str, data, token->quoted);
 	return (0);
 }
 

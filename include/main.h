@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:46:36 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:50:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*content;
+	int				quoted;
 	struct s_token	*next;
 }	t_token;
 

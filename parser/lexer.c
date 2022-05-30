@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:40:22 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 11:39:37 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:12:52 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	found_star(t_data *data, t_token *token, int *i, int j)
+{
+	if (data->flags.single_quote || data->flags.double_quote)
+		add_char(&data->expands[data->cmd_count], '0');
+	else//not in quotes, expand
+		add_char(&data->expands[data->cmd_count], '1');
+	add_char(&(token->content), data->input[*i + j]);
+}
 
 /*
  *	goes through input until it reaches end of token (use ft_tokenlen for that).
@@ -33,15 +42,11 @@ static void	copy_word(t_data *data, t_token *token, int *i)
 		else if (data->input[*i + j] == '\"' && !data->flags.single_quote)
 			data->flags.double_quote = 1 - data->flags.double_quote;
 		else if (data->input[*i + j] == '*')
-		{
-			if (data->flags.single_quote || data->flags.double_quote)
-				add_char(&data->expands[data->cmd_count], '0');
-			else//not in quotes, expand
-				add_char(&data->expands[data->cmd_count], '1');
-			add_char(&(token->content), data->input[*i + j]);
-		}
+			found_star(data, token, i, j);
 		else
 			add_char(&(token->content), data->input[*i + j]);
+		if (data->flags.single_quote || data->flags.double_quote)
+			token->quoted = 2;
 	}
 	add_char(&(token->content), '\0');
 	*i = *i + token_len - 1;//was it really just this - 1 that fixed it not finding new tokens that begin right after quote end?

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:07:27 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:26:52 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:53:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-static void	reverse(char *str, int c, int r, int d)
+static void	reverse(char *str, int c, int r)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ void	ft_find_replace(char *str, int c, int r, int d)
 	i = -1;
 	if (d == -1)
 	{
-		reverse(str, c, r, d);
+		reverse(str, c, r);
 		return ;
 	}
 	else if (d == 1)

@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/30 16:46:51 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/30 21:17:16 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ VPATH = builtins errors executer expander main parser subshell utils
 NAME := ./minishell
 
 CC := gcc
-# CFLAGS ?= -Wall -Werror -Wextra
+CFLAGS ?= -Wall -Werror -Wextra
 
 MAIN_S := 	main.c 						\
 			data.c 						\

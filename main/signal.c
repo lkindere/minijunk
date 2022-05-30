@@ -6,16 +6,17 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 14:51:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:49:01 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void    handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
-	(void)sig;
-    write(1, "\n", 1);
+	if (sig)
+		exit_code(1);
+	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -23,7 +24,7 @@ void    handle_sigint(int sig)
 
 int	signal_default(void)
 {
-	struct sigaction	sint = {0};
+	struct sigaction	sint;
 
 	sint.sa_handler = SIG_DFL;
 	sint.sa_flags = SA_RESTART;
@@ -31,20 +32,20 @@ int	signal_default(void)
 	return (1);
 }
 
-void    signal_unhandler(void)
+void	signal_unhandler(void)
 {
-	struct sigaction	sint = {0};
+	struct sigaction	sint;
 
 	sint.sa_handler = SIG_IGN;
 	sint.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sint, NULL);
 }
 
-void    signal_handler(void)
+void	signal_handler(void)
 {
 	struct termios		term;
-	struct sigaction	sint = {0};
-	struct sigaction	squit = {0};
+	struct sigaction	sint;
+	struct sigaction	squit;
 
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;

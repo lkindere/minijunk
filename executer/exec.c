@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 20:17:44 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:57:20 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ void	executer(t_data *data, t_cmd *cmd)
 {
 	t_cmd	*first_cmd;
 
-	// printf("Cmd: %s\n", cmd->cmd_arg[1]);
-	// printf("Cmd in: %d, cmd out: %d\n", cmd->in, cmd->out);
 	first_cmd = cmd;
 	if (!cmd->pipe_next)
 	{
@@ -109,7 +107,6 @@ void	executer(t_data *data, t_cmd *cmd)
 		{
 			if (cmd->pipe_next)
 				create_pipes(data, cmd);
-			// printf("Starting cmd: %s with in: %d out: %d\n", cmd->cmd_arg[1], cmd->in, cmd->out);
 			executer_startfork(data, cmd);
 		}
 		cmd = cmd->pipe_next;

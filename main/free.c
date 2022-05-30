@@ -6,11 +6,25 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 09:44:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:46:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+//Frees main loop in case of errors
+int	reset(t_data *data, char **input, char **segment)
+{
+	if (*input)
+		free(*input);
+	(*input) = NULL;
+	if (*segment)
+		free(*segment);
+	(*segment) = NULL;
+	reset_mem(data);
+	exit_code(1);
+	return (1);
+}
 
 /*
  *	'free()'s and sets to NULL all members of the 2D array and the array itself.
@@ -81,4 +95,3 @@ void	free_tokens(t_token **tokens)
 	}
 	(*tokens) = NULL;
 }
-

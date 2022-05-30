@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 19:16:12 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:07:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,5 @@ char	**clone_envp(char **envp);
 
 //Bonus
 int		check_wildcards(t_data *data, t_cmd *cmd);
-
 
 #endif

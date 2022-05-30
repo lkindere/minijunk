@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:20 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 09:25:35 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:27:28 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	add_char_ptr(char ***arr)
 {
 	char	**ret;
-	int	i;
+	int		i;
 
 	if (*arr == NULL)
 	{
@@ -70,8 +70,6 @@ int	alloc_data(t_data **data, char **envp)
 int	init_data(t_data **data, char **envp)
 {
 	alloc_data(data, envp);
-	// (*data)->std_in = dup(STDIN_FILENO);
-	// (*data)->std_out = dup(STDOUT_FILENO);
 	(*data)->cmds->in = -2;
 	(*data)->cmds->out = -2;
 	(*data)->pipe1[0] = -1;

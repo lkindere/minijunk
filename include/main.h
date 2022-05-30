@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 20:09:10 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:46:36 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <errno.h>
 # include <limits.h>
 # include <dirent.h>
-# include <stdbool.h>
 # include <stdint.h>
 
 # define SHELLNAME	"MiniJunk"
@@ -85,8 +84,6 @@ typedef struct s_data
 	int				dollar_count;
 	char			**expands;
 	int				exit_code;
-	// int				std_in;
-	// int				std_out;
 	int				is_fork;
 	int				and_or;
 	int				pipe1[2];
@@ -134,6 +131,7 @@ int		init_data(t_data **data, char **envp);
 int		terminator(t_data **rip);
 int		reset_data(t_data *data);
 void	reset_mem(t_data *data);
+int		reset(t_data *data, char **input, char **segment);
 
 int		add_char_ptr(char ***arr);
 int		add_char(char **str, char c);
@@ -151,7 +149,7 @@ int		is_input(char *full_input, char *segment);
 //Signal
 int		signal_default(void);
 void	signal_handler(void);
-void    signal_unhandler(void);
+void	signal_unhandler(void);
 
 //Exit
 int		exit_code(int new);
@@ -164,7 +162,7 @@ int		put_error(char *a, char *b, char *c, char *d);
 int		error_exit(char *cmd, char *arg, int error, int exitcode);
 int		error_return(char *cmd, char *arg, int error, int exitcode);
 int		internal_error_return(t_error error);
-void	internal_error_exit(t_error error);
+int		internal_error_exit(t_error error);
 int		blank_err(t_data *data, char *blank, char *token);
 
 /*----------UTILS----------*/
@@ -206,6 +204,6 @@ char	*ft_itoa(int n);
 //Misc
 int		is_meta(char c);
 
-void   rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line(const char *text, int clear_undo);
 
 #endif

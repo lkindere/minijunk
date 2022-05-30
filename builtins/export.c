@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 11:40:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 20:40:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:56:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int	builtin_export(char **cmd, t_data *data)
 			internal_error_return(ERROR_MALLOC);
 		index = is_set(cmd[i], data->envp);
 		if (index == -2)
-			return (put_error(SHELLNAME, cmd[0], cmd[i], "not a valid identifier"));
+			return (put_error(SHELLNAME, cmd[0], cmd[i],
+					"not a valid identifier"));
 		if (ft_strncmp(cmd[i], "_=", 2) && ft_strchr(cmd[i], '=') != 0)
 		{
 			if (index >= 0 && replace_env(cmd[i], data->envp, index) != 0)

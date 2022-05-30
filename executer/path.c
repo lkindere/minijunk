@@ -6,11 +6,25 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:41:37 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:18:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+static char	*no_paths(t_data *data, char *cmd)
+{
+	char	*full_path;
+
+	full_path = ft_strjoin3(data->pwd, "/", cmd);
+	if (!full_path)
+		internal_error_exit(ERROR_MALLOC);
+	if (access(full_path, F_OK) == 0)
+		return (full_path);
+	free(full_path);
+	full_path = NULL;
+	return (NULL);
+}
 
 //Command not found should return 127 exit code
 //Checks if command exists in paths
@@ -21,14 +35,7 @@ char	*find_cmd(t_data *data, char *cmd, char **paths)
 
 	i = 0;
 	if (!paths || !paths[i])
-	{
-		full_path = ft_strjoin3(data->pwd, "/", cmd);
-		if (!full_path)
-			internal_error_exit(ERROR_MALLOC);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(full_path);
-	}
+		return (no_paths(data, cmd));
 	while (paths && paths[i])
 	{
 		full_path = ft_strjoin(paths[i++], cmd);

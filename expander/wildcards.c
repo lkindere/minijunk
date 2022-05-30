@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 11:40:28 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:07:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	check_match(char *name, char *cmd)
 			return (0);
 		if (ft_strwstr(name, input[i], (char)-1) == -1 && free_2d_char(&input))
 			return (0);
-		if (ft_strwstr(name, input[i], (char)-1) < last_index && free_2d_char(&input))
+		if (ft_strwstr(name, input[i], (char)-1) < last_index
+			&& free_2d_char(&input))
 			return (0);
 		last_index = ft_strwstr(name, input[i], (char)-1);
 	}

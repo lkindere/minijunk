@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 20:30:49 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 07:44:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:13:40 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strionjoin(char *s1, char *s2, int n, int *index)
 		return (NULL);
 	while (s1 && s1[j] && i < (*index))
 		join[i++] = s1[j++];
-	j+= n;
+	j += n;
 	while (s2 && s2[k])
 		join[i++] = s2[k++];
 	*index = i;

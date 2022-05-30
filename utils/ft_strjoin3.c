@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 10:04:05 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/22 15:11:33 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:13:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static size_t	ft_strlenn(const char *s)
 		i++;
 	return (i);
 }
-
 
 //Null protected
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3)

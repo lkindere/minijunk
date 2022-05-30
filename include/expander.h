@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:37:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/28 11:45:52 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:07:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_expander
 //Utils
 void	init_expander(t_expander *xp);
 char	*retrieve_var(char **envp, int index);;
-
 //Wild flags
 void	hide_wildcards(t_cmd *cmd);
 void	unhide_wildcards(t_cmd *cmd);

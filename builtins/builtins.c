@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:37:53 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 19:17:06 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:50:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	is_builtin(char *s)
 {
 	if (!ft_strcmp(s, "echo") || !ft_strcmp(s, "pwd") || !ft_strcmp(s, "env"))
 		return (1);
-	if (!ft_strcmp(s, "export") || !ft_strcmp(s, "unset") || !ft_strcmp(s, "cd"))
-		return (2);
-	if (!ft_strcmp(s, "exit"))
-		return (3);
+	if (!ft_strcmp(s, "export") || !ft_strcmp(s, "unset"))
+		return (1);
+	if (!ft_strcmp(s, "exit") || !ft_strcmp(s, "cd"))
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:22:08 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 20:19:02 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:05:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	create_pipes(t_data *data, t_cmd *cmd)
 
 	if (pipe(pfd) == -1)
 		internal_error_exit(ERROR_PIPE);
-	// printf("New pipe in: %d, out: %d\n\n", pfd[0], pfd[1]);
 	if (pipe_check(data, cmd, 1))
 		cmd->out = pfd[1];
 	else

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:49:51 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:53:04 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:59:00 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	error_return(char *cmd, char *arg, int error, int exitcode)
 }
 
 //Prints out a custom error and exits
-void	internal_error_exit(t_error error)
+int	internal_error_exit(t_error error)
 {
 	if (error == ERROR_NULL)
 		put_error("Internal error: NULL", NULL, NULL, NULL);

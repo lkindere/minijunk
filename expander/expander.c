@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 08:00:52 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:06:34 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,9 @@ char	*rewrite_input(char *input, t_expander *xp)
 	char	*old_input;
 	char	*old_exp;
 
-	// printf("Index: %d, index char: %c\n", xp->i, input[xp->i]);
-	// printf("Dollar len: %d\n", xp->dollar_len);
-	// printf("Double quote: %d\n", xp->double_quote);
 	if ((!xp->expansion) && xp->double_quote)
 	{
-		xp->i+= 2;
+		xp->i += 2;
 		return (input);
 	}
 	old_input = input;

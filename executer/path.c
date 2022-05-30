@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:18:39 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:20:51 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static char	*no_paths(t_data *data, char *cmd)
 		return (full_path);
 	free(full_path);
 	full_path = NULL;
+	exit_code(127);
+	put_error(SHELLNAME, cmd, "No such file or directory", NULL);
 	return (NULL);
 }
 

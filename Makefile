@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/30 21:51:07 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/30 22:03:31 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ OBJ_DIR := ./_obj
 SRC := $(MAIN_S) $(PARSE_S) $(EXPAN_S) $(SUB_S) $(EXEC_S) $(ERROR) $(BUILT) $(UTILS)
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-LIB := -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
+LIB := -lreadline
 INC := -I ./include
 
 # Colorcodes

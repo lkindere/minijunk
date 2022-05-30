@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 21:53:15 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:40:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ int	do_stuff(t_data *data)
 	return (0);
 }
 
+int	subsheller(char **input, char **segment, t_data *data)
+{
+	data->input = (*segment);
+	(*segment) = NULL;
+	do_stuff(data);
+	if (data->is_fork && !(*input) && terminator(&data))
+		exit (exit_code(-1));
+	return (0);
+}
+
 int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
@@ -82,19 +92,7 @@ int	the_loop(char **input, char **segment, t_data *data)
 			return (0);
 		}
 	}
-	return (0);
-}
-
-int	subsheller(char **input, char **segment, t_data *data)
-{
-	if (the_loop(input, segment, data) != 0)
-		return (reset(data, input, segment));
-	data->input = (*segment);
-	(*segment) = NULL;
-	do_stuff(data);
-	if (data->is_fork && !(*input) && terminator(&data))
-		exit (exit_code(-1));
-	return (0);
+	return (subsheller(input, segment, data));
 }
 
 int	main(int argc, char **argv, char **envp)

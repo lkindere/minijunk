@@ -89,7 +89,6 @@ test_from_file() {
 	end_of_file=0
 	line_count=0
 	while [[ $end_of_file == 0 ]] ;
-	sleep 1
 	do
 		read -r line
 		end_of_file=$?

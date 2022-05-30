@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/30 22:03:31 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/30 23:46:33 by mmeising         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,11 +95,14 @@ UTILS :=	ft_calloc.c 				\
 			ft_itoa.c					\
 
 OBJ_DIR := ./_obj
+OBJ_DIR_DEBUG := ./_obj_debug
 
 SRC := $(MAIN_S) $(PARSE_S) $(EXPAN_S) $(SUB_S) $(EXEC_S) $(ERROR) $(BUILT) $(UTILS)
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-LIB := -lreadline
+OBJ_DEBUG := $(addprefix $(OBJ_DIR_DEBUG)/, $(SRC:.c=.o))
+
+LIB := -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
 INC := -I ./include
 
 # Colorcodes
@@ -134,7 +137,14 @@ clean:
 		echo $(G)Cleaned!$(X); \
 	fi
 
-fclean: clean
+clean_debug:
+	@if [ -d "${OBJ_DIR_DEBUG}" ]; then \
+		echo $(R)Cleaning"  "[$(OBJ_DIR_DEBUG)]...$(X); \
+		rm -r ${OBJ_DIR_DEBUG}; \
+		echo $(G)Cleaned!$(X); \
+	fi
+
+fclean: clean clean_debug
 	@if [ -f "$(NAME)" ]; then \
 		echo $(R)Cleaning"  "[$(NAME)]...$(X); \
 		rm -r $(NAME); \
@@ -143,9 +153,13 @@ fclean: clean
 
 re: fclean all
 
-debug: fclean
-	$(CC) $(CFLAGS) -g $(INC) $(SRC) $(INC) -o debug
+debug: $(OBJ_DEBUG)
+	$(CC) $(CFLAGS) -g $^ $(LIB) -o debug
 	lldb debug
+
+$(OBJ_DIR_DEBUG)/%.o: %.c
+	@mkdir -p _obj_debug
+	@$(CC) $(CFLAGS) -g -MMD -MP -c $< $(INC) -o $@
 
 .PHONY: all clean fclean re debug
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:00:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/26 23:47:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:33:29 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	check_input_each_cmd(t_data *data)
 	temp = data->tokens;
 	while (temp)
 	{
-		if (temp->type == PIPE || temp->type == END)
+		if (temp->type == PIPE || temp->type == END
+			|| temp->type == LOG_AND || temp->type == LOG_OR)
 		{
 			if (has_input == 0)
 				return (blank_err(data, "syntax", temp->content));

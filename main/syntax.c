@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 21:21:48 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 06:52:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:34:27 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int	raw_check(t_data *data)
 			&& !(data->flags.single_quote || data->flags.double_quote)
 			&& (data->input[i + 1] == '>' || data->input[i + 1] == '<'))
 		{
-			blank_err(data, "Positional parameters not handled, syntax", NULL);
-			return (1);
+			return (blank_err(data, "Positional parameters not handled", NULL));
 		}
 		i++;
+	}
+	if (data->flags.single_quote || data->flags.double_quote)
+	{
+		return (blank_err(data, "Unclosed quotes", NULL));
 	}
 	return (0);
 }

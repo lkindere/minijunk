@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 14:52:46 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:09:10 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct s_data
 	int				and_or;
 	int				pipe1[2];
 	int				pipe2[2];
-	struct s_data	*next;
 }	t_data;
 
 typedef struct s_cmd

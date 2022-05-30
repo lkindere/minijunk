@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:37:53 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 14:33:42 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:17:06 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,29 @@ int	is_builtin(char *s)
 	return (0);
 }
 
+//Checks if it can close the fds and closes them
+static void	close_check(t_data *data, t_cmd *cmd, int end)
+{
+	if (end == 0)
+	{
+		if (cmd->in <= 0)
+			return ;
+		if (cmd->in == data->pipe1[0] || cmd->in == data->pipe2[0])
+			return ;
+		if (close(cmd->in) == -1)
+			internal_error_return(ERROR_CLOSE);
+	}
+	if (end == 1)
+	{
+		if (cmd->out <= 1)
+			return ;
+		if (cmd->out == data->pipe1[1] || cmd->in == data->pipe2[1])
+			return ;
+		if (close(cmd->out) == -1)
+			internal_error_return(ERROR_CLOSE);
+	}
+}
+
 //Runs a builtin if it matches the command and sets it's exit code
 //Returns 0 if not a builtin
 //Returns 1 if builtin
@@ -91,10 +114,8 @@ int	check_builtin(t_data *data, t_cmd *cmd)
 		exit_code(builtin_unset(cmd->cmd_arg, data));
 	if (!ft_strcmp(cmd->cmd_arg[0], "exit"))
 		exit_code(builtin_exit(cmd, data));
-	if (cmd->out > 1 && close(cmd->out) == -1)
-		internal_error_return(ERROR_CLOSE);
-	if (cmd->pipe_next && cmd->pipe_next->in > 0 
-		&& close(cmd->pipe_next->in) == -1)
-		internal_error_return(ERROR_CLOSE);
+	close_check(data, cmd, 1);
+	if (cmd->pipe_next)
+		close_check(data, cmd->pipe_next, 0);
 	return (1);
 }

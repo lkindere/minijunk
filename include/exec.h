@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 16:46:32 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:16:12 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int		is_exception(char *input);
 int		exec_access(t_cmd *cmd);
 
 //Pipes
-int		create_pipes(t_cmd *cmd);
-int		close_fds(t_cmd *cmd);
+int		create_pipes(t_data *data, t_cmd *cmd);
+int		close_fds(t_cmd *cmd, t_data *data);
 
 //Builtins
 int		is_builtin(char *s);

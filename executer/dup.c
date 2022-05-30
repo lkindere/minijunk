@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 16:44:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:23:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	fork_exit(t_data **data, t_cmd *cmd, int status)
 	if (cmd->cmd_path != cmd->cmd_arg[0])
 		free(cmd->cmd_path);
 	cmd->cmd_path = NULL;
-	close_fds(cmd);
+	close_fds(cmd, *data);
 	terminator(data);
 	if (status >= 0)
 		exit(status);

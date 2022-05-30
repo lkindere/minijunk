@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 16:50:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:17:44 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 		executer_subfork(data, cmd);
 	}
 	if (cmd->pid != 0)
-		close_fds(cmd);
+		close_fds(cmd, data);
 }
 
 //Forks for execve on main
@@ -63,7 +63,7 @@ static void	main_subfork(t_data *data, t_cmd *cmd)
 	if (cmd->cmd_path != cmd->cmd_arg[0])
 		free(cmd->cmd_path);
 	cmd->cmd_path = NULL;
-	close_fds(cmd);
+	close_fds(cmd, data);
 	exit_code(get_exitstatus(cmd->pid));
 }
 
@@ -94,6 +94,8 @@ void	executer(t_data *data, t_cmd *cmd)
 {
 	t_cmd	*first_cmd;
 
+	// printf("Cmd: %s\n", cmd->cmd_arg[1]);
+	// printf("Cmd in: %d, cmd out: %d\n", cmd->in, cmd->out);
 	first_cmd = cmd;
 	if (!cmd->pipe_next)
 	{
@@ -106,7 +108,8 @@ void	executer(t_data *data, t_cmd *cmd)
 		if (cmd->in != -1 && cmd->out != -1 && cmd->cmd_arg)
 		{
 			if (cmd->pipe_next)
-				create_pipes(cmd);
+				create_pipes(data, cmd);
+			// printf("Starting cmd: %s with in: %d out: %d\n", cmd->cmd_arg[1], cmd->in, cmd->out);
 			executer_startfork(data, cmd);
 		}
 		cmd = cmd->pipe_next;

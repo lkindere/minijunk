@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:49:51 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 13:20:25 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:53:04 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
  */
 int	blank_err(t_data *data, char *blank, char *token)
 {
+	(void)data;
 	ft_putstr_fd(PROMPT": ", STDERR_FILENO);
 	ft_putstr_fd(blank, STDERR_FILENO);
 	if (token)
@@ -33,7 +34,7 @@ int	blank_err(t_data *data, char *blank, char *token)
 		ft_putstr_fd(" error", STDERR_FILENO);
 	}
 	ft_putstr_fd("\'\n", STDERR_FILENO);
-	data->exit_code = 258;
+	exit_code(258);
 	return (1);
 }
 

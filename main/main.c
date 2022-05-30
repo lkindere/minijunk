@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 17:40:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:40:04 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	do_stuff(t_data *data)
 		in_out_std(data);
 		pipe_fds(data);
 	}
-	if (can_execute(data->and_or, data->exit_code))
+	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
 	reset_data(data);
 	return (0);
@@ -69,16 +69,16 @@ int	the_loop(char **input, char **segment, t_data *data)
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
 		{
 			reset_data(data);
-			if (data->is_fork)
-				exit (data->exit_code);
+			if (data->is_fork && terminator(&data))
+				exit (exit_code(-1));
 			return (0);
 		}
 	}
 	data->input = (*segment);
 	(*segment) = NULL;
 	do_stuff(data);
-	if (data->is_fork && !(*input))
-		exit (data->exit_code);
+	if (data->is_fork && !(*input) && terminator(&data))
+		exit (exit_code(-1));
 	return (0);
 }
 

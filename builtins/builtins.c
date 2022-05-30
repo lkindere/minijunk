@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:37:53 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/27 20:27:57 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:47:43 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ int	check_builtin_exec(t_data *data, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->cmd_arg[0], "echo"))
 	{
-		data->exit_code = builtin_echo(cmd->cmd_arg, cmd->out);
-		return (data->exit_code);
+		exit_code(builtin_echo(cmd->cmd_arg, cmd->out));
+		return (exit_code(-1));
 	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "pwd"))
 	{
-		data->exit_code = builtin_pwd(data->pwd, cmd->out);
-		return (data->exit_code);
+		exit_code(builtin_pwd(data->pwd, cmd->out));
+		return (exit_code(-1));
 	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "env"))
 	{
-		data->exit_code = builtin_env(data->envp, cmd->out);
-		return (data->exit_code);
+		exit_code(builtin_env(data->envp, cmd->out));
+		return (exit_code(-1));
 	}
 	return (-1);
 }
@@ -84,23 +84,23 @@ int	check_builtin(t_data *data, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->cmd_arg[0], "cd"))
 	{
-		data->exit_code = builtin_cd(cmd->cmd_arg, data);
-		return (data->exit_code);
+		exit_code(builtin_cd(cmd->cmd_arg, data));
+		return (exit_code(-1));
 	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "export"))
 	{
-		data->exit_code = builtin_export(cmd->cmd_arg, data);
-		return (data->exit_code);
+		exit_code(builtin_export(cmd->cmd_arg, data));
+		return (exit_code(-1));
 	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "unset"))
 	{
-		data->exit_code = builtin_unset(cmd->cmd_arg, data);
-		return (data->exit_code);
+		exit_code(builtin_unset(cmd->cmd_arg, data));
+		return (exit_code(-1));
 	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "exit"))
 	{
-		data->exit_code = builtin_exit(cmd, data);
-		return (data->exit_code);
+		exit_code(builtin_exit(cmd, data));
+		return (exit_code(-1));
 	}
 	return (-1);
 }

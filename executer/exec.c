@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 03:49:47 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 07:15:09 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	is_exception(char *input)
 
 //Waits for all the commands executed in current run
 //Frees cmds, gets exit codes
-static void	executer_finish(t_data *data, t_cmd *first_cmd)
+static void	executer_finish(t_cmd *first_cmd)
 {
 	while (first_cmd)
 	{
 		if (first_cmd->pid > 0)
-			data->exit_code = get_exitstatus(first_cmd->pid);
+			exit_code(get_exitstatus(first_cmd->pid));
 		first_cmd = first_cmd->pipe_next;
 	}
 }
@@ -51,12 +51,12 @@ int	executer_subfork(t_data *data, t_cmd *cmd)
 	if (is_exception(cmd->cmd_arg[0]))
 		return (126);
 	cmd->paths = get_paths(data->envp);
-	if (is_exec(cmd) && exec_access(data, cmd) != 0)
-		return (data->exit_code);
+	if (is_exec(cmd) && exec_access(cmd) != 0)
+		return (exit_code(-1));
 	if (!is_exec(cmd))
 		cmd->cmd_path = find_cmd(data, cmd->cmd_arg[0], cmd->paths);
 	if (!cmd->cmd_path)
-		return (data->exit_code);
+		return (exit_code(-1));
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		internal_error_exit(ERROR_FORK);
@@ -72,21 +72,19 @@ int	executer_subfork(t_data *data, t_cmd *cmd)
 //Forks for subfork
 static void	executer_startfork(t_data *data, t_cmd *cmd)
 {
-	int	exit_code;
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		internal_error_exit(ERROR_FORK);
 	if (cmd->pid == 0)
 	{
 		check_wildcards(data, cmd);
-		if (check_builtin(data, cmd) != -1)
-			exit(data->exit_code);
-		if (check_builtin_exec(data, cmd) != -1)
-			exit(data->exit_code);
-		exit_code = executer_subfork(data, cmd);
-		// reset_mem(data);
-		// free(data);
-		exit(exit_code);
+		if (check_builtin(data, cmd) != -1 && terminator(&data))
+			exit(exit_code(-1));
+		if (check_builtin_exec(data, cmd) != -1 && terminator(&data))
+			exit(exit_code(-1));
+		exit_code(executer_subfork(data, cmd));
+		terminator(&data);
+		exit(exit_code(-1));
 	}
 	if (cmd->pid != 0)
 	{	
@@ -105,7 +103,7 @@ int	executer_main(t_data *data, t_cmd *cmd)
 		return (1);
 	if (check_builtin_exec(data, cmd) != -1)
 		return (1);
-	data->exit_code = executer_subfork(data, cmd);
+	exit_code(executer_subfork(data, cmd));
 	return (1);
 }
 
@@ -124,16 +122,13 @@ void	executer(t_data *data, t_cmd *cmd)
 	}
 	while (cmd)
 	{
-		if (cmd->in != -1 || cmd->out != -1)
+		if (cmd->in != -1 && cmd->out != -1 && cmd->cmd_arg)
 		{
-			if (cmd->cmd_arg)
-			{
-				if (cmd->pipe_next)
-					create_pipes(cmd);
-				executer_startfork(data, cmd);
-			}
+			if (cmd->pipe_next)
+				create_pipes(cmd);
+			executer_startfork(data, cmd);
 		}
 		cmd = cmd->pipe_next;
 	}
-	executer_finish(data, first_cmd);
+	executer_finish(first_cmd);
 }

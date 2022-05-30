@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_redirs_in_cmds.c                              :+:      :+:    :+:   */
+/*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 21:59:20 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:40:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	save_redirs_in_cmds(t_data *data)
 				|| (temp->type == OUT && type_out(temp, cmd) != 0)
 				|| (temp->type == APPEND && type_append(temp, cmd) != 0))
 		{//one of the redirections failed
-			data->exit_code = 1;
+			exit_code(1);
 			while (temp && temp->type != PIPE && temp->type != END)
 				temp = temp->next;
 		}

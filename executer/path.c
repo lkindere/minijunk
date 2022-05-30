@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:46:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 03:58:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:41:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*find_cmd(t_data *data, char *cmd, char **paths)
 		free(full_path);
 	}
 	full_path = NULL;
-	data->exit_code = 127;
+	exit_code(127);
 	put_error(SHELLNAME, cmd, "command not found", NULL);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:00:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/28 12:03:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 07:42:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*retrieve_var(char **envp, int index)
 //Sets all struct data to 0, i to -1
 void	init_expander(t_expander *xp)
 {
-	xp->i = -1;
+	xp->i = 0;
 	xp->dollar_len = 0;
 	xp->single_quote = 0;
 	xp->double_quote = 0;

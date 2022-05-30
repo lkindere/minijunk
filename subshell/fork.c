@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 15:20:29 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:40:42 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	create_subshells(t_data *data, char **input, char **segment)
 	{
 		free(*segment);
 		(*segment) = NULL;
-		data->exit_code = get_exitstatus(pid);
+		exit_code(get_exitstatus(pid));
 	}
 	return (0);
 }

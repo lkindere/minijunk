@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 20:40:47 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:49:47 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	dup_and_exec(t_cmd *cmd, char **envp);
 int		is_exec(t_cmd *cmd);
 int		create_pipes(t_cmd *cmd);
-int		exec_access(t_data *data, t_cmd *cmd);
+int		exec_access(t_cmd *cmd);
 
 //Path
 char	**get_paths(char **envp);

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:43 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 22:34:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:39:04 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	get_input(char **full_input, t_data *data)
 		return ;
 	if (!*full_input)
 		*full_input = readline("MiniJunk XD: ");
-		// printf("Data->exit_code: %d\n", data->exit_code);
 	if (!*full_input)
-		exit (data->exit_code);
+		exit (exit_code(-1));
 	if (*full_input && (*full_input)[0])
 		add_history(*full_input);
 	if (input_is_empty(*full_input))

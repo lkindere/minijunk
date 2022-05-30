@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 01:40:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 08:00:52 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 	if (input[i] == '?')
 	{
 		*dollar_len = 2;
-		return (ft_itoa(data->exit_code));
+		return (ft_itoa(exit_code(-1)));
 	}
 	while (input[i] && is_exp(0, input[i]) == 1)
 		i++;
@@ -54,17 +54,20 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 char	*rewrite_input(char *input, t_expander *xp)
 {
 	char	*old_input;
+	char	*old_exp;
 
 	// printf("Index: %d, index char: %c\n", xp->i, input[xp->i]);
 	// printf("Dollar len: %d\n", xp->dollar_len);
 	// printf("Double quote: %d\n", xp->double_quote);
-	if (!xp->expansion && xp->double_quote)
+	if ((!xp->expansion) && xp->double_quote)
 	{
 		xp->i+= 2;
 		return (input);
 	}
 	old_input = input;
+	old_exp = xp->expansion;
 	xp->expansion = quote_meta(xp->expansion);
+	free(old_exp);
 	input = ft_strionjoin(input, xp->expansion, xp->dollar_len, &xp->i);
 	if (!xp->expansion)
 		xp->i--;
@@ -86,7 +89,7 @@ char	*expander(char *input, t_data *data, int heredoc)
 	if (heredoc == 2)
 		return (input);
 	init_expander(&xp);
-	while (input && input[++xp.i])
+	while (input && input[xp.i])
 	{
 		if (!heredoc)
 		{
@@ -100,6 +103,8 @@ char	*expander(char *input, t_data *data, int heredoc)
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
 			input = rewrite_input(input, &xp);
 		}
+		if (input[xp.i])
+			xp.i++;
 	}
 	return (input);
 }

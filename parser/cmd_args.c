@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 11:38:53 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:08:38 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,8 @@ static int	create_new_cmd(t_cmd **cmd)
 	return (0);
 }
 
-/*
- *	Goes through all tokens, creates the cmd linked lists for every command.
- */
-int	create_cmd_args(t_data *data)
+static int	loop(t_data *data, t_token *temp, t_cmd *cmd, int x)
 {
-	int		x;
-	t_token	*temp;
-	t_cmd	*cmd;
-
-	x = 0;
-	temp = data->tokens;
-	cmd = data->cmds;
-	cmd->exp = data->expands[x];
-	data->expands[x++] = NULL;
 	while (temp && temp->type != END)
 	{
 		if (temp->type == PIPE)
@@ -84,6 +72,25 @@ int	create_cmd_args(t_data *data)
 		}
 		temp = temp->next;
 	}
+	return (0);
+}
+
+/*
+ *	Goes through all tokens, creates the cmd linked lists for every command.
+ */
+int	create_cmd_args(t_data *data)
+{
+	int		x;
+	t_token	*temp;
+	t_cmd	*cmd;
+
+	x = 0;
+	temp = data->tokens;
+	cmd = data->cmds;
+	cmd->exp = data->expands[x];
+	data->expands[x++] = NULL;
+	if (loop(data, temp, cmd, x) != 0)
+		return (ERROR_MALLOC);
 	if (cmd->cmd_arg == NULL)
 	{
 		add_char_ptr(&cmd->cmd_arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_get_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:53:17 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/29 17:38:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:11:48 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ t_type	get_type(t_data *data, int *i)
 	while (ft_isspace(data->input[*i]))
 		(*i)++;
 	if ((data->input[*i] == '<' && data->input[*i + 1] == '<')
-			|| (data->input[*i] == '>' && data->input[*i + 1] == '>')
-			|| (data->input[*i] == '&' && data->input[*i + 1] == '&')
-			|| (data->input[*i] == '|' && data->input[*i + 1] == '|'))
+		|| (data->input[*i] == '>' && data->input[*i + 1] == '>')
+		|| (data->input[*i] == '&' && data->input[*i + 1] == '&')
+		|| (data->input[*i] == '|' && data->input[*i + 1] == '|'))
 	{
 		(*i)++;
 		if (data->input[*i - 1] == '<' && data->input[*i] == '<')

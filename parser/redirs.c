@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 06:40:19 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:17:27 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,14 @@ void	save_redirs_in_cmds(t_data *data)
 			temp = temp->next;
 		}
 		else if ((temp->type == IN && type_in(temp, cmd) != 0)
-				|| (temp->type == OUT && type_out(temp, cmd) != 0)
-				|| (temp->type == APPEND && type_append(temp, cmd) != 0))
-		{//one of the redirections failed
+			|| (temp->type == OUT && type_out(temp, cmd) != 0)
+			|| (temp->type == APPEND && type_append(temp, cmd) != 0))
+		{
 			exit_code(1);
 			while (temp && temp->type != PIPE && temp->type != END)
 				temp = temp->next;
 		}
 		else
 			temp = temp->next;
-		// else if (temp->type == OUT && type_out(temp, cmd) != 0)
-		// 	;
-		// else if (temp->type == APPEND && type_append(temp, cmd) != 0)
-		// 	;
-		// temp = temp->next;
 	}
 }

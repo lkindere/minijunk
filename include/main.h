@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/29 03:44:25 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 06:11:04 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
-# include <string.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include <string.h>
 # include <errno.h>
 # include <limits.h>
 # include <dirent.h>

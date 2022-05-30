@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 20:09:10 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:56:52 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*content;
+	int				quoted;
 	struct s_token	*next;
 }	t_token;
 

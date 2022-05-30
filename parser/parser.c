@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:18:45 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 06:52:17 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:06:16 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	copy_redir(t_token *token)
 	token->content = ft_strdup(token->next->content);
 	if (token->content == NULL)
 		return (internal_error_return(ERROR_MALLOC));
+	token->quoted = token->next->quoted;
 	return (0);
 }
 

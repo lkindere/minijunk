@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 22:40:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 23:48:27 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,10 @@ int	do_stuff(t_data *data)
 		in_out_std(data);
 		pipe_fds(data);
 	}
+	// dprintf(2, "Arg: %s\n", data->cmds->cmd_arg[1]);
+	// dprintf(2, "And or: %d, exit code: %d\n", data->and_or, exit_code(-1));
 	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
-	else if (data->is_fork)
-	{
-		terminator(&data);
-		exit(0);
-	}
 	reset_data(data);
 	return (0);
 }
@@ -73,22 +70,19 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
-		if (handle_and_or(segment, &data->and_or) != 0)
+		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
 		if (is_start(*segment))
 			break ;
 		if (splitter(data, input, segment) != 0)
 			return (1);
-		if (is_subshell(segment) == 1)
-		{
-			create_subshells(data, input, segment);
+		if (is_subshell(segment) == 1 && create_subshells(data, input, segment))
 			continue ;
-		}
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
 		{
-			reset_data(data);
 			if (data->is_fork && terminator(&data))
 				exit (exit_code(-1));
+			reset_data(data);
 			return (0);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:50:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 23:35:06 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_data
 	int				dollar_count;
 	char			**expands;
 	int				exit_code;
+	int				start_code;
 	int				is_fork;
 	int				and_or;
 	int				pipe1[2];

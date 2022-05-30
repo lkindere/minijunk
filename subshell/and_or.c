@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:29:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 23:48:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,27 @@ static int	first_sep(const char *segment)
 	return (segment[i]);
 }
 
+static void	check_exit(t_data *data, char **segment, int and_or)
+{
+	int	i;
+
+	i = 0;
+	if (!data->is_fork || data->start_code == -1)
+		return ;
+	if (data->start_code == 0 && and_or == 1)
+		return ;
+	if (data->start_code != 0 && and_or == 2)
+		return ;
+	free(*segment);
+	(*segment) = NULL;
+	terminator(&data);
+}
+
 //Checks the remainder of segment for separators
 //Removes || and && setting and_or next
 //Returns 0 on success
 //Returns 1 on error
-int	handle_and_or(char **segment, int *and_or_next)
+int	handle_and_or(t_data *data, char **segment, int *and_or)
 {
 	int	i;
 
@@ -44,13 +60,17 @@ int	handle_and_or(char **segment, int *and_or_next)
 		return (0);
 	if ((*segment)[i] == '&' && (*segment)[i + 1] == '&')
 	{	
-		*and_or_next = 1;
+		*and_or = 1;
+		check_exit(data, segment, *and_or);
 		return (remove_separator(segment, i));
 	}
 	if ((*segment)[i] == '|' && (*segment)[i + 1] == '|')
 	{
-		*and_or_next = 2;
+		*and_or = 2;
+		check_exit(data, segment, *and_or);
 		return (remove_separator(segment, i));
 	}
+	if (data->is_fork)
+		data->start_code = -1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:40:42 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 23:36:17 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static void	init_fork(t_data *data, char **input, char**segment)
 {
 	data->is_fork = 1;
+	data->start_code = exit_code(-1);
 	if (*input)
 		free(*input);
 	(*input) = (*segment);

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 06:40:04 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:23:35 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 
 	full_input = NULL;
 	segment = NULL;
-	signal_handler();
 	if (init_data(&data, envp) != 0)
 		internal_error_return(ERROR_MALLOC);
 	while (argc || argv)

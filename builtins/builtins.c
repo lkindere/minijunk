@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:37:53 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:47:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:33:42 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,51 +56,45 @@ int	is_set(char *var, char **envp)
 	return (-1);
 }
 
-//Runs a builtin if it matches the command and returns it's exit code
-//Returns -1 if not a builtin exec (FORK)
-int	check_builtin_exec(t_data *data, t_cmd *cmd)
+//Checks if arg is a builtin
+int	is_builtin(char *s)
 {
-	if (!ft_strcmp(cmd->cmd_arg[0], "echo"))
-	{
-		exit_code(builtin_echo(cmd->cmd_arg, cmd->out));
-		return (exit_code(-1));
-	}
-	if (!ft_strcmp(cmd->cmd_arg[0], "pwd"))
-	{
-		exit_code(builtin_pwd(data->pwd, cmd->out));
-		return (exit_code(-1));
-	}
-	if (!ft_strcmp(cmd->cmd_arg[0], "env"))
-	{
-		exit_code(builtin_env(data->envp, cmd->out));
-		return (exit_code(-1));
-	}
-	return (-1);
+	if (!ft_strcmp(s, "echo") || !ft_strcmp(s, "pwd") || !ft_strcmp(s, "env"))
+		return (1);
+	if (!ft_strcmp(s, "export") || !ft_strcmp(s, "unset") || !ft_strcmp(s, "cd"))
+		return (2);
+	if (!ft_strcmp(s, "exit"))
+		return (3);
+	return (0);
 }
 
-//Runs a builtin if it matches the command and returns it's exit code
-//Returns -1 if not a builtin exec (NO FORK)
+//Runs a builtin if it matches the command and sets it's exit code
+//Returns 0 if not a builtin
+//Returns 1 if builtin
 int	check_builtin(t_data *data, t_cmd *cmd)
 {
+	if (!is_builtin(cmd->cmd_arg[0]))
+		return (0);
+	if (cmd->in > 0 && close(cmd->in) == -1)
+		internal_error_return(ERROR_CLOSE);
+	if (!ft_strcmp(cmd->cmd_arg[0], "echo"))
+		exit_code(builtin_echo(cmd->cmd_arg, cmd->out));
+	if (!ft_strcmp(cmd->cmd_arg[0], "pwd"))
+		exit_code(builtin_pwd(data->pwd, cmd->out));
+	if (!ft_strcmp(cmd->cmd_arg[0], "env"))
+		exit_code(builtin_env(data->envp, cmd->out));
 	if (!ft_strcmp(cmd->cmd_arg[0], "cd"))
-	{
 		exit_code(builtin_cd(cmd->cmd_arg, data));
-		return (exit_code(-1));
-	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "export"))
-	{
 		exit_code(builtin_export(cmd->cmd_arg, data));
-		return (exit_code(-1));
-	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "unset"))
-	{
 		exit_code(builtin_unset(cmd->cmd_arg, data));
-		return (exit_code(-1));
-	}
 	if (!ft_strcmp(cmd->cmd_arg[0], "exit"))
-	{
 		exit_code(builtin_exit(cmd, data));
-		return (exit_code(-1));
-	}
-	return (-1);
+	if (cmd->out > 1 && close(cmd->out) == -1)
+		internal_error_return(ERROR_CLOSE);
+	if (cmd->pipe_next && cmd->pipe_next->in > 0 
+		&& close(cmd->pipe_next->in) == -1)
+		internal_error_return(ERROR_CLOSE);
+	return (1);
 }

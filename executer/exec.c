@@ -6,105 +6,86 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 07:15:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:50:13 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	is_exception(char *input)
-{
-	int	i;
-
-	i = 0;
-	if (input_is_empty(input)
-		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
-	if (input[0] == '.' && input_is_empty(&input[1])
-		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
-	while (input[i] && input[i] != '/')
-		i++;
-	if (input[i] == '/' && !input[i + 1] && access(input, F_OK) == 0
-		&& put_error(SHELLNAME, input, "command not found", NULL))
-		return (1);
-	return (0);
-}
-
-//Waits for all the commands executed in current run
-//Frees cmds, gets exit codes
-static void	executer_finish(t_cmd *first_cmd)
-{
-	while (first_cmd)
-	{
-		if (first_cmd->pid > 0)
-			exit_code(get_exitstatus(first_cmd->pid));
-		first_cmd = first_cmd->pipe_next;
-	}
-}
-
-//Is a fork, exits in case of error
-//Gets the paths, finds commands
-//Forks again for execve, exits with exit code
-int	executer_subfork(t_data *data, t_cmd *cmd)
+//Gets data and calls execve
+static void	executer_subfork(t_data *data, t_cmd *cmd)
 {
 	if (is_exception(cmd->cmd_arg[0]))
-		return (126);
+		fork_exit(&data, cmd, 126);
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(cmd) != 0)
-		return (exit_code(-1));
+		fork_exit(&data, cmd, -1);
 	if (!is_exec(cmd))
 		cmd->cmd_path = find_cmd(data, cmd->cmd_arg[0], cmd->paths);
 	if (!cmd->cmd_path)
-		return (exit_code(-1));
-	cmd->pid = fork();
-	if (cmd->pid == -1)
-		internal_error_exit(ERROR_FORK);
-	if (cmd->pid == 0)
+		fork_exit(&data, cmd, -1);
+	if ((!cmd->pipe_next || !is_builtin(cmd->pipe_next->cmd_arg[0])))
+	{
+		signal_default();
 		dup_and_exec(cmd, data->envp);
-	if (cmd->cmd_path != cmd->cmd_arg[0])
-		free(cmd->cmd_path);
-	cmd->cmd_path = NULL;
-	return (get_exitstatus(cmd->pid));
+	}
+	fork_exit(&data, cmd, -1);
 }
 
-//Creates pipes if needed
-//Forks for subfork
+//Starting fork for piping
 static void	executer_startfork(t_data *data, t_cmd *cmd)
 {
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		internal_error_exit(ERROR_FORK);
-	if (cmd->pid == 0)
+	if (cmd->pid == 0 && signal_default())
 	{
 		check_wildcards(data, cmd);
-		if (check_builtin(data, cmd) != -1 && terminator(&data))
+		if (check_builtin(data, cmd) && terminator(&data))
 			exit(exit_code(-1));
-		if (check_builtin_exec(data, cmd) != -1 && terminator(&data))
-			exit(exit_code(-1));
-		exit_code(executer_subfork(data, cmd));
-		terminator(&data);
-		exit(exit_code(-1));
+		executer_subfork(data, cmd);
 	}
 	if (cmd->pid != 0)
-	{	
-		if (cmd->pipe_prev && cmd->in != 0 && close(cmd->in) == -1)
-			internal_error_exit(ERROR_CLOSE);
-		if (cmd->pipe_next && cmd->out != 1 && close(cmd->out) == -1)
-			internal_error_exit(ERROR_CLOSE);
-	}
+		close_fds(cmd);
 }
 
-//Returns 1
-int	executer_main(t_data *data, t_cmd *cmd)
+//Forks for execve on main
+static void	main_subfork(t_data *data, t_cmd *cmd)
+{
+	cmd->pid = fork();
+	if (cmd->pid == -1)
+		internal_error_exit(ERROR_FORK);
+	if (cmd->pid == 0)
+	{
+		signal_default();
+		dup_and_exec(cmd, data->envp);
+	}
+	if (cmd->cmd_path != cmd->cmd_arg[0])
+		free(cmd->cmd_path);
+	cmd->cmd_path = NULL;
+	close_fds(cmd);
+	exit_code(get_exitstatus(cmd->pid));
+}
+
+//Main if no pipes, prepares data and calls subfork
+static void	executer_main(t_data *data, t_cmd *cmd)
 {
 	check_wildcards(data, cmd);
-	if (check_builtin(data, cmd) != -1)
-		return (1);
-	if (check_builtin_exec(data, cmd) != -1)
-		return (1);
-	exit_code(executer_subfork(data, cmd));
-	return (1);
+	if (check_builtin(data, cmd))
+		return ;
+	if (is_exception(cmd->cmd_arg[0]))
+	{
+		exit_code(126);
+		return ;
+	}
+	cmd->paths = get_paths(data->envp);
+	if (is_exec(cmd) && exec_access(cmd) != 0)
+		return ;
+	if (!is_exec(cmd))
+		cmd->cmd_path = find_cmd(data, cmd->cmd_arg[0], cmd->paths);
+	if (!cmd->cmd_path)
+		return ;
+	main_subfork(data, cmd);
 }
 
 //Iterates through cmd if it's not built in, calls the startfork,

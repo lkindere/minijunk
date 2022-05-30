@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:43 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:39:04 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:53:19 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	get_input(char **full_input, t_data *data)
 {
+	signal_handler();
 	if (data->is_fork)
 		return ;
 	if (!*full_input)
 		*full_input = readline("MiniJunk XD: ");
+	signal_unhandler();
 	if (!*full_input)
 		exit (exit_code(-1));
 	if (*full_input && (*full_input)[0])

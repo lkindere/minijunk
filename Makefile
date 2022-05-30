@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/30 11:21:17 by lkindere         ###   ########.fr        #
+#    Updated: 2022/05/30 16:46:51 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,8 @@ SUB_S :=	fork.c 						\
 EXEC_S :=	exec.c						\
 			dup.c 						\
 			path.c 						\
+			pipes.c 					\
+			status.c 					\
 
 ERROR :=	errors.c					\
 			put_error.c					\

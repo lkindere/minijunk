@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:45:41 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:42:18 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //If param is above -1 updates it
 int	exit_code(int new)
 {
-	static int	exit_code;
+	static int	exit_code = {0};
 
 	if (new > -1)
 		exit_code = new;

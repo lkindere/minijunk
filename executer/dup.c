@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 06:49:30 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:44:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,16 @@ void	dup_and_exec(t_cmd *cmd, char **envp)
 	error_exit(cmd->cmd_arg[0], NULL, 1, 0);
 }
 
-//Creates the pipes
-//Returns 1
-int	create_pipes(t_cmd *cmd)
+//Waits for all the commands executed in current run
+//Frees cmds, gets exit codes
+void	executer_finish(t_cmd *first_cmd)
 {
-	int	pfd[2];
-
-	if (pipe(pfd) == -1)
-		internal_error_exit(ERROR_PIPE);
-	if (cmd->out == STDOUT_FILENO)
-		cmd->out = pfd[1];
-	else
-		close (pfd[1]);
-	if (cmd->pipe_next->in == STDIN_FILENO)
-		cmd->pipe_next->in = pfd[0];
-	else
-		close (pfd[0]);
-	return (1);
-}
-
-//Checks whether cmd is exec or command if exec doesn't exist error exits
-int	is_exec(t_cmd *cmd)
-{
-	int	is_exec;
-	int	i;
-
-	is_exec = 0;
-	i = 0;
-	while (cmd->cmd_arg[0][i])
+	while (first_cmd)
 	{
-		if (cmd->cmd_arg[0][i] == '/' && cmd->cmd_arg[0][i + 1])
-			is_exec = 1;
-		i++;
+		if (first_cmd->pid > 0)
+			exit_code(get_exitstatus(first_cmd->pid));
+		first_cmd = first_cmd->pipe_next;
 	}
-	if (i > 0 && cmd->cmd_arg[0][i - 1] == '/')
-		is_exec = 1;
-	if (is_exec)
-		cmd->cmd_path = cmd->cmd_arg[0];
-	return (0 + is_exec);
 }
 
 //Waits for cmd->pid and returns exit code
@@ -91,18 +63,15 @@ int	get_exitstatus(int pid)
 	return (1);
 }
 
-//Checks for correct exit code if executable fails
-int	exec_access(t_cmd *cmd)
+//Closes the forked process freeing everything in case of errors
+int	fork_exit(t_data **data, t_cmd *cmd, int status)
 {
-	if (access(cmd->cmd_arg[0], F_OK != 0))
-	{
-		if (errno == 20)
-		{
-			exit_code(126);
-			return (error_return(cmd->cmd_arg[0], NULL, 1, 126));
-		}
-		exit_code(127);
-			return (error_return(cmd->cmd_arg[0], NULL, 1, 127));
-	}
-	return (0);
+	if (cmd->cmd_path != cmd->cmd_arg[0])
+		free(cmd->cmd_path);
+	cmd->cmd_path = NULL;
+	close_fds(cmd);
+	terminator(data);
+	if (status >= 0)
+		exit(status);
+	exit(exit_code(-1));
 }

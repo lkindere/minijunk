@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 11:35:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:52:46 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,9 @@ int		input_is_empty(char	*input);
 int		is_input(char *full_input, char *segment);
 
 //Signal
+int		signal_default(void);
 void	signal_handler(void);
+void    signal_unhandler(void);
 
 //Exit
 int		exit_code(int new);

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 23:48:27 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:16:21 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	do_stuff(t_data *data)
 		in_out_std(data);
 		pipe_fds(data);
 	}
-	// dprintf(2, "Arg: %s\n", data->cmds->cmd_arg[1]);
-	// dprintf(2, "And or: %d, exit code: %d\n", data->and_or, exit_code(-1));
 	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
 	reset_data(data);
@@ -60,6 +58,7 @@ int	subsheller(char **input, char **segment, t_data *data)
 {
 	data->input = (*segment);
 	(*segment) = NULL;
+	// printf("do\n");
 	do_stuff(data);
 	if (data->is_fork && !(*input) && terminator(&data))
 		exit (exit_code(-1));
@@ -70,12 +69,15 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
+		// printf("Segment: %s, \ninput: %s\n\n", *segment, *input);
 		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
+		// printf("And or Segment: %s, \ninput: %s\n\n", *segment, *input);
 		if (is_start(*segment))
 			break ;
 		if (splitter(data, input, segment) != 0)
 			return (1);
+		// printf("Splitter Segment: %s, \ninput: %s\n\n", *segment, *input);
 		if (is_subshell(segment) == 1 && create_subshells(data, input, segment))
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
@@ -86,6 +88,7 @@ int	the_loop(char **input, char **segment, t_data *data)
 			return (0);
 		}
 	}
+	// printf("Segment: %s\n", *segment);
 	return (subsheller(input, segment, data));
 }
 

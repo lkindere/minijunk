@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:58:05 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 21:07:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:09:07 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*find_cmd(t_data *data, char *cmd, char **paths);
 int		is_exec(t_cmd *cmd);
 int		is_exception(char *input);
 int		exec_access(t_cmd *cmd);
+int		check_empty(t_data *data, t_cmd *cmd);
 
 //Pipes
 int		create_pipes(t_data *data, t_cmd *cmd);

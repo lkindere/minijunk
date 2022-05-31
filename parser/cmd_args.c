@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 22:08:38 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/31 01:16:47 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	create_cmd_args(t_data *data)
 	if (cmd->cmd_arg == NULL)
 	{
 		add_char_ptr(&cmd->cmd_arg);
-		ft_add_str(&cmd->cmd_arg[0], "\0");
+		// ft_add_str(&cmd->cmd_arg[0], "\0");
 	}
 	return (0);
 }

@@ -6,24 +6,22 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 00:53:12 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:39:31 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	is_valid(char *name, char *cmd, char *input, int last_index)
+static int	valid_start(char *name, char *cmd)
 {
-	unsigned	i;
-	unsigned	j;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = -1;
 	j = 0;
+	if ((!ft_strncmp(name, ".", 1)) && cmd[0] != '.')
+		return (0);
 	if (cmd[0] != (char)-1 && cmd[0] != name[0])
-		return (0);
-	if (ft_strwstr(name, input, (char)-1) == -1)
-		return (0);
-	if (ft_strwstr(name, input, (char)-1) < last_index)
 		return (0);
 	if (cmd[ft_strlen(cmd) - 1] != name[ft_strlen(name) - 1]
 		&& cmd[ft_strlen(cmd) - 1] != (char)-1)
@@ -55,17 +53,16 @@ int	check_match(char *name, char *cmd)
 	input = ft_split(cmd, (char)-1);
 	if (!input)
 		return (-1);
-	if ((!ft_strncmp(name, ".", 1)) && cmd[0] != '.' && free_2d_char(&input))
+	if (!valid_start(name, cmd) && free_2d_char(&input))
 		return (0);
 	while (input[++i])
 	{
-		if (!is_valid(name, cmd, input[i], last_index))
-		{
-			free_2d_char(&input);
+		if (ft_strwstr(&name[last_index], input[i], (char)-1) == -1 
+			&& free_2d_char(&input))
 			return (0);
-		}
-		last_index = ft_strwstr(name, input[i], (char)-1);
+		last_index += ft_strwstr(&name[last_index], input[i], (char)-1);
 	}
+	// printf("Is match\n\n\n");
 	return (free_2d_char(&input));
 }
 

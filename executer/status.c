@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:23:45 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 22:43:18 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:29:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	is_exception(char *input)
 		exit_code(127);
 		return (1);
 	}
-	if (input[0] == '.' && input_is_empty(&input[1])
-		&& put_error(SHELLNAME, input, "command not found", NULL))
+	if ((input[0] == '.' && input_is_empty(&input[1]))
+		|| (input[1] == '.' && input_is_empty(&input[2])))
 	{
+		put_error(SHELLNAME, input, "command not found", NULL);
 		exit_code(127);
 		return (1);
 	}

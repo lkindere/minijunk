@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
+#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/30 23:46:33 by mmeising         ###   ########.fr        #
+#    Updated: 2022/05/31 13:18:36 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,8 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 OBJ_DEBUG := $(addprefix $(OBJ_DIR_DEBUG)/, $(SRC:.c=.o))
 
-LIB := -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
+LIB := -lreadline 
+#-L/Users/$(USER)/.brew/opt/readline/lib
 INC := -I ./include
 
 # Colorcodes

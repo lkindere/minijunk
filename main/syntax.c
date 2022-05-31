@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 21:21:48 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 20:15:09 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:46:03 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	raw_check(t_data *data)
 			&& !(data->flags.single_quote || data->flags.double_quote)
 			&& (data->input[i + 1] == '>' || data->input[i + 1] == '<'))
 		{
-			return (blank_err(data, "Positional parameters not handled", NULL));
+			return (blank_err(data, "Numbered redirections not handled", NULL));
 		}
 		i++;
 	}

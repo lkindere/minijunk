@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:50:31 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/26 19:30:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:23:23 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	split_separator(int c, t_flag flag)
 }
 
 //Replaces && || | wih spaces
+//Returns 0
 int	remove_separator(char **segment, int i)
 {
 	if ((*segment)[i] == '|' || (*segment)[i] == '&')

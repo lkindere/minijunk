@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 23:48:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:57:52 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ static int	first_sep(const char *segment)
 
 static void	check_exit(t_data *data, char **segment, int and_or)
 {
-	int	i;
-
-	i = 0;
 	if (!data->is_fork || data->start_code == -1)
 		return ;
 	if (data->start_code == 0 && and_or == 1)

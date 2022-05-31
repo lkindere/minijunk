@@ -6,21 +6,21 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:43:34 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 14:39:05 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:56:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-// void	handle_sigint(int sig)
-// {
-// 	if (sig)
-// 		exit_code(1);
-// 	write(1, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
+void	handle_sigint(int sig)
+{
+	if (sig)
+		exit_code(1);
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
 int	signal_default(void)
 {
@@ -50,7 +50,7 @@ void	signal_handler(void)
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, 0, &term);
-	// sint.sa_handler = &handle_sigint;
+	sint.sa_handler = &handle_sigint;
 	sint.sa_flags = SA_RESTART;
 	squit.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sint, NULL);

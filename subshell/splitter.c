@@ -6,41 +6,11 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 07:22:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 17:51:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:48:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "subshell.h"
-
-//Opens pipes on data
-//Frees segment and returns 1 on error
-//Returns 0 on success
-static int	handle_pipe(t_data *data, char **input, int i)
-{
-	if (data->pipe1[0] == -1 && data->pipe1[1] == -1)
-	{
-		if (pipe(data->pipe1) != 0)
-		{
-			free(*input);
-			(*input) = NULL;
-			return (1);
-		}
-		remove_separator(input, i);
-		return (0);
-	}
-	if (data->pipe2[0] == -1 && data->pipe2[1] == -1)
-	{
-		if (pipe(data->pipe2) != 0)
-		{
-			free(*input);
-			(*input) = NULL;
-			return (1);
-		}
-		remove_separator(input, i);
-		return (0);
-	}
-	return (0);
-}
 
 //Returns 1 on &&
 //Returns 1 on ||
@@ -57,20 +27,6 @@ static int	should_split(char *input, t_flag flag, int i)
 			return (1);
 		if (input[i] == '|' && input[i + 1] == '|')
 			return (1);
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
-		{
-			if (flag.p_open > 0)
-				return (1);
-		}
-	}
-	if (input[i] == '|' || input[i] == '<' || input[i] == '>')
-	{
-		while (input[i] && !split_separator(input[i], flag))
-		{
-			set_flag(input[i], &flag);
-			if (input[i++] == '(' && !is_quoted(flag))
-				return (1);
-		}
 	}
 	return (0);
 }
@@ -78,7 +34,7 @@ static int	should_split(char *input, t_flag flag, int i)
 //Iterates through input and checks for flags or separator
 //Returns index if a split is needed
 //Returns -1 if no split is needed
-static int	get_index(t_data *data, char **input)
+static int	get_index(char **input)
 {
 	int		i;
 	t_flag	flag;
@@ -89,12 +45,7 @@ static int	get_index(t_data *data, char **input)
 	{
 		set_flag((*input)[i], &flag);
 		if (split_separator((*input)[i], flag) && should_split(*input, flag, i))
-		{
-			if ((*input)[i] == '|' && (*input)[i + 1] != '|')
-				if (handle_pipe(data, input, i) == 1)
-					return (-1);
 			return (i);
-		}
 	}
 	return (-1);
 }
@@ -120,13 +71,13 @@ static int	split_input(char **input, char **segment, int end)
 //Splits the input into segments
 //Returns 1 on errors
 //Returns 0 on success
-int	splitter(t_data *data, char **input, char **segment)
+int	splitter(char **input, char **segment)
 {
 	int	end;
 
 	if (!(*input))
 		return (0);
-	end = get_index(data, input);
+	end = get_index(input);
 	if (end != -1)
 		return (split_input(input, segment, end));
 	if (end == -1)

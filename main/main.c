@@ -6,35 +6,13 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/31 17:16:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:21:07 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "parser.h"
 #include "subshell.h"
-
-//Sets the command in/out to pipe fd, resets pipe fds to -1
-void	pipe_fds(t_data *data)
-{
-	t_cmd	*cmd;
-
-	cmd = data->cmds;
-	while (cmd)
-	{
-		if (data->pipe1[1] != -1)
-			cmd->out = data->pipe1[1];
-		if (data->pipe2[1] != -1)
-			cmd->out = data->pipe2[1];
-		cmd = cmd->pipe_next;
-	}
-	if (data->pipe1[0] != -1)
-		data->cmds->in = data->pipe1[0];
-	if (data->pipe2[0] != -1)
-		data->cmds->in = data->pipe2[0];
-	data->pipe1[0] = -1;
-	data->pipe2[0] = -1;
-}
 
 //Returns the entire chain of commands for current segment
 int	do_stuff(t_data *data)
@@ -46,7 +24,6 @@ int	do_stuff(t_data *data)
 	{
 		do_heredoc(data);
 		in_out_std(data);
-		pipe_fds(data);
 	}
 	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
@@ -56,9 +33,10 @@ int	do_stuff(t_data *data)
 
 int	subsheller(char **input, char **segment, t_data *data)
 {
+	if (data->is_fork)
+		data->start_code = -1;
 	data->input = (*segment);
 	(*segment) = NULL;
-	// printf("do\n");
 	do_stuff(data);
 	if (data->is_fork && !(*input) && terminator(&data))
 		exit (exit_code(-1));
@@ -69,15 +47,22 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
-		// printf("Segment: %s, \ninput: %s\n\n", *segment, *input);
+		// printf("Segment: %s, input: %s\n\n", *segment, *input);
 		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
-		// printf("And or Segment: %s, \ninput: %s\n\n", *segment, *input);
+		if (data->is_fork && data->start_code != -1)
+		{
+			if (data->and_or == 1 && data->start_code != 0)
+				exit (0);
+			if (data->and_or == 2 && data->start_code == 0)
+				exit (0);
+		}
+		// printf("And or Segment: %s, input: %s\nn", *segment, *input);
 		if (is_start(*segment))
 			break ;
-		if (splitter(data, input, segment) != 0)
+		if (splitter(input, segment) != 0)
 			return (1);
-		// printf("Splitter Segment: %s, \ninput: %s\n\n", *segment, *input);
+		// printf("Splitter Segment: %s, input: %s\n\n", *segment, *input);
 		if (is_subshell(segment) == 1 && create_subshells(data, input, segment))
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))

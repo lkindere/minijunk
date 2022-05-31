@@ -90,7 +90,7 @@ test_from_file() {
 	line_count=0
 	while [[ $end_of_file == 0 ]] ;
 	do
-		sleep 1
+		# sleep 1
 		read -r line
 		end_of_file=$?
 		((line_count++))

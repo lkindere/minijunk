@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 15:33:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:10:33 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	exit_code(int new)
 	static int	exit_code = {0};
 
 	if (new > -1)
+	{
+		// printf("Exit code set to: %d\n", exit_code);
 		exit_code = new;
+	}
 	return (exit_code);
 }
 

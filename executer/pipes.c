@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:22:08 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:05:49 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 22:19:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 //Closes current commands in and out if not STD
 int	close_fds(t_cmd *cmd, t_data *data)
 {
+	if (data)
+		;
 	if (cmd->in > 0 && close(cmd->in) == -1)
 		internal_error_exit(ERROR_CLOSE);
-	if (cmd->out > 1 && cmd->out != data->pipe1[1]
-		&& cmd->out != data->pipe2[1] && close(cmd->out) == -1)
+	if (cmd->out > 1 && close(cmd->out) == -1)
 		internal_error_exit(ERROR_CLOSE);
+	if (cmd->pipe_next && cmd->pipe_next->in >= 0 && close(cmd->pipe_next->in) == -1)
+		internal_error_exit(ERROR_CLOSE);
+
 	return (1);
 }
 

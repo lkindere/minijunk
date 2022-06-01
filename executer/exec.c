@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 23:00:01 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:37:25 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	main_subfork(t_data *data, t_cmd *cmd)
 //Main if no pipes, prepares data and calls subfork
 static void	executer_main(t_data *data, t_cmd *cmd)
 {
-	// printf("cmd arg: %p\n", cmd->cmd_arg[0]);
 	if (!cmd->cmd_arg[0])
 		return ;
 	if (is_exception(cmd->cmd_arg[0]))
@@ -105,7 +104,7 @@ void	executer(t_data *data, t_cmd *cmd)
 	}
 	while (cmd)
 	{
-		if (cmd->in != -1 && cmd->out != -1 && cmd->cmd_arg)
+		if (cmd->cmd_arg)
 			executer_startfork(data, cmd);
 		cmd = cmd->pipe_next;
 	}

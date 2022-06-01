@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 22:48:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:18:49 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	do_stuff(t_data *data)
 		do_heredoc(data);
 		in_out_std(data);
 	}
-	// printf("Data input: %s\n", data->input);
 	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
 	reset_data(data);
@@ -39,8 +38,6 @@ int	subsheller(char **input, char **segment, t_data *data)
 	data->input = (*segment);
 	(*segment) = NULL;
 	do_stuff(data);
-	// if (data->is_fork)
-	// 	exit(0);
 	if (data->is_fork && !(*input) && terminator(&data))
 		exit (exit_code(-1));
 	return (0);
@@ -50,26 +47,16 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
-		// sleep(1);
-		// printf("\n-----------------------------------------------------------\n");
-		// printf("\nStart input: %s\n", *input);
-		// printf("\nStart segment: %s\n", *segment);
-		// if (handle_and_or(data, segment, &data->and_or) != 0)
-		// 	return (1);
-		// printf("\nData and or: %d\n", data->and_or);
-		// printf("\nSegment after and_or: %s\n", *segment);
 		if (is_start(*segment))
 			break ;
 		if (splitter(input, segment) != 0)
 			return (1);
 		if (handle_and_or(segment, &data->and_or) != 0)
 			return (1);
-		// printf("\nSegment after splitter: %s\n", *segment);
-		if (is_subshell(segment) == 1 && create_subshells(data, input, segment)) 
+		if (is_subshell(segment) == 1 && create_subshells(data, input, segment))
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
 		{
-			// printf("No input quit\n");
 			if (data->is_fork && terminator(&data))
 				exit (exit_code(-1));
 			reset_data(data);

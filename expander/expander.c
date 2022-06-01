@@ -6,17 +6,17 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/02 00:06:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:21:52 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	is_exp(t_expander xp, char c)
+static int	is_exp(int single_quote, char c)
 {
 	if (single_quote)
 		return (0);
-	if (ft_isalnum(c) || c == '_')
+	if (ft_isalnum(c) || c == '_' || c == '_')
 		return (1);
 	if (c == '"' || c == '\'')
 		return (2);
@@ -32,7 +32,6 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 	int		index;
 	int		i;
 
-	printf("Expanding: %s\n", input);
 	i = 0;
 	if (input[i] == '?')
 	{
@@ -42,14 +41,11 @@ char	*expand_var(char *input, t_data *data, int *dollar_len)
 	while (input[i] && is_exp(0, input[i]) == 1)
 		i++;
 	*dollar_len = i + 1;
-	printf("Dollar len: %d\n", *dollar_len);
 	var = ft_substr_append(input, 0, i, '=');
 	if (!var)
 		internal_error_return(ERROR_MALLOC);
-	printf("Var: %s\n", var);
 	index = is_set(var, data->envp);
 	free(var);
-	printf("Index: %d\n", index);
 	if (index >= 0)
 		return (retrieve_var(data->envp, index));
 	return (NULL);
@@ -60,9 +56,6 @@ char	*rewrite_input(char *input, t_expander *xp)
 	char	*old_input;
 	char	*old_exp;
 
-	printf("xp.i: %d\n", xp->i);
-	printf("Expansion: %s\n\n", xp->expansion);
-	printf("Input xp i: %s\n", &input[xp->i]);
 	old_input = input;
 	old_exp = xp->expansion;
 	xp->expansion = quote_meta(xp->expansion);
@@ -97,8 +90,10 @@ char	*expander(char *input, t_data *data, int heredoc)
 			if (input[xp.i] == '"' && !xp.single_quote)
 				xp.double_quote = ~xp.double_quote & 1;
 		}
-		while (input[xp.i] == '$' && is_exp(xp, input[xp.i + 1]))
+		while (input[xp.i] == '$' && is_exp(xp.single_quote, input[xp.i + 1]))
 		{
+			if (input[xp.i] == '$' && input[xp.i + 1] == '"' && xp.double_quote)
+				break ;
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
 			input = rewrite_input(input, &xp);
 		}

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:58:15 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 18:30:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:19:44 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	set_flag(int c, t_flag *flag)
 //Checks and_or and exit code
 int	can_execute(int and_or, int exit_code)
 {
-	// printf("And or: %d, exit_code: %d\n\n", and_or, exit_code);
 	if (and_or == 0)
 		return (1);
 	if (and_or == 1 && exit_code == 0)

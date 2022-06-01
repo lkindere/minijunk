@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 22:56:04 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:17:44 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,8 @@ int	builtin_exit(t_cmd *cmd, t_data *data)
 			terminator(&data);
 			exit(255);
 		}
-		if (!cmd->cmd_arg[2])
-		{
-			terminator(&data);
+		if (!cmd->cmd_arg[2] && terminator(&data))
 			exit(code);
-		}
 	}
 	if (cmd->cmd_arg[1] && cmd->cmd_arg[2])
 	{

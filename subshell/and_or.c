@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:47:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:47:26 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	cut_subshell(char **segment, int i)
 {
 	t_flags	flag;
 
-	// printf("cutting subshell\n\n");
 	flag.single_quote = 0;
 	flag.double_quote = 0;
 	while ((*segment)[i])
@@ -51,7 +50,6 @@ void	check_cut(char **segment, int and_or, int i)
 {
 	if (!(*segment)[i])
 		return ;
-	// printf("\n\nAnd or: %d, exit_code: %d\n\n", and_or, exit_code(-1));
 	if (first_sep(&(*segment)[i]) == '(')
 	{
 		if (and_or == 1 && exit_code(-1) != 0)
@@ -82,14 +80,11 @@ int	check_separators(char **segment, int *and_or, int i)
 //Removes || and && setting and_or next
 //Returns 0 on success
 //Returns 1 on error
-int	handle_and_or(t_data *data, char **segment, int *and_or)
+int	handle_and_or(char **segment, int *and_or)
 {
 	t_flags	flag;
 	int		i;
 
-	// printf("\n\nHANDLING AND_OR: %s\n\n", *segment);
-	if (data)
-		;
 	i = 0;
 	flag.single_quote = 0;
 	flag.double_quote = 0;

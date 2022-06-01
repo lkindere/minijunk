@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 21:48:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:48:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	the_loop(char **input, char **segment, t_data *data)
 			break ;
 		if (splitter(input, segment) != 0)
 			return (1);
-		if (handle_and_or(data, segment, &data->and_or) != 0)
+		if (handle_and_or(segment, &data->and_or) != 0)
 			return (1);
 		// printf("\nSegment after splitter: %s\n", *segment);
 		if (is_subshell(segment) == 1 && create_subshells(data, input, segment)) 

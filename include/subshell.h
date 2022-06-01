@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:59:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 20:50:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:48:11 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_flag
 
 //Loop
 int		splitter(char **input, char **segment);
-int		handle_and_or(t_data *data, char **segment, int *and_or);
+int		handle_and_or(char **segment, int *and_or);
 int		is_subshell(char **segment);
 int		create_subshells(t_data *data, char **input, char **segment);
 

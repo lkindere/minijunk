@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 22:21:50 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:35:59 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,22 @@ int	builtin_exit(t_cmd *cmd, t_data *data)
 {
 	int	code;
 
+	code = 0;
 	if (!data || !cmd)
 		exit(1);
-	if (cmd->cmd_arg[1] && !valid_exit(cmd->cmd_arg[1], &code))
+	if (cmd->cmd_arg[1])
 	{
-		error_return(cmd->cmd_arg[0], "numeric argument required", 0, 255);
-		terminator(&data);
-		exit(255);
+		if (!valid_exit(cmd->cmd_arg[1], &code))
+		{
+			error_return(cmd->cmd_arg[0], "numeric argument required", 0, 255);
+			terminator(&data);
+			exit(255);
+		}
+		if (!cmd->cmd_arg[2])
+		{
+			terminator(&data);
+			exit(code);
+		}
 	}
 	if (cmd->cmd_arg[1] && cmd->cmd_arg[2])
 	{

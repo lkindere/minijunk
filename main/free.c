@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 18:58:35 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:20:56 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 /*
  *	'free()'s and sets to NULL all members of the 2D array and the array itself.
+ *	Returns 1.
  */
-//Returns 1
 int	free_2d_char(char ***cmds)
 {
 	int	i;

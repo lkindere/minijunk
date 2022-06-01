@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 21:25:15 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:17:06 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int	loop(t_data *data, t_token *temp, t_cmd *cmd, int x)
 		else if (temp->type == WORD)
 		{
 			add_char_ptr(&cmd->cmd_arg);
+			// printf("content: \'%p\'\n", temp->content);
 			cmd->cmd_arg[ft_last_ptr(cmd->cmd_arg)] = ft_strdup(temp->content);
 		}
 		temp = temp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:23:43 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 22:05:01 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:27:50 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	input_is_empty(char	*input)
 	i = 0;
 	if (!input)
 		return (1);
-	while (input[i] == ' ')
+	while (input[i] == ' ' || (input[i] >= 9 && input[i] <= 13))
 		i++;
 	if (input[i] == '\0')
 		return (1);

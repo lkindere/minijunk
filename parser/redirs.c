@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/30 22:17:27 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:32:05 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ static int	type_in(t_token *temp, t_cmd *cmd)
 		perror(temp->content);
 		return (1);
 	}
+	if (cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
+	{
+		free(cmd->cmd_arg[0]);
+		cmd->cmd_arg[0] = NULL;
+	}
 	return (0);
 }
 
@@ -35,6 +40,11 @@ static int	type_out(t_token *temp, t_cmd *cmd)
 		perror(temp->content);
 		return (1);
 	}
+	if (cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
+	{
+		free(cmd->cmd_arg[0]);
+		cmd->cmd_arg[0] = NULL;
+	}
 	return (0);
 }
 
@@ -47,6 +57,11 @@ static int	type_append(t_token *temp, t_cmd *cmd)
 	{
 		perror(temp->content);
 		return (1);
+	}
+	if (cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
+	{
+		free(cmd->cmd_arg[0]);
+		cmd->cmd_arg[0] = NULL;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:23:10 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 23:11:07 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ int	get_exitstatus(int pid)
 //Closes the forked process freeing everything in case of errors
 int	fork_exit(t_data **data, t_cmd *cmd, int status)
 {
+	if (cmd->in != STDIN_FILENO)
+		close(cmd->in);
+	if (cmd->out != STDOUT_FILENO)
+		close(cmd->out);
+	if (cmd->pipe_next && cmd->pipe_next->in != STDIN_FILENO)	
+		close(cmd->pipe_next->in);
 	if (cmd->cmd_path != cmd->cmd_arg[0])
 		free(cmd->cmd_path);
 	cmd->cmd_path = NULL;

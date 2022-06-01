@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:27:23 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 21:06:34 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:13:19 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ char	*rewrite_input(char *input, t_expander *xp)
 	char	*old_input;
 	char	*old_exp;
 
-	if ((!xp->expansion) && xp->double_quote)
-	{
-		xp->i += 2;
-		return (input);
-	}
 	old_input = input;
 	old_exp = xp->expansion;
 	xp->expansion = quote_meta(xp->expansion);
@@ -97,6 +92,8 @@ char	*expander(char *input, t_data *data, int heredoc)
 		}
 		while (input[xp.i] == '$' && is_exp(xp.single_quote, input[xp.i + 1]))
 		{
+			if (input[xp.i] == '$' && input[xp.i + 1] == '"' && xp.double_quote)
+				break ;
 			xp.expansion = expand_var(&input[xp.i + 1], data, &xp.dollar_len);
 			input = rewrite_input(input, &xp);
 		}

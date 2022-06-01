@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 17:14:50 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:20:28 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,5 @@ int	handle_and_or(t_data *data, char **segment, int *and_or)
 	}
 	if (!(*segment)[i])
 		return (0);
-	if (data->is_fork)
-		data->start_code = -1;
 	return (0);
 }

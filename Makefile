@@ -6,7 +6,7 @@
 #    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/05/31 14:37:10 by lkindere         ###   ########.fr        #
+#    Updated: 2022/06/01 17:51:36 by lkindere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,6 @@ EXPAN_S	:=	expander.c					\
 SUB_S :=	fork.c 						\
 			splitter.c 					\
 			and_or.c 					\
-			pipe.c						\
-			pipe_checks.c				\
 			subshell.c					\
 			utils.c						\
 			utils_sep.c 				\
@@ -103,7 +101,7 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DEBUG := $(addprefix $(OBJ_DIR_DEBUG)/, $(SRC:.c=.o))
 
 LIB := -lreadline 
-#-L/Users/$(USER)/.brew/opt/readline/lib
+# -L/Users/$(USER)/.brew/opt/readline/lib
 INC := -I ./include
 
 # Colorcodes

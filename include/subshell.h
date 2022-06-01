@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 10:59:33 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 23:39:23 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:50:48 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,10 @@ typedef struct s_flag
 }	t_flag;
 
 //Loop
-int		splitter(t_data *data, char **input, char **segment);
+int		splitter(char **input, char **segment);
 int		handle_and_or(t_data *data, char **segment, int *and_or);
 int		is_subshell(char **segment);
 int		create_subshells(t_data *data, char **input, char **segment);
-
-//Pipe
-int		handle_pipe_main(t_data *data);
-int		handle_pipe_fork(t_data *data);
-
-//Pipe checks
-int		is_first_link(t_data *data);
-int		is_further_pipe(t_data *data);
-int		no_further_pipe(t_data *data);
 
 //Utils
 int		is_quoted(t_flag flag);

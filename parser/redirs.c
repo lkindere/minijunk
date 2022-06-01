@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 03:46:23 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 22:47:36 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 23:01:44 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ static int	type_in(t_token *temp, t_cmd *cmd)
 		perror(temp->content);
 		return (1);
 	}
-	if (cmd->cmd_arg && cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
-	{
-		free(cmd->cmd_arg[0]);
-		cmd->cmd_arg[0] = NULL;
-	}
 	return (0);
 }
 
@@ -40,11 +35,6 @@ static int	type_out(t_token *temp, t_cmd *cmd)
 		perror(temp->content);
 		return (1);
 	}
-	if (cmd->cmd_arg && cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
-	{
-		free(cmd->cmd_arg[0]);
-		cmd->cmd_arg[0] = NULL;
-	}
 	return (0);
 }
 
@@ -57,11 +47,6 @@ static int	type_append(t_token *temp, t_cmd *cmd)
 	{
 		perror(temp->content);
 		return (1);
-	}
-	if (cmd->cmd_arg && cmd->cmd_arg[0] && cmd->cmd_arg[0][0] == '\0')
-	{
-		free(cmd->cmd_arg[0]);
-		cmd->cmd_arg[0] = NULL;
 	}
 	return (0);
 }
@@ -77,6 +62,8 @@ void	save_redirs_in_cmds(t_data *data)
 	{
 		if (temp->type == PIPE)
 		{
+			if (cmd->has_word == 0 && has_content(cmd))
+				free_str(&cmd->cmd_arg[0]);
 			cmd = cmd->pipe_next;
 			temp = temp->next;
 		}

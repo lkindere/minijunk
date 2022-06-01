@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 20:10:21 by mmeising          #+#    #+#              #
-#    Updated: 2022/06/01 17:51:36 by lkindere         ###   ########.fr        #
+#    Updated: 2022/06/01 22:56:41 by mmeising         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ PARSE_S := 	lexer.c 					\
 			in_out_std.c				\
 			expands_utils.c 			\
 			cmd_args.c 					\
+			cmd_utils.c					\
 			redirs.c					\
 			debug.c						\
 

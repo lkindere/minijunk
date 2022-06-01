@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:26:03 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 23:35:06 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 23:01:07 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_cmd
 	int				in;
 	int				out;
 	int				pid;
+	int				has_word;
 	char			*exp;
 	struct s_cmd	*pipe_prev;
 	struct s_cmd	*pipe_next;
@@ -192,6 +193,7 @@ char	**ft_splitpath(char const *s, char c);
 char	**ft_straiojoin(char **a1, char **a2, int *index);
 //Memory
 void	*ft_calloc(size_t count, size_t size);
+void	free_str(char **str);
 void	free_cmds(t_cmd **cmds);
 void	free_tokens(t_token **tokens);
 int		free_2d_char(char ***cmds);

@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 22:45:09 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:51:24 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int	loop(t_data *data, t_token *temp, t_cmd *cmd, int x)
 		else if (temp->type == WORD)
 		{
 			add_char_ptr(&cmd->cmd_arg);
+			cmd->has_word = 1;
 			// printf("content: \'%p\'\n", temp->content);
 			cmd->cmd_arg[ft_last_ptr(cmd->cmd_arg)] = ft_strdup(temp->content);
 		}

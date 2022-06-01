@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:58:40 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 22:20:56 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 23:00:43 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 // 	exit_code(1);
 // 	return (1);
 // }
+
+/*
+ *	Frees the string passed by address and sets it to NULL.
+ */
+void	free_str(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
 
 /*
  *	'free()'s and sets to NULL all members of the 2D array and the array itself.

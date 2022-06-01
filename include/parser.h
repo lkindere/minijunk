@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:34:44 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/27 19:25:53 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:56:13 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		create_cmd_args(t_data *data);
 void	save_redirs_in_cmds(t_data *data);
 int		do_heredoc(t_data *data);
 void	in_out_std(t_data *data);
+
+int		has_content(t_cmd *cmd);
 
 /*	lexer						*/
 

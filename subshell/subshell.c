@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:56:14 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/25 17:24:09 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:52:54 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 //Checks parenthesis and quotes
 //If not a subshell returns -1
-//If syntax error returns 1
 //If subshell returns 0
 static int	is_valid(char *segment)
 {
@@ -26,11 +25,16 @@ static int	is_valid(char *segment)
 	if (!segment)
 		return (-1);
 	while (segment[++i])
+	{
 		set_flag(segment[i], &flag);
+		if (segment[i] == '|' || segment[i] == '&')
+		{
+			if (!flag.p_open && !flag.p_close)
+				return (-1);
+		}
+	}
 	if (!flag.p_open && !flag.p_close)
 		return (-1);
-	if (flag.p_open != flag.p_close)
-		return (1);
 	return (0);
 }
 
@@ -46,5 +50,6 @@ int	is_subshell(char **segment)
 		return (0);
 	ft_find_replace(*segment, '(', ' ', 1);
 	ft_find_replace(*segment, ')', ' ', -1);
+	// printf("After is subshell\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/31 21:21:07 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:13:55 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	do_stuff(t_data *data)
 		do_heredoc(data);
 		in_out_std(data);
 	}
+	// printf("Data input: %s\n", data->input);
 	if (can_execute(data->and_or, exit_code(-1)))
 		executer(data, data->cmds);
 	reset_data(data);
@@ -38,6 +39,8 @@ int	subsheller(char **input, char **segment, t_data *data)
 	data->input = (*segment);
 	(*segment) = NULL;
 	do_stuff(data);
+	if (data->is_fork)
+		exit(0);
 	if (data->is_fork && !(*input) && terminator(&data))
 		exit (exit_code(-1));
 	return (0);
@@ -47,23 +50,13 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
-		// printf("Segment: %s, input: %s\n\n", *segment, *input);
 		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
-		if (data->is_fork && data->start_code != -1)
-		{
-			if (data->and_or == 1 && data->start_code != 0)
-				exit (0);
-			if (data->and_or == 2 && data->start_code == 0)
-				exit (0);
-		}
-		// printf("And or Segment: %s, input: %s\nn", *segment, *input);
 		if (is_start(*segment))
 			break ;
 		if (splitter(input, segment) != 0)
 			return (1);
-		// printf("Splitter Segment: %s, input: %s\n\n", *segment, *input);
-		if (is_subshell(segment) == 1 && create_subshells(data, input, segment))
+		if (is_subshell(segment) == 1 && create_subshells(data, input, segment)) 
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
 		{
@@ -73,7 +66,6 @@ int	the_loop(char **input, char **segment, t_data *data)
 			return (0);
 		}
 	}
-	// printf("Segment: %s\n", *segment);
 	return (subsheller(input, segment, data));
 }
 

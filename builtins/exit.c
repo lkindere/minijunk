@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 17:56:41 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:11:45 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 //If param is above -1 updates it
 int	exit_code(int new)
 {
-	static int	exit_code = {0};
+	static int	exit_code;
 
-	if (new > -1)
+	// printf("New: %d\n", new);
+	if (new != -1)
 	{
-		// printf("Exit code set to: %d\n", exit_code);
 		exit_code = new;
+		// dprintf(2, "Exit code set to: %d\n", exit_code);
 	}
+	// printf("Returning exit code: %d\n", exit_code);
 	return (exit_code);
 }
 

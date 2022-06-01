@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:53:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:18:08 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:37:20 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	cut_subshell(char **segment, int i)
 {
 	t_flags	flag;
 
-	printf("Cutting subshell\n");
+	// printf("cutting subshell\n\n");
 	flag.single_quote = 0;
 	flag.double_quote = 0;
 	while ((*segment)[i])
@@ -47,13 +47,13 @@ void	cut_subshell(char **segment, int i)
 	}
 }
 
-void check_cut(char **segment, int and_or, int i)
+void	check_cut(char **segment, int and_or, int i)
 {
 	if (!(*segment)[i])
 		return ;
+	// printf("\n\nAnd or: %d, exit_code: %d\n\n", and_or, exit_code(-1));
 	if (first_sep(&(*segment)[i]) == '(')
 	{
-		printf("And or: %d, exit_code: %d\n", and_or, exit_code(-1));
 		if (and_or == 1 && exit_code(-1) != 0)
 			cut_subshell(segment, i);
 		if (and_or == 2 && exit_code(-1) == 0)
@@ -87,6 +87,7 @@ int	handle_and_or(t_data *data, char **segment, int *and_or)
 	t_flags	flag;
 	int		i;
 
+	// printf("\n\nHANDLING AND_OR: %s\n\n", *segment);
 	if (data)
 		;
 	i = 0;
@@ -96,7 +97,8 @@ int	handle_and_or(t_data *data, char **segment, int *and_or)
 		return (0);
 	while ((*segment)[i])
 	{
-		if (is_separator((*segment)[i]) && !flag.single_quote && !flag.double_quote)
+		if (is_separator((*segment)[i]) && !flag.single_quote
+			&& !flag.double_quote)
 			return (check_separators(segment, and_or, i));
 		if ((*segment)[i] == '\'')
 			flag.single_quote = ~flag.single_quote & 1;

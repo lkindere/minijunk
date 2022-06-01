@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:50:04 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/31 13:39:31 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:24:37 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,11 @@ int	check_match(char *name, char *cmd)
 		return (0);
 	while (input[++i])
 	{
-		if (ft_strwstr(&name[last_index], input[i], (char)-1) == -1 
+		if (ft_strwstr(&name[last_index], input[i], (char)-1) == -1
 			&& free_2d_char(&input))
 			return (0);
 		last_index += ft_strwstr(&name[last_index], input[i], (char)-1);
 	}
-	// printf("Is match\n\n\n");
 	return (free_2d_char(&input));
 }
 

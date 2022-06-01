@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 21:20:26 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:37:14 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	subsheller(char **input, char **segment, t_data *data)
 	data->input = (*segment);
 	(*segment) = NULL;
 	do_stuff(data);
-	if (data->is_fork)
-		exit(0);
+	// if (data->is_fork)
+	// 	exit(0);
 	if (data->is_fork && !(*input) && terminator(&data))
 		exit (exit_code(-1));
 	return (0);
@@ -53,7 +53,7 @@ int	the_loop(char **input, char **segment, t_data *data)
 		// sleep(1);
 		// printf("\n-----------------------------------------------------------\n");
 		// printf("\nStart input: %s\n", *input);
-		// printf("\nSegment loop start: %s\n", *segment);
+		// printf("\nStart segment: %s\n", *segment);
 		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
 		// printf("\nData and or: %d\n", data->and_or);
@@ -67,6 +67,7 @@ int	the_loop(char **input, char **segment, t_data *data)
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))
 		{
+			// printf("No input quit\n");
 			if (data->is_fork && terminator(&data))
 				exit (exit_code(-1));
 			reset_data(data);

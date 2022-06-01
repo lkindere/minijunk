@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 19:11:45 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:21:41 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ int	exit_code(int new)
 {
 	static int	exit_code;
 
-	// printf("New: %d\n", new);
 	if (new != -1)
-	{
 		exit_code = new;
-		// dprintf(2, "Exit code set to: %d\n", exit_code);
-	}
-	// printf("Returning exit code: %d\n", exit_code);
 	return (exit_code);
 }
 
@@ -98,15 +93,15 @@ int	builtin_exit(t_cmd *cmd, t_data *data)
 {
 	if (!data || !cmd)
 		exit(1);
-	if (cmd->cmd_arg[1] && !valid_exit(cmd->cmd_arg[1]))
-	{
-		error_return(cmd->cmd_arg[0], "numeric argument required", 0, 255);
-		terminator(&data);
-		exit(255);
-	}
 	if (cmd->cmd_arg[1] && cmd->cmd_arg[2])
 	{
 		error_return(cmd->cmd_arg[0], "too many arguments", 0, 255);
+		terminator(&data);
+		exit(255);
+	}
+	if (cmd->cmd_arg[1] && !valid_exit(cmd->cmd_arg[1]))
+	{
+		error_return(cmd->cmd_arg[0], "numeric argument required", 0, 255);
 		terminator(&data);
 		exit(255);
 	}

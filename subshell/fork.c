@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:45:50 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 19:42:39 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:38:01 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	create_subshells(t_data *data, char **input, char **segment)
 {
 	int	pid;
 
+	// printf("Creating subshell\n");
 	pid = fork();
 	if (pid == -1)
 		return (1);

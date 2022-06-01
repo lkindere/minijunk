@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 19:31:48 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:23:10 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ void	executer_finish(t_cmd *first_cmd)
 {
 	while (first_cmd)
 	{
-		for (int i = 3; i < 20; i++)
-		{
-			close(i);
-		}
 		if (first_cmd->in > STDIN_FILENO)
 			close(first_cmd->in);
 		if (first_cmd->out > STDOUT_FILENO)
@@ -77,7 +73,6 @@ int	fork_exit(t_data **data, t_cmd *cmd, int status)
 	if (cmd->cmd_path != cmd->cmd_arg[0])
 		free(cmd->cmd_path);
 	cmd->cmd_path = NULL;
-	// close_fds(cmd, *data);
 	terminator(data);
 	if (status >= 0)
 		exit(status);

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:15:28 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:16:32 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:24:05 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ void	close_main(t_cmd *cmd)
 {
 	if (cmd->in != STDIN_FILENO)
 		close(cmd->in);
-	if (cmd->out != STDOUT_FILENO)	
+	if (cmd->out != STDOUT_FILENO)
 		close(cmd->out);
 }

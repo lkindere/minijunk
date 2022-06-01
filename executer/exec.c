@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:15:13 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:23:20 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 	}
 	if (cmd->pid != 0)
 		close_main(cmd);
-
 }
 
 //Forks for execve on main

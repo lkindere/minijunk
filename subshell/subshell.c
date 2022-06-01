@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:56:14 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:19:53 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:32:39 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ int	is_subshell(char **segment)
 		return (0);
 	ft_find_replace(*segment, '(', ' ', 1);
 	ft_find_replace(*segment, ')', ' ', -1);
-	// printf("After is subshell\n");
 	return (1);
 }

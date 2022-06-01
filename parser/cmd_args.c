@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/05/31 01:16:47 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:25:15 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,6 @@ int	create_cmd_args(t_data *data)
 	if (loop(data, temp, cmd, x) != 0)
 		return (ERROR_MALLOC);
 	if (cmd->cmd_arg == NULL)
-	{
 		add_char_ptr(&cmd->cmd_arg);
-		// ft_add_str(&cmd->cmd_arg[0], "\0");
-	}
 	return (0);
 }

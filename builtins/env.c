@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:13:00 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/19 23:13:45 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 01:00:36 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	builtin_env(char **envp, int fd)
 	while (envp[i])
 	{
 		if (write(fd, envp[i], ft_strlen(envp[i])) == -1)
-			return (error_return("env", NULL, 1, 0));
+			return (1);
 		if (write(fd, "\n", 1) == -1)
-			return (error_return("env", NULL, 1, 0));
+			return (1);
 		i++;
 	}
 	return (0);

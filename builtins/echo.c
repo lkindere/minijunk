@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:11:41 by lkindere          #+#    #+#             */
-/*   Updated: 2022/05/30 14:14:21 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 01:01:20 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	builtin_echo(char **cmd, int fd)
 	while (cmd[i])
 	{	
 		if (write(fd, cmd[i], ft_strlen(cmd[i])) == -1)
-			return (error_return("echo", NULL, 1, 0));
+			return (1);
 		i++;
 		if (cmd[i] && write(fd, " ", 1) == -1)
-			return (error_return("echo", NULL, 1, 0));
+			return (1);
 	}
 	if (nl && write(fd, "\n", 1) == -1)
-		return (error_return("echo", NULL, 1, 0));
+		return (1);
 	return (0);
 }

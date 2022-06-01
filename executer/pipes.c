@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:15:28 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/02 00:37:43 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/02 00:59:25 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	create_pipes(t_data *data, t_cmd *cmd)
 	(void)data;
 	if (pipe(pfd) == -1)
 		internal_error_exit(ERROR_PIPE);
-	if (cmd->out != STDOUT_FILENO)
+	if (cmd->out != STDOUT_FILENO || cmd->in == -1)
 		close(pfd[1]);
 	if (cmd->out == STDOUT_FILENO)
 		cmd->out = pfd[1];

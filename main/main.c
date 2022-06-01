@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 20:19:09 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 21:13:55 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:20:26 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,19 @@ int	the_loop(char **input, char **segment, t_data *data)
 {
 	while (1)
 	{
+		// sleep(1);
+		// printf("\n-----------------------------------------------------------\n");
+		// printf("\nStart input: %s\n", *input);
+		// printf("\nSegment loop start: %s\n", *segment);
 		if (handle_and_or(data, segment, &data->and_or) != 0)
 			return (1);
+		// printf("\nData and or: %d\n", data->and_or);
+		// printf("\nSegment after and_or: %s\n", *segment);
 		if (is_start(*segment))
 			break ;
 		if (splitter(input, segment) != 0)
 			return (1);
+		// printf("\nSegment after splitter: %s\n", *segment);
 		if (is_subshell(segment) == 1 && create_subshells(data, input, segment)) 
 			continue ;
 		if ((!(*input) || input_is_empty(*input)) && !(*segment))

@@ -6,7 +6,7 @@
 /*   By: mmeising <mmeising@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 04:39:25 by mmeising          #+#    #+#             */
-/*   Updated: 2022/06/01 22:17:06 by mmeising         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:45:09 by mmeising         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_last_ptr(char **ptr_arr)
  *	Allocates 2 pointers size to cmd_arg. One for first input and
  *	one for terminating NULL pointer. So first one can be overwritten with
  *	ft_strdup.
- *	in and out fds are set to -1 to show they are not yet set.
+ *	in and out fds are set to -2 to show they are not yet set.
  */
 static int	create_new_cmd(t_cmd **cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 07:49:39 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:21:41 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:21:50 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ long long	ft_atolol(const char *str)
 	return (num * neg);
 }
 
-int	valid_exit(char *arg)
+long long	valid_exit(char *arg, int *code)
 {
 	long long	exit_long;
 	int			i;
@@ -85,25 +85,27 @@ int	valid_exit(char *arg)
 	exit_long = ft_atolol(arg);
 	if (exit_long > LONG_MAX)
 		return (0);
-	exit_long %= 256;
-	exit(exit_long);
+	*code = exit_long % 256;
+	return (1);
 }
 
 int	builtin_exit(t_cmd *cmd, t_data *data)
 {
+	int	code;
+
 	if (!data || !cmd)
 		exit(1);
-	if (cmd->cmd_arg[1] && cmd->cmd_arg[2])
-	{
-		error_return(cmd->cmd_arg[0], "too many arguments", 0, 255);
-		terminator(&data);
-		exit(255);
-	}
-	if (cmd->cmd_arg[1] && !valid_exit(cmd->cmd_arg[1]))
+	if (cmd->cmd_arg[1] && !valid_exit(cmd->cmd_arg[1], &code))
 	{
 		error_return(cmd->cmd_arg[0], "numeric argument required", 0, 255);
 		terminator(&data);
 		exit(255);
+	}
+	if (cmd->cmd_arg[1] && cmd->cmd_arg[2])
+	{
+		error_return(cmd->cmd_arg[0], "too many arguments", 0, 255);
+		terminator(&data);
+		exit(1);
 	}
 	terminator(&data);
 	exit(exit_code(-1));

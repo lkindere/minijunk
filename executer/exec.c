@@ -6,7 +6,7 @@
 /*   By: lkindere <lkindere@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:38:37 by lkindere          #+#    #+#             */
-/*   Updated: 2022/06/01 21:23:20 by lkindere         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:06:26 by lkindere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	executer_startfork(t_data *data, t_cmd *cmd)
 	if (cmd->pid == 0)
 	{
 		close_sub(cmd);
+		// if (!cmd->cmd_arg)
+		// 	exit(0);
 		check_wildcards(data, cmd);
 		if (check_builtin(data, cmd) && terminator(&data))
 			exit(exit_code(-1));
@@ -70,10 +72,12 @@ static void	main_subfork(t_data *data, t_cmd *cmd)
 //Main if no pipes, prepares data and calls subfork
 static void	executer_main(t_data *data, t_cmd *cmd)
 {
-	check_wildcards(data, cmd);
-	if (check_builtin(data, cmd))
+	if (input_is_empty(cmd->cmd_arg[0]))
 		return ;
 	if (is_exception(cmd->cmd_arg[0]))
+		return ;
+	check_wildcards(data, cmd);
+	if (check_builtin(data, cmd))
 		return ;
 	cmd->paths = get_paths(data->envp);
 	if (is_exec(cmd) && exec_access(cmd) != 0)
